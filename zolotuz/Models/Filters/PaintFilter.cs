@@ -7,8 +7,18 @@ namespace zolotuz.Models.Filters
 {
 	public class PaintFilter
 	{
-		List<string> colors = new List<string>();
+		public int ID { get; set; }
 
-		List<string> volumes = new List<string>();
+		public List<byte> Colors { get; set; }
+
+		public List<byte> Volumes { get; set; }
+
+		public List<byte> Countries { get; set; }
+
+		public List<byte> Types { get; set; }
+
+		public decimal MinPrice { get; set; }
+
+		public decimal MaxPrice { get; set; }
 	}
 }

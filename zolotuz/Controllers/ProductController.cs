@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using zolotuz.Models;
@@ -8,38 +9,39 @@ using zolotuz.Models.Filters;
 
 namespace zolotuz.Controllers
 {
-	[Route("[controller]")]
+	[Route("api/[controller]")]
 	[ApiController]
 	public class ProductController : Controller
 	{
 
-		[HttpGet("s")]
-		public string Sss()
-		{
-
-			return "SSS";
-		}
-
 		// GET: Product
 		[HttpGet]
-		public JsonResult Index()
+		public string Index()
 		{
-			var els = Paint.GetAllPaints();
+			return "s";
+			//var els = DataProvider.GetPaints();
 
-			return new JsonResult(els) { };
+			//return new JsonResult(els) { };
 		}
-		[HttpGet("Item/{id}")]
-		public JsonResult Item(int id)
+		[HttpGet("{type}/{id}")]
+		public JsonResult Item(string type, int id)
 		{
-			var el = Paint.GellPaintByID(id);
+			Paint el = new Paint();
+			if(type == "kraski")
+			{
+				el = DataProvider.GetPaintByID(id);
+			}
 
 			return new JsonResult(el) { };
 		}
 
-		[HttpGet("GetPaints/{id}")]
+		[HttpGet("GetPaints")]
 		public JsonResult GetPaints(PaintFilter filter)
 		{
-			return new JsonResult(new string[] { "dsa"}) { };
+			var els = DataProvider.GetPaints(filter);
+
+			return new JsonResult(els) { };
 		}
+
 	}
 }
