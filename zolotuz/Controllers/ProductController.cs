@@ -26,13 +26,13 @@ namespace zolotuz.Controllers
 		[HttpGet("{type}/{id}")]
 		public JsonResult Item(string type, int id)
 		{
-			Paint el = new Paint();
+			List<Paint> el = new List<Paint>();
 			if(type == "kraski")
 			{
-				el = DataProvider.GetPaintByID(id);
+				el = DataProvider.GetPaints(new PaintFilter() { ID = id });
 			}
 
-			return new JsonResult(el) { };
+			return new JsonResult(el.FirstOrDefault()) { };
 		}
 
 		[HttpGet("GetPaints")]

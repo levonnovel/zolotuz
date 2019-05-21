@@ -113,37 +113,6 @@ namespace zolotuz
 			}
 		}
 
-		public static Paint GetPaintByID(int id)
-		{
-			using (SqlConnection conn = new SqlConnection(cs))
-			{
-				SqlCommand cmd = new SqlCommand("SELECT * FROM paints WHERE ID=@id", conn);
-
-				conn.Open();
-				cmd.Parameters.AddWithValue("@id", id);
-				SqlDataReader dr = cmd.ExecuteReader();
-				Paint el = new Paint();
-				while (dr.Read())
-				{
-
-					el = new Paint()
-					{
-						Id = Convert.ToInt32(dr["Id"]),
-						Name = dr["Name"].ToString(),
-						Description = dr["Description"].ToString(),
-						Composition = dr["Composition"].ToString(),
-						Application_Area = dr["Application_Area"].ToString(),
-						Price = Convert.ToDecimal(dr["Price"]),
-						Color = dr["Color"].ToString(),
-						Volume = dr["Volume"].ToString(),
-						Country = dr["Country"].ToString(),
-					};
-
-
-				}
-				return el;
-			}
-		}
 
 	}
 }
