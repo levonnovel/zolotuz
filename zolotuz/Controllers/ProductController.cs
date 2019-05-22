@@ -35,7 +35,7 @@ namespace zolotuz.Controllers
 			return new JsonResult(el.FirstOrDefault()) { };
 		}
 
-		[HttpGet("GetPaints")]
+		[HttpPost("GetPaints")]
 		public JsonResult GetPaints(PaintFilter filter)
 		{
 			var els = DataProvider.GetPaints(filter);

@@ -9,7 +9,8 @@ namespace zolotuz
 {
 	public static class DataProvider
 	{
-		static readonly string cs = @"Data Source=LEVPETROS-PC\SQLEXPRESS; database=ZolotoyUzor ;Integrated Security=SSPI";
+		//static readonly string cs = @"Data Source=LEVPETROS-PC\SQLEXPRESS; database=ZolotoyUzor ;Integrated Security=SSPI";
+		static readonly string cs = @"Data Source=SQL6001.site4now.net;Initial Catalog=DB_A48CD1_zu;User Id=DB_A48CD1_zu_admin;Password=googlecomm123;";
 
 		public static List<Paint> GetPaints(PaintFilter filter)
 		{
@@ -61,6 +62,8 @@ namespace zolotuz
 				{
 
 					Paint P = new Paint();
+					List<Image> images = new List<Image>();
+					
 					if (dr["Id"] != DBNull.Value)
 					{
 						P.Id = Convert.ToInt32(dr["Id"]);
@@ -105,7 +108,19 @@ namespace zolotuz
 					{
 						P.Product_Type = dr["Product_Type"].ToString();
 					}
-
+					if (dr["IMAGE_1_NAME"] != DBNull.Value && dr["IMG_1"] != DBNull.Value)
+					{
+						images.Add(new Image() { Name = dr["IMAGE_1_NAME"].ToString(), Base64 = dr["IMG_1"].ToString() });
+					}
+					if (dr["IMAGE_2_NAME"] != DBNull.Value && dr["IMG_2"] != DBNull.Value)
+					{
+						images.Add(new Image() { Name = dr["IMAGE_2_NAME"].ToString(), Base64 = dr["IMG_2"].ToString() });
+					}
+					if (dr["IMAGE_3_NAME"] != DBNull.Value && dr["IMG_3"] != DBNull.Value)
+					{
+						images.Add(new Image() { Name = dr["IMAGE_3_NAME"].ToString(), Base64 = dr["IMG_3"].ToString() });
+					}
+					P.Images = images;
 					ProductsList.Add(P);
 				}
 
