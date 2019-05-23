@@ -26,7 +26,8 @@ namespace zolotuz.Models
 		public string Country { get; set; }
 		public string Product_Type { get; set; }
 		public string Type { get; set; }
-		
+		public List<Image> Images{ get; set; }
+
 
 		//public static List<Paint> GetAllPaints()
 		//{
