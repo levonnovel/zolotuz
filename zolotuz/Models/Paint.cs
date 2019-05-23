@@ -24,7 +24,9 @@ namespace zolotuz.Models
 		public string Color { get; set; }
 		public string Volume { get; set; }
 		public string Country { get; set; }
-		public string Product_Type { get; set; }
+		public int Product_Type { get; set; }
+		public string Product_Type_Name { get; set; }
+		
 		public string Type { get; set; }
 		public List<Image> Images{ get; set; }
 

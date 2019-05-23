@@ -43,5 +43,35 @@ namespace zolotuz.Controllers
 			return new JsonResult(els) { };
 		}
 
+		[HttpGet("GetRandomItems")]
+		public JsonResult GetRandomItems()
+		{
+			var list = DataProvider.GetRandomItems();
+
+			return new JsonResult(list) { };
+		}
+
+		[HttpGet("GetDiscountedItems")]
+		public JsonResult GetDiscountedItems()
+		{
+			var list = DataProvider.GetDiscountedItems();
+
+			return new JsonResult(list) { };
+		}
+
+		[HttpGet("GetCurrentProductTypeItems/{table}/{type}")]
+		public JsonResult GetCurrentProductTypeItems(string table, string type)
+		{
+			var list = DataProvider.GetCurrentTypeItems(table, type);
+
+			return new JsonResult(list) { };
+		}
+		[HttpGet("GetCurrentTypeItems/{table}")]
+		public JsonResult GetCurrentTypeItems(string table)
+		{
+			var list = DataProvider.GetCurrentTypeItems(table);
+
+			return new JsonResult(list) { };
+		}
 	}
 }

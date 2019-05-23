@@ -17,8 +17,8 @@ namespace zolotuz.Models.Filters
 
 		public List<byte> Types { get; set; }
 
-		public decimal MinPrice { get; set; }
+		public decimal? MinPrice { get; set; }
 
-		public decimal MaxPrice { get; set; }
+		public decimal? MaxPrice { get; set; }
 	}
 }
