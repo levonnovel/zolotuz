@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.Swagger;
+
 
 namespace zolotuz
 {
@@ -27,6 +29,14 @@ namespace zolotuz
 		{
 			services.AddCors();
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+			services.AddSwaggerGen(c => {
+				c.SwaggerDoc("v1", new Info
+				{
+					Version = "v1",
+					Title = "Web API",
+					Description = "Web API"
+				});
+			});
 
 		}
 
@@ -42,6 +52,11 @@ namespace zolotuz
 				// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 				app.UseHsts();
 			}
+
+			app.UseSwagger();
+			app.UseSwaggerUI(c => {
+				c.SwaggerEndpoint("../swagger/v1/swagger.json", "DebtManagement Web API");
+			});
 
 			app.UseCors(builder => builder
 				.AllowAnyOrigin()
