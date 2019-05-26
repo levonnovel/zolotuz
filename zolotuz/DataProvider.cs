@@ -10,16 +10,16 @@ namespace zolotuz
 	public static class DataProvider
 	{
 		//static readonly string cs = @"Data Source=LEVPETROS-PC\SQLEXPRESS; database=ZolotoyUzor ;Integrated Security=SSPI";
-		static readonly string cs = @"Data Source=LEVON\LEOMAX; database=ZolotoyUzor ;Integrated Security=SSPI";
-		//static readonly string cs = @"Data Source=SQL6001.site4now.net;Initial Catalog=DB_A48CD1_zu;User Id=DB_A48CD1_zu_admin;Password=googlecomm123;";
+		//static readonly string cs = @"Data Source=LEVON\LEOMAX; database=ZolotoyUzor ;Integrated Security=SSPI";
+		static readonly string cs = @"Data Source=SQL6001.site4now.net;Initial Catalog=DB_A48CD1_zu;User Id=DB_A48CD1_zu_admin;Password=googlecomm123;";
 
-		public static List<Paint> GetPaints(PaintFilter filter)
+		public static List<ProductDTO> GetPaints(PaintFilter filter)
 		{
 
 
 			DataTable dt = new DataTable();
 
-			List<Paint> ProductsList = new List<Paint>();
+			List<ProductDTO> ProductsList = new List<ProductDTO>();
 			using (SqlConnection conn = new SqlConnection(cs))
 			{
 				SqlCommand cmd = new SqlCommand("sp_get_paints", conn);
@@ -38,6 +38,32 @@ namespace zolotuz
 				outParameter.Direction = ParameterDirection.Output;
 
 				cmd.Parameters.Add(outParameter);
+
+				conn.Open();
+				dt.Load(cmd.ExecuteReader());
+
+				foreach (DataRow dr in dt.Rows)
+				{
+					ProductsList.Add(dr.ConvertToProductDTO());
+				}
+
+				return ProductsList;
+			}
+		}
+
+		public static List<Paint> GetPaint(int id)
+		{
+
+
+			DataTable dt = new DataTable();
+
+			List<Paint> ProductsList = new List<Paint>();
+			using (SqlConnection conn = new SqlConnection(cs))
+			{
+				SqlCommand cmd = new SqlCommand("sp_get_paint", conn);
+
+				cmd.CommandType = CommandType.StoredProcedure;
+				cmd.Parameters.AddWithValue("@id", id);
 
 				conn.Open();
 				dt.Load(cmd.ExecuteReader());
@@ -99,6 +125,30 @@ namespace zolotuz
 
 		}
 
+		public static List<ProductDTO> GetPopularItems()
+		{
+
+			DataTable dt = new DataTable();
+
+			List<ProductDTO> ProductsList = new List<ProductDTO>();
+			using (SqlConnection conn = new SqlConnection(cs))
+			{
+				SqlCommand cmd = new SqlCommand("sp_get_most_viewd_items", conn);
+				cmd.CommandType = CommandType.StoredProcedure;
+
+				conn.Open();
+				dt.Load(cmd.ExecuteReader());
+
+				foreach (DataRow dr in dt.Rows)
+				{
+					ProductsList.Add(dr.ConvertToProductDTO());
+				}
+
+				return ProductsList;
+			}
+
+		}
+
 		public static List<ProductDTO> GetCurrentTypeItems(string table, string type = null)
 		{
 
@@ -111,7 +161,7 @@ namespace zolotuz
 				cmd.CommandType = CommandType.StoredProcedure;
 
 				cmd.Parameters.AddWithValue("@tbl", table);
-				if(type != null)
+				if (type != null)
 				{
 					cmd.Parameters.AddWithValue("@type", type);
 
@@ -129,6 +179,93 @@ namespace zolotuz
 			}
 
 		}
-		
+
+		public static Dictionary<string, string> GetRefNames()
+		{
+
+
+			DataTable dt = new DataTable();
+
+			Dictionary<string, string> Refs = new Dictionary<string, string>();
+			using (SqlConnection conn = new SqlConnection(cs))
+			{
+				SqlCommand cmd = new SqlCommand("select * from spr_list", conn);
+
+				cmd.CommandType = CommandType.Text;
+
+				conn.Open();
+				dt.Load(cmd.ExecuteReader());
+
+				foreach (DataRow dr in dt.Rows)
+				{
+					Refs.Add(dr["Name"].ToString(), dr["View"].ToString());
+				}
+
+				return Refs;
+			}
+		}
+
+		public static Dictionary<string, Dictionary<int, string>> GetRefs(string name, string reference)
+		{
+
+
+			DataTable dt = new DataTable();
+
+			Dictionary<string, Dictionary<int, string>> Refs = new Dictionary<string, Dictionary<int, string>>();
+			//List<Reference> Refs = new List<Reference>();
+
+			using (SqlConnection conn = new SqlConnection(cs))
+			{
+				SqlCommand cmd = new SqlCommand("sp_get_refs", conn);
+
+				cmd.CommandType = CommandType.StoredProcedure;
+				cmd.Parameters.AddWithValue("@ref", reference);
+
+
+				conn.Open();
+				dt.Load(cmd.ExecuteReader());
+
+				Reference R = new Reference() { Name = name };
+				foreach (DataRow dr in dt.Rows)
+				{
+					R.Values.Add(Convert.ToInt32(dr["Id"]), dr["Name"].ToString());
+				}
+
+				Refs.Add(R.Name, R.Values);
+				return Refs;
+			}
+		}
+
+		public static bool AddOrder(Order order)
+		{
+
+			//DataTable dt = new DataTable();
+
+			//List<ProductDTO> ProductsList = new List<ProductDTO>();
+			using (SqlConnection conn = new SqlConnection(cs))
+			{
+				SqlCommand cmd = new SqlCommand("sp_insert_order", conn);
+
+				cmd.CommandType = CommandType.StoredProcedure;
+				cmd.Parameters.AddWithValue("@name", order.Name);
+				cmd.Parameters.AddWithValue("@email", order.EMail);
+				cmd.Parameters.AddWithValue("@phone", order.Number);
+				cmd.Parameters.AddWithValue("@name", order.Items);
+				cmd.Parameters.Add("@items", SqlDbType.Structured);
+				cmd.Parameters["@items"].Value = order.Items;
+				//cmd.Parameters.AddWithValue("@items", order.Items);
+
+
+				conn.Open();
+				//dt.Load(cmd.ExecuteReader());
+				cmd.ExecuteNonQuery();
+				//foreach (DataRow dr in dt.Rows)
+				//{
+				//	ProductsList.Add(dr.ConvertToProductDTO());
+				//}
+
+				return true;
+			}
+		}
 	}
 }

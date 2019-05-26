@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿	using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,9 +27,9 @@ namespace zolotuz.Controllers
 		public JsonResult Item(string type, int id)
 		{
 			List<Paint> el = new List<Paint>();
-			if(type == "kraski")
+			if (type == "kraski")
 			{
-				el = DataProvider.GetPaints(new PaintFilter() { ID = id });
+				el = DataProvider.GetPaint(id);
 			}
 
 			return new JsonResult(el.FirstOrDefault()) { };
@@ -59,6 +59,14 @@ namespace zolotuz.Controllers
 			return new JsonResult(list) { };
 		}
 
+		[HttpGet("GetPopularItems")]
+		public JsonResult GetPopularItems()
+		{
+			var list = DataProvider.GetPopularItems();
+
+			return new JsonResult(list) { };
+		}
+
 		[HttpGet("GetCurrentProductTypeItems/{table}/{type}")]
 		public JsonResult GetCurrentProductTypeItems(string table, string type)
 		{
@@ -66,10 +74,19 @@ namespace zolotuz.Controllers
 
 			return new JsonResult(list) { };
 		}
+
 		[HttpGet("GetCurrentTypeItems/{table}")]
 		public JsonResult GetCurrentTypeItems(string table)
 		{
 			var list = DataProvider.GetCurrentTypeItems(table);
+
+			return new JsonResult(list) { };
+		}
+
+		[HttpPost("CreateOrder")]
+		public string CreateOrder(Order order)
+		{
+			var list = DataProvider.AddOrder(order);
 
 			return new JsonResult(list) { };
 		}
