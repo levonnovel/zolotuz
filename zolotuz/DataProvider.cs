@@ -252,7 +252,15 @@ namespace zolotuz
 				cmd.Parameters.AddWithValue("@phone", order.Number);
 				cmd.Parameters.AddWithValue("@name", order.Items);
 				cmd.Parameters.Add("@items", SqlDbType.Structured);
-				cmd.Parameters["@items"].Value = order.Items;
+				cmd.Parameters.Add("@items", SqlDbType.Structured);
+				cmd.Parameters.Add("@items", SqlDbType.Structured);
+				cmd.Parameters.Add("@items", SqlDbType.Structured);
+
+
+
+
+
+			cmd.Parameters["@items"].Value = order.Items;
 				//cmd.Parameters.AddWithValue("@items", order.Items);
 
 

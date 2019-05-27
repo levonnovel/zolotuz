@@ -86,9 +86,9 @@ namespace zolotuz.Controllers
 		[HttpPost("CreateOrder")]
 		public string CreateOrder(Order order)
 		{
-			var list = DataProvider.AddOrder(order);
+			bool isAdded = false; isAdded =  DataProvider.AddOrder(order);
 
-			return new JsonResult(list) { };
+			return isAdded;
 		}
 	}
 }
