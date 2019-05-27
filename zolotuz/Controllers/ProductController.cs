@@ -84,7 +84,7 @@ namespace zolotuz.Controllers
 		}
 
 		[HttpPost("CreateOrder")]
-		public string CreateOrder(Order order)
+		public bool CreateOrder(Order order)
 		{
 			bool isAdded = false; isAdded =  DataProvider.AddOrder(order);
 
