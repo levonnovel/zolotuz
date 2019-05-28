@@ -11,7 +11,9 @@ namespace zolotuz.Models
 
 		public string EMail { get; set; }
 
-		public string Number { get; set; }
+		public string Phone { get; set; }
+
+		public string Address { get; set; }
 
 		public List<PurchasedItem> Items = new List<PurchasedItem>();
 	}

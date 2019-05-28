@@ -103,7 +103,7 @@ namespace zolotuz
 			P.Images = images;
 			return P;
 		}
-
+		
 		internal static ProductDTO ConvertToProductDTO(this DataRow dr)
 		{
 			ProductDTO P = new ProductDTO();
@@ -119,6 +119,10 @@ namespace zolotuz
 			if (dr["Description"] != DBNull.Value)
 			{
 				P.Description = dr["Description"].ToString();
+			}
+			if (dr["Discount"] != DBNull.Value)
+			{
+				P.Discount = Convert.ToByte(dr["Discount"]);
 			}
 			if (dr["Price"] != DBNull.Value)
 			{
@@ -137,6 +141,56 @@ namespace zolotuz
 				P.Image = new Image() { Name = dr["IMAGE_1_NAME"].ToString(), Base64 = dr["IMG_1"].ToString() };
 			}
 			
+			return P;
+		}
+
+		internal static PurchasedItem ConvertToPurchaisedItem(this DataRow dr)
+		{
+			PurchasedItem P = new PurchasedItem();
+
+		
+			if (dr["Name"] != DBNull.Value)
+			{
+				P.Name = dr["Name"].ToString();
+			}
+			if (dr["Description"] != DBNull.Value)
+			{
+				P.Description = dr["Description"].ToString();
+			}
+			if (dr["Count"] != DBNull.Value)
+			{
+				P.Count = Convert.ToByte(dr["Count"]);
+			}
+			if (dr["Price"] != DBNull.Value)
+			{
+				P.Price = Convert.ToDecimal(dr["Price"]);
+			}
+			
+			return P;
+		}
+
+		internal static Order ConvertToOrder(this DataRow dr)
+		{
+			Order P = new Order();
+
+
+			if (dr["Name"] != DBNull.Value)
+			{
+				P.Name = dr["Name"].ToString();
+			}
+			if (dr["email"] != DBNull.Value)
+			{
+				P.EMail = dr["email"].ToString();
+			}
+			if (dr["phone"] != DBNull.Value)
+			{
+				P.Phone = dr["phone"].ToString();
+			}
+			if (dr["address"] != DBNull.Value)
+			{
+				P.Address = dr["address"].ToString();
+			}
+
 			return P;
 		}
 	}

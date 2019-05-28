@@ -249,18 +249,16 @@ namespace zolotuz
 				cmd.CommandType = CommandType.StoredProcedure;
 				cmd.Parameters.AddWithValue("@name", order.Name);
 				cmd.Parameters.AddWithValue("@email", order.EMail);
-				cmd.Parameters.AddWithValue("@phone", order.Number);
+				cmd.Parameters.AddWithValue("@phone", order.Phone);
 				cmd.Parameters.AddWithValue("@name", order.Items);
+				cmd.Parameters.AddWithValue("@addr", order.Address);
 				cmd.Parameters.Add("@items", SqlDbType.Structured);
-				cmd.Parameters.Add("@items", SqlDbType.Structured);
-				cmd.Parameters.Add("@items", SqlDbType.Structured);
-				cmd.Parameters.Add("@items", SqlDbType.Structured);
+				//cmd.Parameters.Add("@items", SqlDbType.Structured);
+				//cmd.Parameters.Add("@items", SqlDbType.Structured);
+				//cmd.Parameters.Add("@items", SqlDbType.Structured);
 
 
-
-
-
-			cmd.Parameters["@items"].Value = order.Items;
+				cmd.Parameters["@items"].Value = order.Items;
 				//cmd.Parameters.AddWithValue("@items", order.Items);
 
 
@@ -274,6 +272,51 @@ namespace zolotuz
 
 				return true;
 			}
+		}
+
+		public static List<Order> GetOrders()
+		{
+
+
+			List<Order> OrdersList = new List<Order>();
+			using (SqlConnection conn = new SqlConnection(cs))
+			{
+				SqlCommand cmd = new SqlCommand("sp_get_orders", conn);
+				cmd.CommandType = CommandType.StoredProcedure;
+
+				conn.Open();
+				//dt.Load(cmd.ExecuteReader());
+
+
+				System.Data.SqlClient.SqlDataAdapter adapter = new System.Data.SqlClient.SqlDataAdapter(cmd);
+
+				DataSet ds = new DataSet();
+				adapter.Fill(ds);
+
+				DataTable dt1 = new DataTable();
+				dt1 = ds.Tables[0];
+
+				DataTable dt2 = new DataTable();
+				dt2 = ds.Tables[1];
+
+				foreach (DataRow dr in dt1.Rows)
+				{
+					Order order = new Order();
+					order = dr.ConvertToOrder();
+
+					foreach (DataRow dr2 in dt2.Rows)
+					{
+						if (dr["id"].ToString() == dr2["order_id"].ToString())
+						{
+							order.Items.Add(dr2.ConvertToPurchaisedItem());
+						}
+					}
+					OrdersList.Add(order);
+				}
+
+				return OrdersList;
+			}
+
 		}
 	}
 }

@@ -35,7 +35,7 @@ namespace zolotuz.Controllers
 			return new JsonResult(el.FirstOrDefault()) { };
 		}
 
-		[HttpPost("GetPaints")]
+		[HttpPost("filter/kraski")]
 		public JsonResult GetPaints(PaintFilter filter)
 		{
 			var els = DataProvider.GetPaints(filter);
@@ -86,9 +86,32 @@ namespace zolotuz.Controllers
 		[HttpPost("CreateOrder")]
 		public bool CreateOrder(Order order)
 		{
-			bool isAdded = false; isAdded =  DataProvider.AddOrder(order);
+			bool isAdded = false;
+
+			isAdded =  DataProvider.AddOrder(order);
 
 			return isAdded;
 		}
+
+		[HttpGet("GetOrders")]
+		public JsonResult GetOrders()
+		{
+			var orders = DataProvider.GetOrders();
+
+			return new JsonResult(orders) { };
+		}
+
+		[HttpGet("img/{table}/{id}/{nmb}")]
+		public ActionResult Img(string table, string id, string nmb)
+		{
+			Image img = new Image();
+			//string name = Directory.GetFiles("imgs")[0];
+
+			string path = Directory.GetCurrentDirectory() + string.Format(@"\imgs\{0}_{1}_{2}.jpg", table, id, nmb);
+			byte[] bytes = System.IO.File.ReadAllBytes(path);
+
+			return File(bytes, "image/jpeg");
+		}
+
 	}
 }
