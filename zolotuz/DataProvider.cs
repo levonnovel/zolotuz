@@ -10,8 +10,8 @@ namespace zolotuz
 	public static class DataProvider
 	{
 		//static readonly string cs = @"Data Source=LEVPETROS-PC\SQLEXPRESS; database=ZolotoyUzor ;Integrated Security=SSPI";
-		static readonly string cs = @"Data Source=LEVON\LEOMAX; database=ZolotoyUzor ;Integrated Security=SSPI";
-		//static readonly string cs = @"Data Source=SQL6001.site4now.net;Initial Catalog=DB_A48CD1_zu;User Id=DB_A48CD1_zu_admin;Password=googlecomm123;";
+		//static readonly string cs = @"Data Source=LEVON\LEOMAX; database=ZolotoyUzor ;Integrated Security=SSPI";
+		static readonly string cs = @"Data Source=SQL6001.site4now.net;Initial Catalog=DB_A48CD1_zu;User Id=DB_A48CD1_zu_admin;Password=googlecomm123;";
 
 		public static List<ProductDTO> GetPaints(PaintFilter filter)
 		{
@@ -143,7 +143,6 @@ namespace zolotuz
 				return ProductsList;
 			}
 		}
-
 
 		public static List<ProductDTO> GetRandomItems()
 		{

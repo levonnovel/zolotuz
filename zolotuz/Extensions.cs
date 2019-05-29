@@ -90,15 +90,15 @@ namespace zolotuz
 			}
 			if (dr["IMAGE_1_NAME"] != DBNull.Value && dr["IMG_1"] != DBNull.Value)
 			{
-				images.Add(new Image() { Name = dr["IMAGE_1_NAME"].ToString(), Base64 = dr["IMG_1"].ToString() });
+				images.Add(new Image() { Name = dr["IMAGE_1_NAME"].ToString(), Url = dr["IMG_1"].ToString() });
 			}
 			if (dr["IMAGE_2_NAME"] != DBNull.Value && dr["IMG_2"] != DBNull.Value)
 			{
-				images.Add(new Image() { Name = dr["IMAGE_2_NAME"].ToString(), Base64 = dr["IMG_2"].ToString() });
+				images.Add(new Image() { Name = dr["IMAGE_2_NAME"].ToString(), Url = dr["IMG_2"].ToString() });
 			}
 			if (dr["IMAGE_3_NAME"] != DBNull.Value && dr["IMG_3"] != DBNull.Value)
 			{
-				images.Add(new Image() { Name = dr["IMAGE_3_NAME"].ToString(), Base64 = dr["IMG_3"].ToString() });
+				images.Add(new Image() { Name = dr["IMAGE_3_NAME"].ToString(), Url = dr["IMG_3"].ToString() });
 			}
 			P.Images = images;
 			return P;
@@ -144,15 +144,15 @@ namespace zolotuz
 			}
 			if (dr["IMAGE_1_NAME"] != DBNull.Value && dr["IMG_1"] != DBNull.Value)
 			{
-				images.Add(new Image() { Name = dr["IMAGE_1_NAME"].ToString(), Base64 = dr["IMG_1"].ToString() });
+				images.Add(new Image() { Name = dr["IMAGE_1_NAME"].ToString(), Url = dr["IMG_1"].ToString() });
 			}
 			if (dr["IMAGE_2_NAME"] != DBNull.Value && dr["IMG_2"] != DBNull.Value)
 			{
-				images.Add(new Image() { Name = dr["IMAGE_2_NAME"].ToString(), Base64 = dr["IMG_2"].ToString() });
+				images.Add(new Image() { Name = dr["IMAGE_2_NAME"].ToString(), Url = dr["IMG_2"].ToString() });
 			}
 			if (dr["IMAGE_3_NAME"] != DBNull.Value && dr["IMG_3"] != DBNull.Value)
 			{
-				images.Add(new Image() { Name = dr["IMAGE_3_NAME"].ToString(), Base64 = dr["IMG_3"].ToString() });
+				images.Add(new Image() { Name = dr["IMAGE_3_NAME"].ToString(), Url = dr["IMG_3"].ToString() });
 
 			}
 			P.Images = images;
@@ -193,7 +193,7 @@ namespace zolotuz
 			}
 			if (dr["IMAGE_1_NAME"] != DBNull.Value && dr["IMG_1"] != DBNull.Value)
 			{
-				P.Image = new Image() { Name = dr["IMAGE_1_NAME"].ToString(), Base64 = dr["IMG_1"].ToString() };
+				P.Image = new Image() { Name = dr["IMAGE_1_NAME"].ToString(), Url = dr["IMG_1"].ToString() };
 			}
 			
 			return P;
