@@ -26,13 +26,31 @@ namespace zolotuz.Controllers
 		[HttpGet("{type}/{id}")]
 		public JsonResult Item(string type, int id)
 		{
-			List<Paint> el = new List<Paint>();
+			
 			if (type == "kraski")
 			{
-				el = DataProvider.GetPaint(id);
+				var el1 = DataProvider.GetPaint(id);
+
+				return new JsonResult(el1.FirstOrDefault()) { };
+
+			}
+			else if (type == "stroymateryali")
+			{
+				var el2 = DataProvider.GetStroymateryali(id);
+
+				return new JsonResult(el2.FirstOrDefault()) { };
 			}
 
-			return new JsonResult(el.FirstOrDefault()) { };
+
+			return null;
+		}
+
+		[HttpPost("filter/stroymateryali")]
+		public JsonResult GetStroymats(StroymatFilter filter)
+		{
+			var els = DataProvider.GetStroymats(filter);
+
+			return new JsonResult(els) { };
 		}
 
 		[HttpPost("filter/kraski")]

@@ -5,15 +5,15 @@ using System.Threading.Tasks;
 
 namespace zolotuz.Models.Filters
 {
-	public class PaintFilter
+	public class StroymatFilter
 	{
 		public int ID { get; set; }
 
-		public List<byte> Colors { get; set; }
+		//public List<byte> Colors { get; set; }
 
 		public List<byte> Manufacturers { get; set; }
 
-		public List<byte> Volumes { get; set; }
+		//public List<byte> Volumes { get; set; }
 
 		public List<byte> Countries { get; set; }
 
@@ -28,3 +28,4 @@ namespace zolotuz.Models.Filters
 		public int? End { get; set; }
 	}
 }
+
