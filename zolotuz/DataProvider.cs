@@ -315,17 +315,28 @@ namespace zolotuz
 
 				cmd.CommandType = CommandType.StoredProcedure;
 				cmd.Parameters.AddWithValue("@name", order.Name);
-				cmd.Parameters.AddWithValue("@email", order.EMail);
+				cmd.Parameters.AddWithValue("@email", order.Email);
 				cmd.Parameters.AddWithValue("@phone", order.Phone);
-				cmd.Parameters.AddWithValue("@name", order.Items);
 				cmd.Parameters.AddWithValue("@addr", order.Address);
-				cmd.Parameters.Add("@items", SqlDbType.Structured);
+
+				DataTable dt = new DataTable();
+				dt.Columns.Add("Name", typeof(string));
+				dt.Columns.Add("Description", typeof(string));
+				dt.Columns.Add("Price", typeof(decimal));
+				dt.Columns.Add("Count", typeof(int));
+
+				foreach(var el in order.Items)
+				{
+					dt.Rows.Add(el.Name, el.Description, el.Price, el.Count);
+				}
+				cmd.Parameters.AddWithValue("@ordersList", dt);
+
 				//cmd.Parameters.Add("@items", SqlDbType.Structured);
 				//cmd.Parameters.Add("@items", SqlDbType.Structured);
 				//cmd.Parameters.Add("@items", SqlDbType.Structured);
 
 
-				cmd.Parameters["@items"].Value = order.Items;
+				//cmd.Parameters["@items"].Value = order.Items;
 				//cmd.Parameters.AddWithValue("@items", order.Items);
 
 

@@ -9,11 +9,13 @@ namespace zolotuz.Models
 	{
 		public string Name { get; set; }
 
-		public string EMail { get; set; }
+		public string Email { get; set; }
 
 		public string Phone { get; set; }
 
 		public string Address { get; set; }
+
+		public DateTime? Date { get; set; }
 
 		public List<PurchasedItem> Items = new List<PurchasedItem>();
 	}

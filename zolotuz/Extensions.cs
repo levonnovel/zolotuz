@@ -214,7 +214,7 @@ namespace zolotuz
 			}
 			if (dr["Count"] != DBNull.Value)
 			{
-				P.Count = Convert.ToByte(dr["Count"]);
+				P.Count = Convert.ToInt32(dr["Count"]);
 			}
 			if (dr["Price"] != DBNull.Value)
 			{
@@ -235,7 +235,7 @@ namespace zolotuz
 			}
 			if (dr["email"] != DBNull.Value)
 			{
-				P.EMail = dr["email"].ToString();
+				P.Email = dr["email"].ToString();
 			}
 			if (dr["phone"] != DBNull.Value)
 			{
@@ -245,7 +245,11 @@ namespace zolotuz
 			{
 				P.Address = dr["address"].ToString();
 			}
-
+			if (dr["date"] != DBNull.Value)
+			{
+				P.Date = Convert.ToDateTime(dr["date"]);
+			}
+			
 			return P;
 		}
 	}
