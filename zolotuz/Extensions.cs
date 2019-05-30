@@ -76,10 +76,17 @@ namespace zolotuz
 			{
 				P.Country = dr["Country_NAME"].ToString();
 			}
+
+			if (dr["Type"] != DBNull.Value)
+			{
+				P.Type = Convert.ToInt32(dr["Type"]);
+			}
 			if (dr["PAINT_TYPE_NAME"] != DBNull.Value)
 			{
-				P.Type = dr["PAINT_TYPE_NAME"].ToString();
+				P.Type_Name = dr["PAINT_TYPE_NAME"].ToString();
 			}
+			
+			
 			if (dr["Product_Type"] != DBNull.Value)
 			{
 				P.Product_Type = Convert.ToInt32(dr["Product_Type"]);
@@ -90,7 +97,7 @@ namespace zolotuz
 			}
 			if (dr["IMAGE_1_NAME"] != DBNull.Value && dr["IMG_1"] != DBNull.Value)
 			{
-				images.Add(new Image() { Name = dr["IMAGE_1_NAME"].ToString(), Url = dr["IMG_1"].ToString() });
+				P.Image = new Image() { Name = dr["IMAGE_1_NAME"].ToString(), Url = dr["IMG_1"].ToString() };
 			}
 			if (dr["IMAGE_2_NAME"] != DBNull.Value && dr["IMG_2"] != DBNull.Value)
 			{
@@ -130,9 +137,13 @@ namespace zolotuz
 			{
 				P.Country = dr["Country_NAME"].ToString();
 			}
+			if (dr["Type"] != DBNull.Value)
+			{
+				P.Type = Convert.ToInt32(dr["Type"]);
+			}
 			if (dr["STROYMAT_TYPE_NAME"] != DBNull.Value)
 			{
-				P.Type = dr["STROYMAT_TYPE_NAME"].ToString();
+				P.Type_Name = dr["STROYMAT_TYPE_NAME"].ToString();
 			}
 			if (dr["Product_Type"] != DBNull.Value)
 			{
@@ -144,7 +155,7 @@ namespace zolotuz
 			}
 			if (dr["IMAGE_1_NAME"] != DBNull.Value && dr["IMG_1"] != DBNull.Value)
 			{
-				images.Add(new Image() { Name = dr["IMAGE_1_NAME"].ToString(), Url = dr["IMG_1"].ToString() });
+				P.Image = new Image() { Name = dr["IMAGE_1_NAME"].ToString(), Url = dr["IMG_1"].ToString() };
 			}
 			if (dr["IMAGE_2_NAME"] != DBNull.Value && dr["IMG_2"] != DBNull.Value)
 			{

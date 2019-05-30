@@ -17,7 +17,7 @@ namespace zolotuz.Models.Filters
 
 		public List<byte> Countries { get; set; }
 
-		public List<byte> Types { get; set; }
+		public List<byte> Paint_type { get; set; }
 
 		public decimal? MinPrice { get; set; }
 

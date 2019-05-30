@@ -15,7 +15,11 @@ namespace zolotuz.Models
 		public int Product_Type { get; set; }
 		public string Product_Type_Name { get; set; }
 
-		public string Type { get; set; }
+		public int Type { get; set; }
+		public string Type_Name { get; set; }
+
+		public Image Image { get; set; }
+
 		public List<Image> Images { get; set; }
 
 	}

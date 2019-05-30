@@ -28,7 +28,7 @@ namespace zolotuz
 				cmd.Parameters.AddWithValue("@paint_id", filter.ID);
 				cmd.Parameters.AddWithValue("@min_amount", filter.MinPrice);
 				cmd.Parameters.AddWithValue("@max_amount", filter.MaxPrice);
-				cmd.Parameters.AddWithValue("@type", filter.Types.ConvertToSqlArr());
+				cmd.Parameters.AddWithValue("@type", filter.Paint_type.ConvertToSqlArr());
 				cmd.Parameters.AddWithValue("@volume", filter.Volumes.ConvertToSqlArr());
 				cmd.Parameters.AddWithValue("@color", filter.Colors.ConvertToSqlArr());
 				cmd.Parameters.AddWithValue("@country", filter.Countries.ConvertToSqlArr());
@@ -69,7 +69,7 @@ namespace zolotuz
 				cmd.Parameters.AddWithValue("@stroymat_id", filter.ID);
 				cmd.Parameters.AddWithValue("@min_amount", filter.MinPrice);
 				cmd.Parameters.AddWithValue("@max_amount", filter.MaxPrice);
-				cmd.Parameters.AddWithValue("@type", filter.Types.ConvertToSqlArr());
+				cmd.Parameters.AddWithValue("@type", filter.Stroymat_type.ConvertToSqlArr());
 				cmd.Parameters.AddWithValue("@country", filter.Countries.ConvertToSqlArr());
 				cmd.Parameters.AddWithValue("@manufact", filter.Manufacturers.ConvertToSqlArr());
 
