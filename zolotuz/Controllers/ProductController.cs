@@ -131,5 +131,21 @@ namespace zolotuz.Controllers
 			return File(bytes, "image/jpeg");
 		}
 
+
+		[HttpGet("DeleteProduct/{table}/{id}")]
+		public JsonResult DeleteProduct(string table, string id)
+		{
+			var orders = DataProvider.DeleteProduct(table, Convert.ToInt32(id));
+
+			return new JsonResult(true) { };
+		}
+
+
+		[HttpGet("asd")]
+		public string asd()
+		{
+
+			return "asd";
+		}
 	}
 }

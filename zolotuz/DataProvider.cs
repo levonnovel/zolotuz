@@ -9,9 +9,9 @@ namespace zolotuz
 {
 	public static class DataProvider
 	{
-		//static readonly string cs = @"Data Source=LEVPETROS-PC\SQLEXPRESS; database=ZolotoyUzor ;Integrated Security=SSPI";
+		static readonly string cs = @"Data Source=LEVPETROS-PC\SQLEXPRESS; database=ZolotoyUzor ;Integrated Security=SSPI";
 		//static readonly string cs = @"Data Source=LEVON\LEOMAX; database=ZolotoyUzor ;Integrated Security=SSPI";
-		static readonly string cs = @"Data Source=SQL6003.site4now.net;Initial Catalog=DB_A49556_zu;User Id=DB_A49556_zu_admin;Password=googlecomm123;";
+		//static readonly string cs = @"Data Source=SQL6003.site4now.net;Initial Catalog=DB_A49556_zu;User Id=DB_A49556_zu_admin;Password=googlecomm123;";
 		
 
 		public static List<ProductDTO> GetPaints(PaintFilter filter)
@@ -367,7 +367,7 @@ namespace zolotuz
 				//dt.Load(cmd.ExecuteReader());
 
 
-				System.Data.SqlClient.SqlDataAdapter adapter = new System.Data.SqlClient.SqlDataAdapter(cmd);
+				SqlDataAdapter adapter = new SqlDataAdapter(cmd);
 
 				DataSet ds = new DataSet();
 				adapter.Fill(ds);
@@ -397,5 +397,51 @@ namespace zolotuz
 			}
 
 		}
+
+		public static bool IsAdmin(string login, string password)
+		{
+			DataTable dt = new DataTable();
+			//DataTable dt = new DataTable();
+
+			//List<ProductDTO> ProductsList = new List<ProductDTO>();
+			using (SqlConnection conn = new SqlConnection(cs))
+			{
+				SqlCommand cmd = new SqlCommand(@"select * from admins where login = '" + login + @"' and password = '" + password + @"'", conn);
+
+				conn.Open();
+				dt.Load(cmd.ExecuteReader());
+				//foreach (DataRow dr in dt.Rows)
+				//{
+				//	ProductsList.Add(dr.ConvertToProductDTO());
+				//}
+
+				return dt.Rows.Count > 0;
+			}
+		}
+		public static bool DeleteProduct(string table, int id)
+		{
+			DataTable dt = new DataTable();
+			//DataTable dt = new DataTable();
+
+			//List<ProductDTO> ProductsList = new List<ProductDTO>();
+			using (SqlConnection conn = new SqlConnection(cs))
+			{
+				SqlCommand cmd = new SqlCommand("sp_delete_product", conn);
+
+				cmd.CommandType = CommandType.StoredProcedure;
+				cmd.Parameters.AddWithValue("@id", id);
+				cmd.Parameters.AddWithValue("@table", table);
+
+				conn.Open();
+				cmd.ExecuteNonQuery();
+				//foreach (DataRow dr in dt.Rows)
+				//{
+				//	ProductsList.Add(dr.ConvertToProductDTO());
+				//}
+
+				return true;
+			}
+		}
+		
 	}
 }
