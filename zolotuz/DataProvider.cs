@@ -9,9 +9,9 @@ namespace zolotuz
 {
 	public static class DataProvider
 	{
-		static readonly string cs = @"Data Source=LEVPETROS-PC\SQLEXPRESS; database=ZolotoyUzor ;Integrated Security=SSPI";
+		//static readonly string cs = @"Data Source=LEVPETROS-PC\SQLEXPRESS; database=ZolotoyUzor ;Integrated Security=SSPI";
 		//static readonly string cs = @"Data Source=LEVON\LEOMAX; database=ZolotoyUzor ;Integrated Security=SSPI";
-		//static readonly string cs = @"Data Source=SQL6003.site4now.net;Initial Catalog=DB_A49556_zu;User Id=DB_A49556_zu_admin;Password=googlecomm123;";
+		static readonly string cs = @"Data Source=SQL6003.site4now.net;Initial Catalog=DB_A49556_zu;User Id=DB_A49556_zu_admin;Password=googlecomm123;";
 		
 
 		public static List<ProductDTO> GetPaints(PaintFilter filter)
