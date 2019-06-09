@@ -40,11 +40,16 @@ namespace zolotuz.Controllers
 
 				return new JsonResult(el2.FirstOrDefault()) { };
 			}
+			else if (type == "kovka")
+			{
+				var el2 = DataProvider.GetKovki(id);
 
+				return new JsonResult(el2.FirstOrDefault()) { };
+			}
 
 			return null;
 		}
-
+		
 		[HttpPost("filter/stroymateryali")]
 		public JsonResult GetStroymats(StroymatFilter filter)
 		{
@@ -57,6 +62,14 @@ namespace zolotuz.Controllers
 		public JsonResult GetPaints(PaintFilter filter)
 		{
 			var els = DataProvider.GetPaints(filter);
+
+			return new JsonResult(els) { };
+		}
+
+		[HttpPost("filter/kovka")]
+		public JsonResult GetKovka(KovkaFilter filter)
+		{
+			var els = DataProvider.GetKovki(filter);
 
 			return new JsonResult(els) { };
 		}

@@ -92,6 +92,38 @@ namespace zolotuz
 				return ProductsList;
 			}
 		}
+		
+		public static List<ProductDTO> GetKovki(KovkaFilter filter)
+		{
+
+
+			DataTable dt = new DataTable();
+
+			List<ProductDTO> ProductsList = new List<ProductDTO>();
+			using (SqlConnection conn = new SqlConnection(cs))
+			{
+				SqlCommand cmd = new SqlCommand("sp_get_kovki", conn);
+
+				cmd.CommandType = CommandType.StoredProcedure;
+				cmd.Parameters.AddWithValue("@kovka_id", filter.ID);
+				cmd.Parameters.AddWithValue("@min_amount", filter.MinPrice);
+				cmd.Parameters.AddWithValue("@max_amount", filter.MaxPrice);
+				cmd.Parameters.AddWithValue("@type", filter.Kovka_type.ConvertToSqlArr());
+
+				cmd.Parameters.AddWithValue("@start", filter.Start);
+				cmd.Parameters.AddWithValue("@end", filter.End);
+
+				conn.Open();
+				dt.Load(cmd.ExecuteReader());
+
+				foreach (DataRow dr in dt.Rows)
+				{
+					ProductsList.Add(dr.ConvertToProductDTO());
+				}
+
+				return ProductsList;
+			}
+		}
 
 		public static List<Paint> GetPaint(int id)
 		{
@@ -139,6 +171,32 @@ namespace zolotuz
 				foreach (DataRow dr in dt.Rows)
 				{
 					ProductsList.Add(dr.ConvertToStroymat());
+				}
+
+				return ProductsList;
+			}
+		}
+
+		public static List<Kovka> GetKovki(int id)
+		{
+
+
+			DataTable dt = new DataTable();
+
+			List<Kovka> ProductsList = new List<Kovka>();
+			using (SqlConnection conn = new SqlConnection(cs))
+			{
+				SqlCommand cmd = new SqlCommand("sp_get_kovka", conn);
+
+				cmd.CommandType = CommandType.StoredProcedure;
+				cmd.Parameters.AddWithValue("@id", id);
+
+				conn.Open();
+				dt.Load(cmd.ExecuteReader());
+
+				foreach (DataRow dr in dt.Rows)
+				{
+					ProductsList.Add(dr.ConvertToKovka());
 				}
 
 				return ProductsList;

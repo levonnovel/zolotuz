@@ -170,6 +170,60 @@ namespace zolotuz
 			return P;
 		}
 
+		internal static Kovka ConvertToKovka(this DataRow dr)
+		{
+			Kovka P = new Kovka();
+			List<Image> images = new List<Image>();
+
+			if (dr["Id"] != DBNull.Value)
+			{
+				P.Id = Convert.ToInt32(dr["Id"]);
+			}
+			if (dr["Name"] != DBNull.Value)
+			{
+				P.Name = dr["Name"].ToString();
+			}
+			if (dr["Description"] != DBNull.Value)
+			{
+				P.Description = dr["Description"].ToString();
+			}
+			if (dr["Price"] != DBNull.Value)
+			{
+				P.Price = Convert.ToDecimal(dr["Price"]);
+			}
+			if (dr["Type"] != DBNull.Value)
+			{
+				P.Type = Convert.ToInt32(dr["Type"]);
+			}
+			if (dr["KOVKA_TYPE_NAME"] != DBNull.Value)
+			{
+				P.Type_Name = dr["KOVKA_TYPE_NAME"].ToString();
+			}
+			if (dr["Product_Type"] != DBNull.Value)
+			{
+				P.Product_Type = Convert.ToInt32(dr["Product_Type"]);
+			}
+			if (dr["PRODUCT_TYPE_NAME"] != DBNull.Value)
+			{
+				P.Product_Type_Name = dr["PRODUCT_TYPE_NAME"].ToString();
+			}
+			if (dr["IMAGE_1_NAME"] != DBNull.Value && dr["IMG_1"] != DBNull.Value)
+			{
+				P.Image = new Image() { Name = dr["IMAGE_1_NAME"].ToString(), Url = dr["IMG_1"].ToString() };
+			}
+			if (dr["IMAGE_2_NAME"] != DBNull.Value && dr["IMG_2"] != DBNull.Value)
+			{
+				images.Add(new Image() { Name = dr["IMAGE_2_NAME"].ToString(), Url = dr["IMG_2"].ToString() });
+			}
+			if (dr["IMAGE_3_NAME"] != DBNull.Value && dr["IMG_3"] != DBNull.Value)
+			{
+				images.Add(new Image() { Name = dr["IMAGE_3_NAME"].ToString(), Url = dr["IMG_3"].ToString() });
+
+			}
+			P.Images = images;
+			return P;
+		}
+
 		internal static ProductDTO ConvertToProductDTO(this DataRow dr)
 		{
 			ProductDTO P = new ProductDTO();
