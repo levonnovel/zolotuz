@@ -10,8 +10,8 @@ namespace zolotuz
 	public static class DataProvider
 	{
 		//static readonly string cs = @"Data Source=LEVPETROS-PC\SQLEXPRESS; database=ZolotoyUzor ;Integrated Security=SSPI";
-		//static readonly string cs = @"Data Source=LEVON\LEOMAX; database=ZolotoyUzor ;Integrated Security=SSPI";
-		static readonly string cs = @"Data Source=SQL6003.site4now.net;Initial Catalog=DB_A49556_zu;User Id=DB_A49556_zu_admin;Password=googlecomm123;";
+		static readonly string cs = @"Data Source=LEVON\LEOMAX; database=ZolotoyUzor ;Integrated Security=SSPI";
+		//static readonly string cs = @"Data Source=SQL6003.site4now.net;Initial Catalog=DB_A49556_zu;User Id=DB_A49556_zu_admin;Password=googlecomm123;";
 		
 
 		public static List<ProductDTO> GetPaints(PaintFilter filter)
@@ -476,6 +476,7 @@ namespace zolotuz
 				return dt.Rows.Count > 0;
 			}
 		}
+
 		public static bool DeleteProduct(string table, int id)
 		{
 			DataTable dt = new DataTable();
@@ -500,6 +501,131 @@ namespace zolotuz
 				return true;
 			}
 		}
-		
+
+
+		public static bool AddPaint(PaintDTO order)
+		{
+
+			//DataTable dt = new DataTable();
+
+			//List<ProductDTO> ProductsList = new List<ProductDTO>();
+			using (SqlConnection conn = new SqlConnection(cs))
+			{
+				SqlCommand cmd = new SqlCommand("sp_insert_kraska", conn);
+
+				cmd.CommandType = CommandType.StoredProcedure;
+				cmd.Parameters.AddWithValue("@name", order.Name);
+				cmd.Parameters.AddWithValue("@desc", order.Description);
+				cmd.Parameters.AddWithValue("@appl_area", order.Application_Area);
+				cmd.Parameters.AddWithValue("@price", order.Price);
+				cmd.Parameters.AddWithValue("@color", order.Color);
+				cmd.Parameters.AddWithValue("@volume", order.Volume);
+				cmd.Parameters.AddWithValue("@country", order.Country);
+				cmd.Parameters.AddWithValue("@man", order.Manufacturer);
+				cmd.Parameters.AddWithValue("@type", order.Type);
+				cmd.Parameters.AddWithValue("@discount", order.Discount);
+
+
+				//cmd.Parameters.Add("@items", SqlDbType.Structured);
+				//cmd.Parameters.Add("@items", SqlDbType.Structured);
+				//cmd.Parameters.Add("@items", SqlDbType.Structured);
+
+
+				//cmd.Parameters["@items"].Value = order.Items;
+				//cmd.Parameters.AddWithValue("@items", order.Items);
+
+
+				conn.Open();
+				//dt.Load(cmd.ExecuteReader());
+				cmd.ExecuteNonQuery();
+				//foreach (DataRow dr in dt.Rows)
+				//{
+				//	ProductsList.Add(dr.ConvertToProductDTO());
+				//}
+
+				return true;
+			}
+		}
+
+		public static bool AddStroymat(StroymatDTO order)
+		{
+
+			//DataTable dt = new DataTable();
+
+			//List<ProductDTO> ProductsList = new List<ProductDTO>();
+			using (SqlConnection conn = new SqlConnection(cs))
+			{
+				SqlCommand cmd = new SqlCommand("sp_insert_stroymateryal", conn);
+
+				cmd.CommandType = CommandType.StoredProcedure;
+				cmd.Parameters.AddWithValue("@name", order.Name);
+				cmd.Parameters.AddWithValue("@desc", order.Description);
+				cmd.Parameters.AddWithValue("@price", order.Price);
+				cmd.Parameters.AddWithValue("@country", order.Country);
+				cmd.Parameters.AddWithValue("@man", order.Manufacturer);
+				cmd.Parameters.AddWithValue("@type", order.Type);
+				cmd.Parameters.AddWithValue("@discount", order.Discount);
+
+
+				//cmd.Parameters.Add("@items", SqlDbType.Structured);
+				//cmd.Parameters.Add("@items", SqlDbType.Structured);
+				//cmd.Parameters.Add("@items", SqlDbType.Structured);
+
+
+				//cmd.Parameters["@items"].Value = order.Items;
+				//cmd.Parameters.AddWithValue("@items", order.Items);
+
+
+				conn.Open();
+				//dt.Load(cmd.ExecuteReader());
+				cmd.ExecuteNonQuery();
+				//foreach (DataRow dr in dt.Rows)
+				//{
+				//	ProductsList.Add(dr.ConvertToProductDTO());
+				//}
+
+				return true;
+			}
+		}
+
+		public static bool AddKovka(KovkaDTO order)
+		{
+
+			//DataTable dt = new DataTable();
+
+			//List<ProductDTO> ProductsList = new List<ProductDTO>();
+			using (SqlConnection conn = new SqlConnection(cs))
+			{
+				SqlCommand cmd = new SqlCommand("sp_insert_kovka", conn);
+
+				cmd.CommandType = CommandType.StoredProcedure;
+				cmd.Parameters.AddWithValue("@name", order.Name);
+				cmd.Parameters.AddWithValue("@desc", order.Description);
+				cmd.Parameters.AddWithValue("@price", order.Price);
+				cmd.Parameters.AddWithValue("@type", order.Type);
+				cmd.Parameters.AddWithValue("@discount", order.Discount);
+
+
+				//cmd.Parameters.Add("@items", SqlDbType.Structured);
+				//cmd.Parameters.Add("@items", SqlDbType.Structured);
+				//cmd.Parameters.Add("@items", SqlDbType.Structured);
+
+
+				//cmd.Parameters["@items"].Value = order.Items;
+				//cmd.Parameters.AddWithValue("@items", order.Items);
+
+
+				conn.Open();
+				//dt.Load(cmd.ExecuteReader());
+				cmd.ExecuteNonQuery();
+				//foreach (DataRow dr in dt.Rows)
+				//{
+				//	ProductsList.Add(dr.ConvertToProductDTO());
+				//}
+
+				return true;
+			}
+		}
+
 	}
 }

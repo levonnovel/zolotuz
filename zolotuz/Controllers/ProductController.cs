@@ -145,10 +145,10 @@ namespace zolotuz.Controllers
 		}
 
 
-		[HttpGet("DeleteProduct/{table}/{id}")]
-		public JsonResult DeleteProduct(string table, string id)
+		[HttpPost("DeleteProduct")]
+		public JsonResult DeleteProduct(DeleteProductDTO dt)
 		{
-			var orders = DataProvider.DeleteProduct(table, Convert.ToInt32(id));
+			var orders = DataProvider.DeleteProduct(dt.Table, Convert.ToInt32(dt.Id));
 
 			return new JsonResult(true) { };
 		}
@@ -159,6 +159,36 @@ namespace zolotuz.Controllers
 		{
 
 			return "asd";
+		}
+
+		[HttpPost("CreateProduct/kraski")]
+		public bool CreateProduct(PaintDTO paint)
+		{
+			bool isAdded = false;
+
+			isAdded = DataProvider.AddPaint(paint);
+
+			return isAdded;
+		}
+
+		[HttpPost("CreateProduct/stroymateryali")]
+		public bool CreateStroymat(StroymatDTO str)
+		{
+			bool isAdded = false;
+
+			isAdded = DataProvider.AddStroymat(str);
+
+			return isAdded;
+		}
+
+		[HttpPost("CreateProduct/kovka")]
+		public bool CreateКovka(KovkaDTO str)
+		{
+			bool isAdded = false;
+
+			isAdded = DataProvider.AddKovka(str);
+
+			return isAdded;
 		}
 	}
 }
