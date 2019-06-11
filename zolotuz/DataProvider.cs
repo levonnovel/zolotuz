@@ -10,8 +10,8 @@ namespace zolotuz
 	public static class DataProvider
 	{
 		//static readonly string cs = @"Data Source=LEVPETROS-PC\SQLEXPRESS; database=ZolotoyUzor ;Integrated Security=SSPI";
-		static readonly string cs = @"Data Source=LEVON\LEOMAX; database=ZolotoyUzor ;Integrated Security=SSPI";
-		//static readonly string cs = @"Data Source=SQL6003.site4now.net;Initial Catalog=DB_A49556_zu;User Id=DB_A49556_zu_admin;Password=googlecomm123;";
+		//static readonly string cs = @"Data Source=LEVON\LEOMAX; database=ZolotoyUzor ;Integrated Security=SSPI";
+		static readonly string cs = @"Data Source=SQL6003.site4now.net;Initial Catalog=DB_A49556_zu;User Id=DB_A49556_zu_admin;Password=googlecomm123;";
 		
 
 		public static List<ProductDTO> GetPaints(PaintFilter filter)
@@ -503,9 +503,15 @@ namespace zolotuz
 		}
 
 
-		public static bool AddPaint(PaintDTO order)
+		public static bool AddPaint(PaintDTO order, out int id)
 		{
-
+			int cnt = 0;
+			if (order.Img1 != null)
+				cnt++;
+			if (order.Img2 != null)
+				cnt++;
+			if (order.Img3 != null)
+				cnt++;
 			//DataTable dt = new DataTable();
 
 			//List<ProductDTO> ProductsList = new List<ProductDTO>();
@@ -524,7 +530,12 @@ namespace zolotuz
 				cmd.Parameters.AddWithValue("@man", order.Manufacturer);
 				cmd.Parameters.AddWithValue("@type", order.Type);
 				cmd.Parameters.AddWithValue("@discount", order.Discount);
+				cmd.Parameters.AddWithValue("@imgscount", cnt);
 
+
+				SqlParameter outParameter = new SqlParameter("@id", SqlDbType.Int);
+				outParameter.Direction = ParameterDirection.Output;
+				cmd.Parameters.Add(outParameter);
 
 				//cmd.Parameters.Add("@items", SqlDbType.Structured);
 				//cmd.Parameters.Add("@items", SqlDbType.Structured);
@@ -542,14 +553,21 @@ namespace zolotuz
 				//{
 				//	ProductsList.Add(dr.ConvertToProductDTO());
 				//}
+				id = Convert.ToInt32(outParameter.Value);
 
 				return true;
 			}
 		}
 
-		public static bool AddStroymat(StroymatDTO order)
+		public static bool AddStroymat(StroymatDTO order, out int id)
 		{
-
+			int cnt = 0;
+			if (order.Img1 != null)
+				cnt++;
+			if (order.Img2 != null)
+				cnt++;
+			if (order.Img3 != null)
+				cnt++;
 			//DataTable dt = new DataTable();
 
 			//List<ProductDTO> ProductsList = new List<ProductDTO>();
@@ -565,8 +583,14 @@ namespace zolotuz
 				cmd.Parameters.AddWithValue("@man", order.Manufacturer);
 				cmd.Parameters.AddWithValue("@type", order.Type);
 				cmd.Parameters.AddWithValue("@discount", order.Discount);
+				cmd.Parameters.AddWithValue("@imgscount", cnt);
 
 
+
+
+				SqlParameter outParameter = new SqlParameter("@id", SqlDbType.Int);
+				outParameter.Direction = ParameterDirection.Output;
+				cmd.Parameters.Add(outParameter);
 				//cmd.Parameters.Add("@items", SqlDbType.Structured);
 				//cmd.Parameters.Add("@items", SqlDbType.Structured);
 				//cmd.Parameters.Add("@items", SqlDbType.Structured);
@@ -579,6 +603,8 @@ namespace zolotuz
 				conn.Open();
 				//dt.Load(cmd.ExecuteReader());
 				cmd.ExecuteNonQuery();
+				id = Convert.ToInt32(outParameter.Value);
+
 				//foreach (DataRow dr in dt.Rows)
 				//{
 				//	ProductsList.Add(dr.ConvertToProductDTO());
@@ -588,9 +614,15 @@ namespace zolotuz
 			}
 		}
 
-		public static bool AddKovka(KovkaDTO order)
+		public static bool AddKovka(KovkaDTO order, out int id)
 		{
-
+			int cnt = 0;
+			if (order.Img1 != null)
+				cnt++;
+			if (order.Img2 != null)
+				cnt++;
+			if (order.Img3 != null)
+				cnt++;
 			//DataTable dt = new DataTable();
 
 			//List<ProductDTO> ProductsList = new List<ProductDTO>();
@@ -604,12 +636,14 @@ namespace zolotuz
 				cmd.Parameters.AddWithValue("@price", order.Price);
 				cmd.Parameters.AddWithValue("@type", order.Type);
 				cmd.Parameters.AddWithValue("@discount", order.Discount);
-
+				cmd.Parameters.AddWithValue("@imgscount", cnt);
 
 				//cmd.Parameters.Add("@items", SqlDbType.Structured);
 				//cmd.Parameters.Add("@items", SqlDbType.Structured);
 				//cmd.Parameters.Add("@items", SqlDbType.Structured);
-
+				SqlParameter outParameter = new SqlParameter("@id", SqlDbType.Int);
+				outParameter.Direction = ParameterDirection.Output;
+				cmd.Parameters.Add(outParameter);
 
 				//cmd.Parameters["@items"].Value = order.Items;
 				//cmd.Parameters.AddWithValue("@items", order.Items);
@@ -618,6 +652,7 @@ namespace zolotuz
 				conn.Open();
 				//dt.Load(cmd.ExecuteReader());
 				cmd.ExecuteNonQuery();
+				id = Convert.ToInt32(outParameter.Value);
 				//foreach (DataRow dr in dt.Rows)
 				//{
 				//	ProductsList.Add(dr.ConvertToProductDTO());
