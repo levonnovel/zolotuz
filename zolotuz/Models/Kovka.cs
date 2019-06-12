@@ -13,7 +13,7 @@ namespace zolotuz.Models
 		public decimal Price { get; set; }
 		public int Product_Type { get; set; }
 		public string Product_Type_Name { get; set; }
-
+		public int Discount { get; set; }
 		public int Type { get; set; }
 		public string Type_Name { get; set; }
 

@@ -502,7 +502,6 @@ namespace zolotuz
 			}
 		}
 
-
 		public static bool AddPaint(PaintDTO order, out int id)
 		{
 			int cnt = 0;
@@ -662,5 +661,91 @@ namespace zolotuz
 			}
 		}
 
+		public static bool EditPaint(PaintDTO order)
+		{
+			//List<ProductDTO> ProductsList = new List<ProductDTO>();
+			using (SqlConnection conn = new SqlConnection(cs))
+			{
+				SqlCommand cmd = new SqlCommand("sp_update_kraska", conn);
+
+				cmd.CommandType = CommandType.StoredProcedure;
+				cmd.Parameters.AddWithValue("@id", order.Id);
+				cmd.Parameters.AddWithValue("@name", order.Name);
+				cmd.Parameters.AddWithValue("@desc", order.Description);
+				cmd.Parameters.AddWithValue("@appl_area", order.Application_Area);
+				cmd.Parameters.AddWithValue("@price", order.Price);
+				cmd.Parameters.AddWithValue("@color", order.Color);
+				cmd.Parameters.AddWithValue("@volume", order.Volume);
+				cmd.Parameters.AddWithValue("@country", order.Country);
+				cmd.Parameters.AddWithValue("@man", order.Manufacturer);
+				cmd.Parameters.AddWithValue("@type", order.Type);
+				cmd.Parameters.AddWithValue("@discount", order.Discount);
+
+
+
+			
+
+				conn.Open();
+				//dt.Load(cmd.ExecuteReader());
+				cmd.ExecuteNonQuery();
+				
+
+				return true;
+			}
+		}
+
+		public static bool EditStroymat(StroymatDTO order)
+		{
+			//List<ProductDTO> ProductsList = new List<ProductDTO>();
+			using (SqlConnection conn = new SqlConnection(cs))
+			{
+				SqlCommand cmd = new SqlCommand("sp_update_kraska", conn);
+
+				cmd.CommandType = CommandType.StoredProcedure;
+				cmd.Parameters.AddWithValue("@id", order.Id);
+				cmd.Parameters.AddWithValue("@name", order.Name);
+				cmd.Parameters.AddWithValue("@desc", order.Description);
+				cmd.Parameters.AddWithValue("@price", order.Price);
+				cmd.Parameters.AddWithValue("@country", order.Country);
+				cmd.Parameters.AddWithValue("@man", order.Manufacturer);
+				cmd.Parameters.AddWithValue("@type", order.Type);
+				cmd.Parameters.AddWithValue("@discount", order.Discount);
+
+
+
+				conn.Open();
+				//dt.Load(cmd.ExecuteReader());
+				cmd.ExecuteNonQuery();
+
+
+				return true;
+			}
+		}
+
+		public static bool EditKovka(KovkaDTO order)
+		{
+			//List<ProductDTO> ProductsList = new List<ProductDTO>();
+			using (SqlConnection conn = new SqlConnection(cs))
+			{
+				SqlCommand cmd = new SqlCommand("sp_update_kraska", conn);
+
+				cmd.CommandType = CommandType.StoredProcedure;
+				cmd.Parameters.AddWithValue("@id", order.Id);
+				cmd.Parameters.AddWithValue("@name", order.Name);
+				cmd.Parameters.AddWithValue("@desc", order.Description);
+				cmd.Parameters.AddWithValue("@price", order.Price);
+				cmd.Parameters.AddWithValue("@type", order.Type);
+				cmd.Parameters.AddWithValue("@discount", order.Discount);
+
+
+
+				conn.Open();
+				//dt.Load(cmd.ExecuteReader());
+				cmd.ExecuteNonQuery();
+
+
+				return true;
+			}
+		}
 	}
 }

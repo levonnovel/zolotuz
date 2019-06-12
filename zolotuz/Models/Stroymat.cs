@@ -11,7 +11,10 @@ namespace zolotuz.Models
 		public string Name { get; set; }
 		public string Description { get; set; }
 		public decimal Price { get; set; }
-		public string Country { get; set; }
+		public int Country { get; set; }
+		public string CountryName { get; set; }
+		public byte Manufacturer { get; set; }
+		public int Discount { get; set; }
 		public int Product_Type { get; set; }
 		public string Product_Type_Name { get; set; }
 

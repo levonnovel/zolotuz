@@ -56,6 +56,14 @@ namespace zolotuz
 			{
 				P.Composition = dr["Composition"].ToString();
 			}
+			if (dr["Discount"] != DBNull.Value)
+			{
+				P.Discount = Convert.ToInt32(dr["Discount"]);
+			}
+			if (dr["Manufacturer"] != DBNull.Value)
+			{
+				P.Manufacturer = Convert.ToByte(dr["Manufacturer"]);
+			}
 			if (dr["Application_Area"] != DBNull.Value)
 			{
 				P.Application_Area = dr["Application_Area"].ToString();
@@ -66,17 +74,28 @@ namespace zolotuz
 			}
 			if (dr["Color"] != DBNull.Value)
 			{
-				P.Color = dr["COLOR_NAME"].ToString();
+				P.Color = Convert.ToInt32(dr["Color"].ToString());
+			}
+			if (dr["COLOR_NAME"] != DBNull.Value)
+			{
+				P.ColorName = dr["COLOR_NAME"].ToString();
 			}
 			if (dr["Volume"] != DBNull.Value)
 			{
-				P.Volume = dr["Volume_NAME"].ToString();
+				P.Volume = Convert.ToInt32(dr["Volume"].ToString());
+			}
+			if (dr["Volume_NAME"] != DBNull.Value)
+			{
+				P.VolumeName = dr["Volume_NAME"].ToString();
 			}
 			if (dr["Country"] != DBNull.Value)
 			{
-				P.Country = dr["Country_NAME"].ToString();
+				P.Country = Convert.ToInt32(dr["Country"]);
 			}
-
+			if (dr["Country_NAME"] != DBNull.Value)
+			{
+				P.CountryName = dr["Country_NAME"].ToString();
+			}
 			if (dr["Type"] != DBNull.Value)
 			{
 				P.Type = Convert.ToInt32(dr["Type"]);
@@ -132,11 +151,23 @@ namespace zolotuz
 			{
 				P.Price = Convert.ToDecimal(dr["Price"]);
 			}
-		
+			if (dr["Discount"] != DBNull.Value)
+			{
+				P.Discount = Convert.ToInt32(dr["Discount"]);
+			}
 			if (dr["Country"] != DBNull.Value)
 			{
-				P.Country = dr["Country_NAME"].ToString();
+				P.Country = Convert.ToInt32(dr["Country"]);
 			}
+			if (dr["Country_NAME"] != DBNull.Value)
+			{
+				P.CountryName = dr["Country_NAME"].ToString();
+			}
+			if (dr["Manufacturer"] != DBNull.Value)
+			{
+				P.Manufacturer = Convert.ToByte(dr["Manufacturer"]);
+			}
+
 			if (dr["Type"] != DBNull.Value)
 			{
 				P.Type = Convert.ToInt32(dr["Type"]);
@@ -190,6 +221,10 @@ namespace zolotuz
 			if (dr["Price"] != DBNull.Value)
 			{
 				P.Price = Convert.ToDecimal(dr["Price"]);
+			}
+			if (dr["Discount"] != DBNull.Value)
+			{
+				P.Discount = Convert.ToInt32(dr["Discount"]);
 			}
 			if (dr["Type"] != DBNull.Value)
 			{

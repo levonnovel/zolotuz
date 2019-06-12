@@ -40,7 +40,7 @@ namespace zolotuz.Controllers
 
 				return new JsonResult(el2.FirstOrDefault()) { };
 			}
-			else if (type == "kovka")
+			else if (type == "kovki")
 			{
 				var el2 = DataProvider.GetKovki(id);
 
@@ -66,7 +66,7 @@ namespace zolotuz.Controllers
 			return new JsonResult(els) { };
 		}
 
-		[HttpPost("filter/kovka")]
+		[HttpPost("filter/kovki")]
 		public JsonResult GetKovka(KovkaFilter filter)
 		{
 			var els = DataProvider.GetKovki(filter);
@@ -162,17 +162,17 @@ namespace zolotuz.Controllers
 		}
 
 		[HttpPost("CreateProduct/kraski")]
-		public bool CreateProduct(PaintDTO paint)
+		public bool CreateKraska([FromForm] PaintDTO paint)
 		{
 			bool isAdded = false;
 
 			isAdded = DataProvider.AddPaint(paint, out var id);
 
 
-			string path = @"/imgs/kraski/" + id;
+			string path = @"imgs/kraski/" + id;
 
 			Directory.CreateDirectory(path);
-			if (paint.Img1.Length > 0)
+			if (paint.Img1?.Length > 0)
 			{
 				var filePath = path + @"/1.jpg";
 				using (var fileStream = new FileStream(filePath, FileMode.Create))
@@ -180,7 +180,7 @@ namespace zolotuz.Controllers
 					paint.Img1.CopyToAsync(fileStream);
 				}
 			}
-			if (paint.Img2.Length > 0)
+			if (paint.Img2?.Length > 0)
 			{
 				var filePath = path + @"/2.jpg";
 				using (var fileStream = new FileStream(filePath, FileMode.Create))
@@ -188,7 +188,7 @@ namespace zolotuz.Controllers
 					paint.Img2.CopyToAsync(fileStream);
 				}
 			}
-			if (paint.Img3.Length > 0)
+			if (paint.Img3?.Length > 0)
 			{
 				var filePath = path + @"/3.jpg";
 				using (var fileStream = new FileStream(filePath, FileMode.Create))
@@ -196,6 +196,16 @@ namespace zolotuz.Controllers
 					paint.Img3.CopyToAsync(fileStream);
 				}
 			}
+
+			return isAdded;
+		}
+
+		[HttpPost("EditProduct/kraski")]
+		public bool EditKraska(PaintDTO paint)
+		{
+			bool isAdded = false;
+
+			isAdded = DataProvider.EditPaint(paint);
 
 			return isAdded;
 		}
@@ -210,10 +220,10 @@ namespace zolotuz.Controllers
 			
 			isAdded = DataProvider.AddStroymat(str, out var id);
 
-			string path = @"/imgs/stroymateryali/" + id;
+			string path = @"imgs/stroymateryali/" + id;
 
 			Directory.CreateDirectory(path);
-			if (str.Img1.Length > 0)
+			if (str.Img1?.Length > 0)
 			{
 				var filePath = path +  @"/1.jpg";
 				using (var fileStream = new FileStream(filePath, FileMode.Create))
@@ -221,7 +231,7 @@ namespace zolotuz.Controllers
 					str.Img1.CopyToAsync(fileStream);
 				}
 			}
-			if (str.Img2.Length > 0)
+			if (str.Img2?.Length > 0)
 			{
 				var filePath = path + @"/2.jpg";
 				using (var fileStream = new FileStream(filePath, FileMode.Create))
@@ -229,7 +239,7 @@ namespace zolotuz.Controllers
 					str.Img2.CopyToAsync(fileStream);
 				}
 			}
-			if (str.Img3.Length > 0)
+			if (str.Img3?.Length > 0)
 			{
 				var filePath = path + @"/3.jpg";
 				using (var fileStream = new FileStream(filePath, FileMode.Create))
@@ -241,16 +251,26 @@ namespace zolotuz.Controllers
 			return isAdded;
 		}
 
-		[HttpPost("CreateProduct/kovka")]
+		[HttpPost("EditProduct/stroymateryali")]
+		public bool EditStroymat(StroymatDTO str)
+		{
+			bool isAdded = false;
+
+			isAdded = DataProvider.EditStroymat(str);
+
+			return isAdded;
+		}
+
+		[HttpPost("CreateProduct/kovki")]
 		public bool CreateКovka([FromForm] KovkaDTO str)
 		{
 			bool isAdded = false;
 
 			isAdded = DataProvider.AddKovka(str, out var id);
-			string path = @"/imgs/kovka/" + id;
+			string path = @"imgs/kovka/" + id;
 
 			Directory.CreateDirectory(path);
-			if (str.Img1.Length > 0)
+			if (str.Img1?.Length > 0)
 			{
 				var filePath = path + @"/1.jpg";
 				using (var fileStream = new FileStream(filePath, FileMode.Create))
@@ -258,7 +278,7 @@ namespace zolotuz.Controllers
 					str.Img1.CopyToAsync(fileStream);
 				}
 			}
-			if (str.Img2.Length > 0)
+			if (str.Img2?.Length > 0)
 			{
 				var filePath = path + @"/2.jpg";
 				using (var fileStream = new FileStream(filePath, FileMode.Create))
@@ -266,7 +286,7 @@ namespace zolotuz.Controllers
 					str.Img2.CopyToAsync(fileStream);
 				}
 			}
-			if (str.Img3.Length > 0)
+			if (str.Img3?.Length > 0)
 			{
 				var filePath = path + @"/3.jpg";
 				using (var fileStream = new FileStream(filePath, FileMode.Create))
@@ -274,6 +294,16 @@ namespace zolotuz.Controllers
 					str.Img3.CopyToAsync(fileStream);
 				}
 			}
+			return isAdded;
+		}
+
+		[HttpPost("EditProduct/kovki")]
+		public bool EditKovka(KovkaDTO str)
+		{
+			bool isAdded = false;
+
+			isAdded = DataProvider.EditKovka(str);
+
 			return isAdded;
 		}
 	}
