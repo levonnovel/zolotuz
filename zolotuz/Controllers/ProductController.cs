@@ -150,6 +150,10 @@ namespace zolotuz.Controllers
 		{
 			var orders = DataProvider.DeleteProduct(dt.Table, Convert.ToInt32(dt.Id));
 
+			string path = @"imgs\" + dt.Table + @"\" + dt.Id;
+
+			Directory.Delete(path, true);
+
 			return new JsonResult(true) { };
 		}
 
@@ -169,31 +173,31 @@ namespace zolotuz.Controllers
 			isAdded = DataProvider.AddPaint(paint, out var id);
 
 
-			string path = @"/imgs/kraski/" + id;
+			string path = @"imgs\kraski\" + id;
 
 			Directory.CreateDirectory(path);
 			if (paint.Img1?.Length > 0)
 			{
-				var filePath = path + @"/1.jpg";
+				var filePath = path + @"\1.jpg";
 				using (var fileStream = new FileStream(filePath, FileMode.Create))
 				{
-					paint.Img1.CopyToAsync(fileStream);
+					paint.Img1.CopyTo(fileStream);
 				}
 			}
 			if (paint.Img2?.Length > 0)
 			{
-				var filePath = path + @"/2.jpg";
+				var filePath = path + @"\2.jpg";
 				using (var fileStream = new FileStream(filePath, FileMode.Create))
 				{
-					paint.Img2.CopyToAsync(fileStream);
+					paint.Img2.CopyTo(fileStream);
 				}
 			}
 			if (paint.Img3?.Length > 0)
 			{
-				var filePath = path + @"/3.jpg";
+				var filePath = path + @"\3.jpg";
 				using (var fileStream = new FileStream(filePath, FileMode.Create))
 				{
-					paint.Img3.CopyToAsync(fileStream);
+					paint.Img3.CopyTo(fileStream);
 				}
 			}
 
@@ -211,7 +215,7 @@ namespace zolotuz.Controllers
 		}
 
 		[HttpPost("CreateProduct/stroymateryali")]
-		public bool CreateStroymat([FromForm] StroymatDTO str)
+		public string CreateStroymat([FromForm] StroymatDTO str)
 		{
 
 		
@@ -219,36 +223,42 @@ namespace zolotuz.Controllers
 
 			
 			isAdded = DataProvider.AddStroymat(str, out var id);
-
-			string path = @"/imgs/stroymateryali/" + id;
-
-			Directory.CreateDirectory(path);
-			if (str.Img1?.Length > 0)
+			try
 			{
-				var filePath = path +  @"/1.jpg";
-				using (var fileStream = new FileStream(filePath, FileMode.Create))
+				string path = @"imgs\stroymateryali\" + id;
+
+				Directory.CreateDirectory(path);
+				if (str.Img1?.Length > 0)
 				{
-					str.Img1.CopyToAsync(fileStream);
+					var filePath = path + @"\1.jpg";
+					using (var fileStream = new FileStream(filePath, FileMode.Create))
+					{
+						str.Img1.CopyTo(fileStream);
+					}
+				}
+				if (str.Img2?.Length > 0)
+				{
+					var filePath = path + @"\2.jpg";
+					using (var fileStream = new FileStream(filePath, FileMode.Create))
+					{
+						str.Img2.CopyTo(fileStream);
+					}
+				}
+				if (str.Img3?.Length > 0)
+				{
+					var filePath = path + @"\3.jpg";
+					using (var fileStream = new FileStream(filePath, FileMode.Create))
+					{
+						str.Img3.CopyTo(fileStream);
+					}
 				}
 			}
-			if (str.Img2?.Length > 0)
+			catch(Exception ex)
 			{
-				var filePath = path + @"/2.jpg";
-				using (var fileStream = new FileStream(filePath, FileMode.Create))
-				{
-					str.Img2.CopyToAsync(fileStream);
-				}
+				return ex.Message;
 			}
-			if (str.Img3?.Length > 0)
-			{
-				var filePath = path + @"/3.jpg";
-				using (var fileStream = new FileStream(filePath, FileMode.Create))
-				{
-					str.Img3.CopyToAsync(fileStream);
-				}
-			}
-
-			return isAdded;
+			
+			return id.ToString();
 		}
 
 		[HttpPost("EditProduct/stroymateryali")]
@@ -267,31 +277,31 @@ namespace zolotuz.Controllers
 			bool isAdded = false;
 
 			isAdded = DataProvider.AddKovka(str, out var id);
-			string path = @"/imgs/kovka/" + id;
-
+			string path = @"imgs\kovka\" + id;
+			
 			Directory.CreateDirectory(path);
 			if (str.Img1?.Length > 0)
 			{
-				var filePath = path + @"/1.jpg";
+				var filePath = path + @"\1.jpg";
 				using (var fileStream = new FileStream(filePath, FileMode.Create))
 				{
-					str.Img1.CopyToAsync(fileStream);
+					str.Img1.CopyTo(fileStream);
 				}
 			}
 			if (str.Img2?.Length > 0)
 			{
-				var filePath = path + @"/2.jpg";
+				var filePath = path + @"\2.jpg";
 				using (var fileStream = new FileStream(filePath, FileMode.Create))
 				{
-					str.Img2.CopyToAsync(fileStream);
+					str.Img2.CopyTo(fileStream);
 				}
 			}
 			if (str.Img3?.Length > 0)
 			{
-				var filePath = path + @"/3.jpg";
+				var filePath = path + @"\3.jpg";
 				using (var fileStream = new FileStream(filePath, FileMode.Create))
 				{
-					str.Img3.CopyToAsync(fileStream);
+					str.Img3.CopyTo(fileStream);
 				}
 			}
 			return isAdded;
