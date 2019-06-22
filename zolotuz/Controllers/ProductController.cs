@@ -169,7 +169,7 @@ namespace zolotuz.Controllers
 			isAdded = DataProvider.AddPaint(paint, out var id);
 
 
-			string path = @"imgs/kraski/" + id;
+			string path = @"/imgs/kraski/" + id;
 
 			Directory.CreateDirectory(path);
 			if (paint.Img1?.Length > 0)
@@ -220,7 +220,7 @@ namespace zolotuz.Controllers
 			
 			isAdded = DataProvider.AddStroymat(str, out var id);
 
-			string path = @"imgs/stroymateryali/" + id;
+			string path = @"/imgs/stroymateryali/" + id;
 
 			Directory.CreateDirectory(path);
 			if (str.Img1?.Length > 0)
@@ -267,7 +267,7 @@ namespace zolotuz.Controllers
 			bool isAdded = false;
 
 			isAdded = DataProvider.AddKovka(str, out var id);
-			string path = @"imgs/kovka/" + id;
+			string path = @"/imgs/kovka/" + id;
 
 			Directory.CreateDirectory(path);
 			if (str.Img1?.Length > 0)
