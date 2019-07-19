@@ -118,8 +118,10 @@ namespace zolotuz.Controllers
 		public bool CreateOrder(Order order)
 		{
 			bool isAdded = false;
+            MailController.Send(order.Name, order.Email);
 
-			isAdded =  DataProvider.AddOrder(order);
+          
+            isAdded =  DataProvider.AddOrder(order);
 
 			return isAdded;
 		}
