@@ -45,7 +45,6 @@ namespace zolotuz.Controllers
             mail.Body = "Dear " + name + " ваш заказ оформлен";
             //send the message 
             SmtpClient smtp = new SmtpClient("mail.zolotoyuzor.ru");
-
             //IMPORANT:  Your smtp login email MUST be same as your FROM address. 
             NetworkCredential Credentials = new NetworkCredential("Artur@zolotoyuzor.ru", "Aa199814-");
             smtp.Credentials = Credentials;
