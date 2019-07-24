@@ -35,11 +35,11 @@ namespace zolotuz.Controllers
             MailMessage mail = new MailMessage();
 
             //set the addresses 
-            mail.From = new MailAddress("Artur@zolotoyuzor.ru"); //IMPORTANT: This must be same as your smtp authentication address.
+            mail.From = new MailAddress("Artur@zolotoyuzor.ru"); //IMPORTANT: This must be same as your smtp authentication addres
             mail.To.Add("leomax2016@mail.ru");
             mail.To.Add("dadamyan2012@mail.ru");
             mail.To.Add(email);
-            
+
             //set the content dasdasdasdas
             mail.Subject = "Pokupka";
             mail.Body = "Dear " + name + " ваш заказ оформлен";
@@ -50,6 +50,24 @@ namespace zolotuz.Controllers
             smtp.Credentials = Credentials;
             smtp.Send(mail);
 
+
+           // MailMessage mail = new MailMessage();
+
+            //set the addresses 
+           //mail.From = new MailAddress("seller@zolotoyuzor.ru"); //IMPORTANT: This must be same as your smtp authentication addres
+           //mail.To.Add("leomax2016@mail.ru");
+           //mail.To.Add("dadamyan2012@mail.ru");
+           //mail.To.Add(email);
+           //
+           ////set the content dasdasdasdas
+           //mail.Subject = "Pokupka";
+           //mail.Body = "Dear " + name + " ваш заказ оформлен";
+           ////send the message 
+           //SmtpClient smtp = new SmtpClient("smtp.hostinger.ru");
+           ////IMPORANT:  Your smtp login email MUST be same as your FROM address. 
+           //NetworkCredential Credentials = new NetworkCredential("seller@zolotoyuzor.ru", "Aa199814-");
+           //smtp.Credentials = Credentials;
+           //smtp.Send(mail);
         }
     }
 }
