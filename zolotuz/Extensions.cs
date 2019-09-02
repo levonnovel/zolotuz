@@ -275,15 +275,16 @@ namespace zolotuz
 			{
 				P.Description = dr["Description"].ToString();
 			}
-			if (dr["Discount"] != DBNull.Value)
-			{
-				P.Discount = Convert.ToByte(dr["Discount"]);
-			}
 			if (dr["Price"] != DBNull.Value)
 			{
 				P.Price = Convert.ToDecimal(dr["Price"]);
 			}
-			if (dr["Product_Type"] != DBNull.Value)
+            if (dr["Discount"] != DBNull.Value)
+            {
+                P.Discount = Convert.ToByte(dr["Discount"]);
+                P.DiscountedPrice = Math.Round((P.Price * (100 - P.Discount)) / 100);
+            }
+            if (dr["Product_Type"] != DBNull.Value)
 			{
 				P.Product_Type = Convert.ToInt32(dr["Product_Type"]);
 			}

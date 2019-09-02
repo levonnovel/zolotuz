@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using zolotuz.Models;
 
 namespace zolotuz.Controllers
 {
@@ -13,7 +15,7 @@ namespace zolotuz.Controllers
 	public class MailController : Controller
     {
 
-        public static void Send(string name, string email)
+        public static void Send(string name, string email, List<PurchasedItem> items)
         {
             //SmtpClient smtpClient = new SmtpClient("mail.zolotoyuzor.ru", 8889);
             //
@@ -36,13 +38,27 @@ namespace zolotuz.Controllers
 
             //set the addresses 
             mail.From = new MailAddress("Artur@zolotoyuzor.ru"); //IMPORTANT: This must be same as your smtp authentication addres
+
             mail.To.Add("leomax2016@mail.ru");
             mail.To.Add("dadamyan2012@mail.ru");
             mail.To.Add(email);
-
+            mail.IsBodyHtml = true;
+            StringBuilder str = new StringBuilder();
+            str.Append("Здравствуйте " + name + "! Ваш заказ оформлен <br />");
+            str.Append("Вы заказали: <br />");
+            foreach(var it in items)
+            {
+                str.Append(it.Name);
+                str.Append(" - ");
+                str.Append(it.Count);
+                str.Append("(");
+                str.Append(it.Price);
+                str.Append(")rubli");
+                str.Append("<br />");
+            }
             //set the content dasdasdasdas
-            mail.Subject = "Pokupka";
-            mail.Body = "Dear " + name + " ваш заказ оформлен";
+            mail.Subject = "Спасибо за ваш заказ у <<Интернет-магазин \"Золотой Узор\">>!";
+            mail.Body = str.ToString();
             //send the message 
             SmtpClient smtp = new SmtpClient("mail.zolotoyuzor.ru");
             //IMPORANT:  Your smtp login email MUST be same as your FROM address. 
