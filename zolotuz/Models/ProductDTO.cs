@@ -11,6 +11,7 @@ namespace zolotuz.Models
 			public string Name { get; set; }
 			public string Description { get; set; }
 			public decimal Price { get; set; }
+			public decimal DiscountedPrice { get; set; }
 			public byte Discount { get; set; }
 
 			public int Product_Type { get; set; }

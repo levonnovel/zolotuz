@@ -126,6 +126,13 @@ namespace zolotuz
 			{
 				images.Add(new Image() { Name = dr["IMAGE_3_NAME"].ToString(), Url = dr["IMG_3"].ToString() });
 			}
+
+			if (P.Discount != 0)
+			{
+				P.DiscountedPrice = Math.Round(P.Price * (100 - P.Discount) / 100);
+			}
+
+
 			P.Images = images;
 			return P;
 		}
@@ -197,6 +204,13 @@ namespace zolotuz
 				images.Add(new Image() { Name = dr["IMAGE_3_NAME"].ToString(), Url = dr["IMG_3"].ToString() });
 
 			}
+
+			if (P.Discount != 0)
+			{
+				P.DiscountedPrice = Math.Round(P.Price * (100 - P.Discount) / 100);
+			}
+
+
 			P.Images = images;
 			return P;
 		}
@@ -255,6 +269,12 @@ namespace zolotuz
 				images.Add(new Image() { Name = dr["IMAGE_3_NAME"].ToString(), Url = dr["IMG_3"].ToString() });
 
 			}
+
+			if (P.Discount != 0)
+			{
+				P.DiscountedPrice = Math.Round(P.Price * (100 - P.Discount) / 100);
+			}
+
 			P.Images = images;
 			return P;
 		}
@@ -296,6 +316,10 @@ namespace zolotuz
 				P.Image = new Image() { Name = dr["IMAGE_1_NAME"].ToString(), Url = dr["IMG_1"].ToString() };
 			}
 			
+			if(P.Discount != 0)
+			{
+				P.DiscountedPrice = Math.Round(P.Price * (100 - P.Discount) / 100);
+			}
 			return P;
 		}
 
