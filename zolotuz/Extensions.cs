@@ -56,10 +56,10 @@ namespace zolotuz
 			{
 				P.Composition = dr["Composition"].ToString();
 			}
-			if (dr["Discount"] != DBNull.Value)
-			{
-				P.Discount = Convert.ToInt32(dr["Discount"]);
-			}
+			//if (dr["Discount"] != DBNull.Value)
+			//{
+			//	P.Discount = Convert.ToInt32(dr["Discount"]);
+			//}
 			if (dr["Manufacturer"] != DBNull.Value)
 			{
 				P.Manufacturer = Convert.ToByte(dr["Manufacturer"]);
@@ -72,7 +72,12 @@ namespace zolotuz
 			{
 				P.Price = Convert.ToDecimal(dr["Price"]);
 			}
-			if (dr["Color"] != DBNull.Value)
+            if (dr["Discount"] != DBNull.Value)
+            {
+                P.Discount = Convert.ToByte(dr["Discount"]);
+                P.DiscountedPrice = Math.Round((P.Price * (100 - P.Discount)) / 100);
+            }
+            if (dr["Color"] != DBNull.Value)
 			{
 				P.Color = Convert.ToInt32(dr["Color"].ToString());
 			}
@@ -158,11 +163,16 @@ namespace zolotuz
 			{
 				P.Price = Convert.ToDecimal(dr["Price"]);
 			}
-			if (dr["Discount"] != DBNull.Value)
-			{
-				P.Discount = Convert.ToInt32(dr["Discount"]);
-			}
-			if (dr["Country"] != DBNull.Value)
+			//if (dr["Discount"] != DBNull.Value)
+			//{
+			//	P.Discount = Convert.ToInt32(dr["Discount"]);
+			//}
+            if (dr["Discount"] != DBNull.Value)
+            {
+                P.Discount = Convert.ToByte(dr["Discount"]);
+                P.DiscountedPrice = Math.Round((P.Price * (100 - P.Discount)) / 100);
+            }
+            if (dr["Country"] != DBNull.Value)
 			{
 				P.Country = Convert.ToInt32(dr["Country"]);
 			}
@@ -236,11 +246,16 @@ namespace zolotuz
 			{
 				P.Price = Convert.ToDecimal(dr["Price"]);
 			}
-			if (dr["Discount"] != DBNull.Value)
-			{
-				P.Discount = Convert.ToInt32(dr["Discount"]);
-			}
-			if (dr["Type"] != DBNull.Value)
+			//if (dr["Discount"] != DBNull.Value)
+			//{
+			//	P.Discount = Convert.ToInt32(dr["Discount"]);
+			//}
+            if (dr["Discount"] != DBNull.Value)
+            {
+                P.Discount = Convert.ToByte(dr["Discount"]);
+                P.DiscountedPrice = Math.Round((P.Price * (100 - P.Discount)) / 100);
+            }
+            if (dr["Type"] != DBNull.Value)
 			{
 				P.Type = Convert.ToInt32(dr["Type"]);
 			}
@@ -295,15 +310,16 @@ namespace zolotuz
 			{
 				P.Description = dr["Description"].ToString();
 			}
-			if (dr["Discount"] != DBNull.Value)
-			{
-				P.Discount = Convert.ToByte(dr["Discount"]);
-			}
 			if (dr["Price"] != DBNull.Value)
 			{
 				P.Price = Convert.ToDecimal(dr["Price"]);
 			}
-			if (dr["Product_Type"] != DBNull.Value)
+            if (dr["Discount"] != DBNull.Value)
+            {
+                P.Discount = Convert.ToByte(dr["Discount"]);
+                P.DiscountedPrice = Math.Round((P.Price * (100 - P.Discount)) / 100);
+            }
+            if (dr["Product_Type"] != DBNull.Value)
 			{
 				P.Product_Type = Convert.ToInt32(dr["Product_Type"]);
 			}

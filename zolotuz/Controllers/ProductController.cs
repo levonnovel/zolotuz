@@ -115,23 +115,25 @@ namespace zolotuz.Controllers
 		}
 
 		[HttpPost("CreateOrder")]
-		public string CreateOrder(Order order)
+		public bool CreateOrder(Order order)
 		{
 			bool isAdded = false;
-			try
-			{
-				MailController.Send(order.Name, order.Email);
+            try
+            {
+                MailController.Send(order.Name, order.Email, order.Items);
+                if (DataProvider.AddOrder(order))
+                {
+                    isAdded = true;
+                }
+            }
+            catch(Exception)
+            {
+                isAdded = false;
+            }
 
-			}
-			catch(Exception ex)
-			{
-				return ex.Message;
-			}
+           // isAdded = DataProvider.AddOrder(order);
 
-
-			isAdded =  DataProvider.AddOrder(order);
-
-			return "asd";
+			return isAdded;
 		}
 
 		[HttpGet("GetOrders")]
