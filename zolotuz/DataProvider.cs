@@ -9,9 +9,9 @@ namespace zolotuz
 {
 	public static class DataProvider
 	{
-		//static readonly string cs = @"Data Source=LEVPETROS-PC\SQLEXPRESS; database=ZolotoyUzor ;Integrated Security=SSPI";
+		//static readonly string cs = @"Data Source=LEVONPET-PC\SQLEXPRESS; database=DB_A49556_zu ;Integrated Security=SSPI";
 		//static readonly string cs = @"Data Source=LEVON\LEOMAX; database=ZolotoyUzor ;Integrated Security=SSPI";
-		static readonly string cs = @"Data Source=SQL6003.site4now.net;Initial Catalog=DB_A49556_zu;User Id=DB_A49556_zu_admin;Password=googlecomm123;";
+		static readonly string cs = @"Data Source=SQL6007.site4now.net;Initial Catalog=DB_A49556_zolotoyuzor;User Id=DB_A49556_zolotoyuzor_admin;Password=Aa199814;";
 		
 
 		public static List<ProductDTO> GetPaints(PaintFilter filter)
@@ -747,5 +747,142 @@ namespace zolotuz
 				return true;
 			}
 		}
-	}
+
+        public static List<Headers> GetHeaders()
+        {
+            DataTable dt = new DataTable();
+            List<Headers> Headers = new List<Headers>();
+
+            using (SqlConnection conn = new SqlConnection(cs))
+            {
+                SqlCommand cmd = new SqlCommand("[sp_get_headers]", conn);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                conn.Open();
+                dt.Load(cmd.ExecuteReader());
+
+                foreach (DataRow dr in dt.Rows)
+                {
+
+                   dr.ConvertToHeader(Headers);
+                }
+
+                return Headers;
+            }
+        }
+
+        public static List<PageFiltersValues> GetPageFiltersValues()
+        {
+
+
+            DataTable dt = new DataTable();
+
+            List<PageFiltersValues> Filters = new List<PageFiltersValues>();
+            using (SqlConnection conn = new SqlConnection(cs))
+            {
+                SqlCommand cmd = new SqlCommand("[sp_get_products_filter_values]", conn);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                conn.Open();
+                dt.Load(cmd.ExecuteReader());
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    Filters.Add(dr.ConvertToPageFilterValues());
+                }
+
+                return Filters;
+            }
+        }
+
+        public static List<PageFilters> GetPageFilters()
+        {
+
+
+            DataTable dt = new DataTable();
+
+            List<PageFilters> Filters = new List<PageFilters>();
+            using (SqlConnection conn = new SqlConnection(cs))
+            {
+                SqlCommand cmd = new SqlCommand("[get_page_filters]", conn);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                conn.Open();
+                dt.Load(cmd.ExecuteReader());
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    Filters.Add(dr.ConvertToPageFilter());
+                }
+
+                return Filters;
+            }
+        }
+
+        public static List<Product> GetProducts(ProductFilter filter)
+        {
+            DataTable dt = new DataTable();
+
+            List<Product> ProductsList = new List<Product>();
+            using (SqlConnection conn = new SqlConnection(cs))
+            {
+                SqlCommand cmd = new SqlCommand("sp_get_products", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@product_id", filter.Id);
+
+                cmd.Parameters.AddWithValue("@manufacturer", filter.manufacturer.ConvertToSqlArr());
+                cmd.Parameters.AddWithValue("@color_palette", filter.color_palette.ConvertToSqlArr());
+                cmd.Parameters.AddWithValue("@appearance", filter.appearance.ConvertToSqlArr());
+                cmd.Parameters.AddWithValue("@washable", filter.washable.ConvertToSqlArr());
+                cmd.Parameters.AddWithValue("@smell", filter.smell.ConvertToSqlArr());
+                cmd.Parameters.AddWithValue("@color", filter.color.ConvertToSqlArr());
+                cmd.Parameters.AddWithValue("@appointment", filter.appointment.ConvertToSqlArr());
+                cmd.Parameters.AddWithValue("@type", filter.type.ConvertToSqlArr());
+                cmd.Parameters.AddWithValue("@application_type", filter.application_type.ConvertToSqlArr());
+                cmd.Parameters.AddWithValue("@paint_type", filter.paint_type.ConvertToSqlArr());
+                cmd.Parameters.AddWithValue("@room_type", filter.room_type.ConvertToSqlArr());
+                cmd.Parameters.AddWithValue("@brush_type", filter.brush_type.ConvertToSqlArr());
+                cmd.Parameters.AddWithValue("@type_of_use", filter.type_of_use.ConvertToSqlArr());
+                cmd.Parameters.AddWithValue("@stencil_theme", filter.stencil_theme.ConvertToSqlArr());
+                cmd.Parameters.AddWithValue("@place_of_use", filter.place_of_use.ConvertToSqlArr());
+                cmd.Parameters.AddWithValue("@created_for", filter.created_for.ConvertToSqlArr());
+                cmd.Parameters.AddWithValue("@finish_guarantee", filter.finish_guarantee.ConvertToSqlArr());
+                cmd.Parameters.AddWithValue("@effect", filter.effect.ConvertToSqlArr());
+                cmd.Parameters.AddWithValue("@volume", filter.volume.ConvertToSqlArr());
+                cmd.Parameters.AddWithValue("@duration_of_protection", filter.duration_of_protection.ConvertToSqlArr());
+                cmd.Parameters.AddWithValue("@surface_of_application", filter.surface_of_application.ConvertToSqlArr());
+                cmd.Parameters.AddWithValue("@width", filter.width.ConvertToSqlArr());
+                cmd.Parameters.AddWithValue("@fiber_material", filter.fiber_material.ConvertToSqlArr());
+                cmd.Parameters.AddWithValue("@structure", filter.structure.ConvertToSqlArr());
+                cmd.Parameters.AddWithValue("@resistant", filter.resistant.ConvertToSqlArr());
+                cmd.Parameters.AddWithValue("@gluing_strength", filter.gluing_strength.ConvertToSqlArr());
+                cmd.Parameters.AddWithValue("@capture_time", filter.capture_time.ConvertToSqlArr());
+                cmd.Parameters.AddWithValue("@frost_resistance", filter.frost_resistance.ConvertToSqlArr());
+                cmd.Parameters.AddWithValue("@heat_resistance", filter.heat_resistance.ConvertToSqlArr());
+                cmd.Parameters.AddWithValue("@color_after_drying", filter.color_after_drying.ConvertToSqlArr());
+                cmd.Parameters.AddWithValue("@gluing_material", filter.gluing_material.ConvertToSqlArr());
+                cmd.Parameters.AddWithValue("@external_material", filter.external_material.ConvertToSqlArr());
+
+                cmd.Parameters.AddWithValue("@min_amount", filter.MinPrice);
+                cmd.Parameters.AddWithValue("@max_amount", filter.MaxPrice);
+
+                cmd.Parameters.AddWithValue("@start", filter.Start);
+                cmd.Parameters.AddWithValue("@end", filter.End);
+
+                conn.Open();
+                dt.Load(cmd.ExecuteReader());
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    ProductsList.Add(dr.ConvertToProduct());
+                }
+
+                return ProductsList;
+            }
+        }
+    }
 }
