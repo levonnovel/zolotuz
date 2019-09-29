@@ -3,7 +3,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iis": {
-      "applicationUrl": "http://localhost:8082/zolotuzWebService",
+      "applicationUrl": "http://localhost/zolotuzWebService",
       "sslPort": 0
     },
     "iisExpress": {

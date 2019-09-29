@@ -328,5 +328,38 @@ namespace zolotuz.Controllers
 
 			return isAdded;
 		}
-	}
+
+        [HttpGet("GetHeaders")]
+        public JsonResult GetHeaders()
+        {
+            var headers = DataProvider.GetHeaders();
+
+            return new JsonResult(headers) { };
+        }
+
+        [HttpGet("GetPageFiltersValues")]
+        public JsonResult GetPageFiltersValues()
+        {
+            var pageFilters = DataProvider.GetPageFiltersValues();
+
+            return new JsonResult(pageFilters) { };
+        }
+
+        [HttpGet("GetPageFilters")]
+        public JsonResult GetPageFilters()
+        {
+            var pageFilters = DataProvider.GetPageFilters();
+
+            return new JsonResult(pageFilters) { };
+        }
+
+        [HttpPost("GetProducts")]
+        public JsonResult GetProducts(ProductFilter filter)
+        {
+            var pageFilters = DataProvider.GetProducts(filter);
+
+            return new JsonResult(pageFilters) { };
+        }
+
+    }
 }
