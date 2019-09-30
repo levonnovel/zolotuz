@@ -131,7 +131,6 @@ namespace zolotuz.Controllers
 			return File(bytes, "image/jpeg");
 		}
 
-
 		[HttpPost("DeleteProduct")]
 		public JsonResult DeleteProduct(DeleteProductDTO dt)
 		{
@@ -142,14 +141,6 @@ namespace zolotuz.Controllers
 			Directory.Delete(path, true);
 
 			return new JsonResult(true) { };
-		}
-
-
-		[HttpGet("asd")]
-		public string asd()
-		{
-
-			return "asd";
 		}
 
 		[HttpPost("CreateProduct/kraski")]
