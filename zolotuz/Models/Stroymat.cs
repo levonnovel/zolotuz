@@ -16,7 +16,6 @@ namespace zolotuz.Models
 		public string CountryName { get; set; }
 		public byte Manufacturer { get; set; }
 		public int Discount { get; set; }
-        public decimal DiscountedPrice { get; set; }
         public int Product_Type { get; set; }
 		public string Product_Type_Name { get; set; }
 

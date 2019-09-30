@@ -20,7 +20,6 @@ namespace zolotuz.Models
         public byte Manufacturer { get; set; }
 		public string Application_Area { get; set; }
 		public decimal Price { get; set; }
-		public decimal DiscountedPrice { get; set; }
 		public int Color { get; set; }
 		public string ColorName { get; set; }
 		public int Volume { get; set; }

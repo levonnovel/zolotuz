@@ -23,32 +23,7 @@ namespace zolotuz.Controllers
 
 			//return new JsonResult(els) { };
 		}
-		[HttpGet("{type}/{id}")]
-		public JsonResult Item(string type, int id)
-		{
-			
-			if (type == "kraski")
-			{
-				var el1 = DataProvider.GetPaint(id);
-
-				return new JsonResult(el1.FirstOrDefault()) { };
-
-			}
-			else if (type == "stroymateryali")
-			{
-				var el2 = DataProvider.GetStroymateryali(id);
-
-				return new JsonResult(el2.FirstOrDefault()) { };
-			}
-			else if (type == "kovki")
-			{
-				var el2 = DataProvider.GetKovki(id);
-
-				return new JsonResult(el2.FirstOrDefault()) { };
-			}
-
-			return null;
-		}
+		
 		
 		[HttpPost("filter/stroymateryali")]
 		public JsonResult GetStroymats(StroymatFilter filter)
@@ -361,5 +336,13 @@ namespace zolotuz.Controllers
             return new JsonResult(pageFilters) { };
         }
 
-    }
+		[HttpGet("GetProduct/{id}")]
+		public JsonResult GetProduct(int id)
+		{
+			var pageFilters = DataProvider.GetProduct(id);
+
+			return new JsonResult(pageFilters) { };
+		}
+
+	}
 }

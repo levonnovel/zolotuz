@@ -11,66 +11,66 @@ namespace zolotuz.Models
         public byte? product_type { get; set; }
         public byte? product_subType { get; set; }
 
-        public List<byte> manufacturer;
+        public List<byte> cat_manufacturer;
 
-        public List<byte> color_palette;
+        public List<byte> cat_color_palette;
 
-        public List<byte> appearance;
+        public List<byte> cat_appearance;
 
-        public List<byte> washable;
+        public List<byte> cat_washable;
 
-        public List<byte> smell;
+        public List<byte> cat_smell;
 
-        public List<byte> color;
+        public List<byte> cat_color;
 
-        public List<byte> room_type;
+        public List<byte> cat_room_type;
 
-        public List<byte> appointment;
+        public List<byte> cat_appointment;
 
-        public List<byte> type;
+        public List<byte> cat_type;
 
-        public List<byte> stencil_theme;
+        public List<byte> cat_stencil_theme;
 
-        public List<byte> place_of_use;
+        public List<byte> cat_place_of_use;
 
-        public List<byte> created_for;
+        public List<byte> cat_created_for;
 
-        public List<byte> finish_guarantee;
+        public List<byte> cat_finish_guarantee;
 
-        public List<byte> effect;
+        public List<byte> cat_effect;
 
-        public List<byte> volume;
+        public List<byte> cat_volume;
 
-        public List<byte> duration_of_protection;
+        public List<byte> cat_duration_of_protection;
 
-        public List<byte> surface_of_application;
+        public List<byte> cat_surface_of_application;
 
-        public List<byte> type_of_use;
+        public List<byte> cat_type_of_use;
 
-        public List<byte> brush_type;
+        public List<byte> cat_brush_type;
 
-        public List<byte> width;
+        public List<byte> cat_width;
 
-        public List<byte> fiber_material;
+        public List<byte> cat_fiber_material;
 
-        public List<byte> structure;
+        public List<byte> cat_structure;
 
-        public List<byte> resistant;
+        public List<byte> cat_resistant;
 
-        public List<byte> gluing_strength;
+        public List<byte> cat_gluing_strength;
 
-        public List<byte> capture_time;
+        public List<byte> cat_capture_time;
 
-        public List<byte> gluing_material;
+        public List<byte> cat_gluing_material;
 
-        public List<byte> frost_resistance;
+        public List<byte> cat_frost_resistance;
 
-        public List<byte> heat_resistance;
+        public List<byte> cat_heat_resistance;
 
-        public List<byte> color_after_drying;
+        public List<byte> cat_color_after_drying;
 
-        public List<byte> external_material;
+        public List<byte> cat_external_material;
 
-        public List<byte> application_type;
+        public List<byte> cat_application_type;
     }
 }
