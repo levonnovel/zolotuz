@@ -13,8 +13,6 @@ namespace zolotuz.Models
 			public decimal Price { get; set; }
 			public decimal DiscountedPrice { get; set; }
 			public byte Discount { get; set; }
-			public int Product_Type { get; set; }
-			public string Product_Type_Name { get; set; }
 			public Image Image { get; set; }
 	}
 }
