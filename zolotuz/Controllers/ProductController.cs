@@ -119,13 +119,13 @@ namespace zolotuz.Controllers
 			return new JsonResult(orders) { };
 		}
 
-		[HttpGet("img/{table}/{id}/{nmb}")]
-		public ActionResult Img(string table, string id, string nmb)
+		[HttpGet("img/{id}/{nmb}")]
+		public ActionResult Img(string id, string nmb)
 		{
 			Image img = new Image();
 			//string name = Directory.GetFiles("imgs")[0];
 
-			string path = Directory.GetCurrentDirectory() + string.Format(@"\imgs\{0}\{1}\{2}.jpg", table, id, nmb);
+			string path = Directory.GetCurrentDirectory() + string.Format(@"\imgs\{0}\{1}.jpg", id, nmb);
 			byte[] bytes = System.IO.File.ReadAllBytes(path);
 
 			return File(bytes, "image/jpeg");
@@ -322,18 +322,27 @@ namespace zolotuz.Controllers
         [HttpPost("GetProducts")]
         public JsonResult GetProducts(ProductFilter filter)
         {
-            var pageFilters = DataProvider.GetProducts(filter);
-
-            return new JsonResult(pageFilters) { };
+            decimal maxPrice;
+            var pageFilters = DataProvider.GetProducts(filter, out maxPrice);
+            object o = new { pageFilters, maxPrice };
+            return new JsonResult(o) { };
         }
 
 		[HttpGet("GetProduct/{id}")]
 		public JsonResult GetProduct(int id)
 		{
-			var pageFilters = DataProvider.GetProduct(id);
+			var product = DataProvider.GetProduct(id);
 
-			return new JsonResult(pageFilters) { };
+			return new JsonResult(product) { };
 		}
 
-	}
+        [HttpGet("GetCurrentGroupItems/{group}")]
+        public JsonResult GetCurrentProductTypeItems(int group)
+        {
+            var list = DataProvider.GetCurrentGroupItems(group);
+
+            return new JsonResult(list) { };
+        }
+
+    }
 }

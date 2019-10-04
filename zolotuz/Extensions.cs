@@ -258,7 +258,7 @@ namespace zolotuz
 			{
 				P.Product_Type_Name = dr["PRODUCT_TYPE_NAME"].ToString();
 			}
-			if (dr["IMAGE_1_NAME"] != DBNull.Value && dr["IMG_1"] != DBNull.Value)
+            if (dr["IMAGE_1_NAME"] != DBNull.Value && dr["IMG_1"] != DBNull.Value)
 			{
 				P.Image = new Image() { Name = dr["IMAGE_1_NAME"].ToString(), Url = dr["IMG_1"].ToString() };
 			}
@@ -283,7 +283,7 @@ namespace zolotuz
 			{
 				P.Id = Convert.ToInt32(dr["Id"]);
 			}
-			if (dr["Name"] != DBNull.Value)
+            if (dr["Name"] != DBNull.Value)
 			{
 				P.Name = dr["Name"].ToString();
 			}
@@ -779,27 +779,33 @@ namespace zolotuz
 			return P;
 		}
 
-		internal static Product ConvertToProduct(this DataRow dr)
+		internal static Product ConvertToProduct(this DataRow dr, Product P)
 		{
-			Product P = new Product();
+			//Product P = new Product();
 			var refs = DataProvider.GetRefNames();
-			//if (dr["product_group_name"] != DBNull.Value)
-			//{
-			//    P.product_group = Convert.ToByte(dr["product_group_name"]);
-			//}
-			//if (dr["product_type_name"] != DBNull.Value)
-			//{
-			//    P.product_type = Convert.ToByte(dr["product_type_name"]);
-			//}
-			//if (dr["product_subtype_name"] != DBNull.Value)
-			//{
-			//    P.product_subType = Convert.ToByte(dr["product_subtype_name"]);
-			//}
-			if (dr["Id"] != DBNull.Value)
+            List<Image> images = new List<Image>();
+           
+            //if (dr["product_group_name"] != DBNull.Value)
+            //{
+            //    P.product_group = Convert.ToByte(dr["product_group_name"]);
+            //}
+            //if (dr["product_type_name"] != DBNull.Value)
+            //{
+            //    P.product_type = Convert.ToByte(dr["product_type_name"]);
+            //}
+            //if (dr["product_subtype_name"] != DBNull.Value)
+            //{
+            //    P.product_subType = Convert.ToByte(dr["product_subtype_name"]);
+            //}
+            if (dr["Id"] != DBNull.Value)
 			{
 				P.Id = Convert.ToInt32(dr["Id"]);
 			}
-			if (dr["Name"] != DBNull.Value)
+            if (dr["product_group"] != DBNull.Value)
+            {
+                P.Group = Convert.ToInt32(dr["product_group"]);
+            }
+            if (dr["Name"] != DBNull.Value)
 			{
 				P.Name = dr["Name"].ToString();
 			}
@@ -942,7 +948,21 @@ namespace zolotuz
 				P.produtInfos.Add(new ProductInfo() { Label = refs.First(x => x.Key == "cat_application_type").Value, Value = dr["application_type_name"].ToString() });
 			}
 
-			return P;
+            if (dr["IMAGE_1_NAME"] != DBNull.Value && dr["IMG_1"] != DBNull.Value)
+            {
+                P.Image = new Image() { Name = dr["IMAGE_1_NAME"].ToString(), Url = dr["IMG_1"].ToString() };
+            }
+            if (dr["IMAGE_2_NAME"] != DBNull.Value && dr["IMG_2"] != DBNull.Value)
+            {
+                images.Add(new Image() { Name = dr["IMAGE_2_NAME"].ToString(), Url = dr["IMG_2"].ToString() });
+            }
+            if (dr["IMAGE_3_NAME"] != DBNull.Value && dr["IMG_3"] != DBNull.Value)
+            {
+                images.Add(new Image() { Name = dr["IMAGE_3_NAME"].ToString(), Url = dr["IMG_3"].ToString() });
+
+            }
+            P.Images = images;
+            return P;
 		}
 	}
 }

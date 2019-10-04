@@ -77,9 +77,9 @@ namespace zolotuz.Models
 
 		public List<byte> cat_paint_type;
 
-		public decimal? MinPrice { get; set; }
+		public decimal? Min_price { get; set; }
 
-		public decimal? MaxPrice { get; set; }
+		public decimal? Max_price { get; set; }
 
 		public int? Start { get; set; }
 

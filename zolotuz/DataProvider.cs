@@ -822,7 +822,7 @@ namespace zolotuz
             }
         }
 
-        public static List<ProductDTO> GetProducts(ProductFilter filter)
+        public static List<ProductDTO> GetProducts(ProductFilter filter, out decimal maxPrice)
         {
 
 			if(filter.Product_group == 0)
@@ -879,14 +879,24 @@ namespace zolotuz
                 cmd.Parameters.AddWithValue("@gluing_material", filter.cat_gluing_material.ConvertToSqlArr());
                 cmd.Parameters.AddWithValue("@external_material", filter.cat_external_material.ConvertToSqlArr());
 
-                cmd.Parameters.AddWithValue("@min_amount", filter.MinPrice);
-                cmd.Parameters.AddWithValue("@max_amount", filter.MaxPrice);
+                cmd.Parameters.AddWithValue("@min_amount", filter.Min_price);
+                cmd.Parameters.AddWithValue("@max_amount", filter.Max_price);
 
                 cmd.Parameters.AddWithValue("@start", filter.Start);
                 cmd.Parameters.AddWithValue("@end", filter.End);
 
+
+
+                SqlParameter outParameter = new SqlParameter("@max_price", SqlDbType.Decimal);
+                outParameter.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(outParameter);
+
+
+
                 conn.Open();
                 dt.Load(cmd.ExecuteReader());
+
+                maxPrice = Convert.ToDecimal(outParameter.Value);
 
                 foreach (DataRow dr in dt.Rows)
                 {
@@ -897,13 +907,13 @@ namespace zolotuz
             }
         }
 
-		public static List<Product> GetProduct(int id)
+		public static Product GetProduct(int id)
 		{
 
 
 			DataTable dt = new DataTable();
 
-			List<Product> ProductsList = new List<Product>();
+			Product product = new Product();
 			using (SqlConnection conn = new SqlConnection(cs))
 			{
 				SqlCommand cmd = new SqlCommand("sp_get_product", conn);
@@ -916,12 +926,36 @@ namespace zolotuz
 
 				foreach (DataRow dr in dt.Rows)
 				{
-					ProductsList.Add(dr.ConvertToProduct());
+                     dr.ConvertToProduct(product);
 				}
 
-				return ProductsList;
+				return product;
 			}
 		}
+        public static List<ProductDTO> GetCurrentGroupItems(int group)
+        {
+            DataTable dt = new DataTable();
 
-	}
+            List<ProductDTO> ProductsList = new List<ProductDTO>();
+            using (SqlConnection conn = new SqlConnection(cs))
+            {
+                SqlCommand cmd = new SqlCommand("sp_get_current_type_products", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@group", group);
+
+                conn.Open();
+                dt.Load(cmd.ExecuteReader());
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    ProductsList.Add(dr.ConvertToProductDTO());
+                }
+
+                return ProductsList;
+            }
+
+        }
+
+    }
 }
