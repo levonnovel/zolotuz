@@ -896,9 +896,15 @@ namespace zolotuz
                 conn.Open();
                 dt.Load(cmd.ExecuteReader());
 
-                maxPrice = Convert.ToDecimal(outParameter.Value);
 
-                foreach (DataRow dr in dt.Rows)
+				maxPrice = 0;
+
+				if (outParameter.Value != DBNull.Value)
+				{
+					maxPrice = Convert.ToDecimal(outParameter.Value);
+				}
+
+				foreach (DataRow dr in dt.Rows)
                 {
                     ProductsList.Add(dr.ConvertToProductDTO());
                 }
