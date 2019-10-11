@@ -12,7 +12,7 @@ namespace zolotuz
 		//static readonly string cs = @"Data Source=LEVONPET-PC\SQLEXPRESS; database=DB_A49556_zu ;Integrated Security=SSPI";
 		//static readonly string cs = @"Data Source=LEVON\LEOMAX; database=ZolotoyUzor ;Integrated Security=SSPI";
 		static readonly string cs = @"Data Source=SQL6007.site4now.net;Initial Catalog=DB_A49556_zolotoyuzor;User Id=DB_A49556_zolotoyuzor_admin;Password=Aa199814;";
-		
+
 
 		public static List<ProductDTO> GetPaints(PaintFilter filter)
 		{
@@ -92,7 +92,7 @@ namespace zolotuz
 				return ProductsList;
 			}
 		}
-		
+
 		public static List<ProductDTO> GetKovki(KovkaFilter filter)
 		{
 
@@ -384,12 +384,12 @@ namespace zolotuz
 				dt.Columns.Add("Price", typeof(decimal));
 				dt.Columns.Add("Count", typeof(int));
 
-                SqlParameter outParameter = new SqlParameter("@id", SqlDbType.Int);
-                outParameter.Direction = ParameterDirection.Output;
-                cmd.Parameters.Add(outParameter);
+				SqlParameter outParameter = new SqlParameter("@id", SqlDbType.Int);
+				outParameter.Direction = ParameterDirection.Output;
+				cmd.Parameters.Add(outParameter);
 
 
-                foreach (var el in order.Items)
+				foreach (var el in order.Items)
 				{
 					dt.Rows.Add(el.Name, el.Description, el.Price, el.Count);
 				}
@@ -407,13 +407,13 @@ namespace zolotuz
 				conn.Open();
 				//dt.Load(cmd.ExecuteReader());
 				cmd.ExecuteNonQuery();
-                //foreach (DataRow dr in dt.Rows)
-                //{
-                //	ProductsList.Add(dr.ConvertToProductDTO());
-                //}
-                id = Convert.ToInt32(outParameter.Value);
+				//foreach (DataRow dr in dt.Rows)
+				//{
+				//	ProductsList.Add(dr.ConvertToProductDTO());
+				//}
+				id = Convert.ToInt32(outParameter.Value);
 
-                return true;
+				return true;
 			}
 		}
 
@@ -483,7 +483,7 @@ namespace zolotuz
 			}
 		}
 
-		public static bool DeleteProduct(string table, int id)
+		public static bool DeleteProduct(int id)
 		{
 			DataTable dt = new DataTable();
 			//DataTable dt = new DataTable();
@@ -495,7 +495,6 @@ namespace zolotuz
 
 				cmd.CommandType = CommandType.StoredProcedure;
 				cmd.Parameters.AddWithValue("@id", id);
-				cmd.Parameters.AddWithValue("@table", table);
 
 				conn.Open();
 				cmd.ExecuteNonQuery();
@@ -689,12 +688,12 @@ namespace zolotuz
 
 
 
-			
+
 
 				conn.Open();
 				//dt.Load(cmd.ExecuteReader());
 				cmd.ExecuteNonQuery();
-				
+
 
 				return true;
 			}
@@ -754,84 +753,84 @@ namespace zolotuz
 			}
 		}
 
-        public static List<Headers> GetHeaders()
-        {
-            DataTable dt = new DataTable();
-            List<Headers> Headers = new List<Headers>();
+		public static List<Headers> GetHeaders()
+		{
+			DataTable dt = new DataTable();
+			List<Headers> Headers = new List<Headers>();
 
-            using (SqlConnection conn = new SqlConnection(cs))
-            {
-                SqlCommand cmd = new SqlCommand("[sp_get_headers]", conn);
+			using (SqlConnection conn = new SqlConnection(cs))
+			{
+				SqlCommand cmd = new SqlCommand("[sp_get_headers]", conn);
 
-                cmd.CommandType = CommandType.StoredProcedure;
+				cmd.CommandType = CommandType.StoredProcedure;
 
-                conn.Open();
-                dt.Load(cmd.ExecuteReader());
+				conn.Open();
+				dt.Load(cmd.ExecuteReader());
 
-                foreach (DataRow dr in dt.Rows)
-                {
+				foreach (DataRow dr in dt.Rows)
+				{
 
-                   dr.ConvertToHeader(Headers);
-                }
+					dr.ConvertToHeader(Headers);
+				}
 
-                return Headers;
-            }
-        }
+				return Headers;
+			}
+		}
 
-        public static List<PageFiltersValues> GetPageFiltersValues()
-        {
-
-
-            DataTable dt = new DataTable();
-
-            List<PageFiltersValues> Filters = new List<PageFiltersValues>();
-            using (SqlConnection conn = new SqlConnection(cs))
-            {
-                SqlCommand cmd = new SqlCommand("[sp_get_products_filter_values]", conn);
-
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                conn.Open();
-                dt.Load(cmd.ExecuteReader());
-
-                foreach (DataRow dr in dt.Rows)
-                {
-                    Filters.Add(dr.ConvertToPageFilterValues());
-                }
-
-                return Filters;
-            }
-        }
-
-        public static List<PageFilters> GetPageFilters()
-        {
+		public static List<PageFiltersValues> GetPageFiltersValues()
+		{
 
 
-            DataTable dt = new DataTable();
+			DataTable dt = new DataTable();
 
-            List<PageFilters> Filters = new List<PageFilters>();
-            using (SqlConnection conn = new SqlConnection(cs))
-            {
-                SqlCommand cmd = new SqlCommand("[get_page_filters]", conn);
+			List<PageFiltersValues> Filters = new List<PageFiltersValues>();
+			using (SqlConnection conn = new SqlConnection(cs))
+			{
+				SqlCommand cmd = new SqlCommand("[sp_get_products_filter_values]", conn);
 
-                cmd.CommandType = CommandType.StoredProcedure;
+				cmd.CommandType = CommandType.StoredProcedure;
 
-                conn.Open();
-                dt.Load(cmd.ExecuteReader());
+				conn.Open();
+				dt.Load(cmd.ExecuteReader());
 
-                foreach (DataRow dr in dt.Rows)
-                {
-                    Filters.Add(dr.ConvertToPageFilter());
-                }
+				foreach (DataRow dr in dt.Rows)
+				{
+					Filters.Add(dr.ConvertToPageFilterValues());
+				}
 
-                return Filters;
-            }
-        }
+				return Filters;
+			}
+		}
 
-        public static List<ProductDTO> GetProducts(ProductFilter filter, out decimal maxPrice)
-        {
+		public static List<PageFilters> GetPageFilters()
+		{
 
-			if(filter.Product_group == 0)
+
+			DataTable dt = new DataTable();
+
+			List<PageFilters> Filters = new List<PageFilters>();
+			using (SqlConnection conn = new SqlConnection(cs))
+			{
+				SqlCommand cmd = new SqlCommand("[get_page_filters]", conn);
+
+				cmd.CommandType = CommandType.StoredProcedure;
+
+				conn.Open();
+				dt.Load(cmd.ExecuteReader());
+
+				foreach (DataRow dr in dt.Rows)
+				{
+					Filters.Add(dr.ConvertToPageFilter());
+				}
+
+				return Filters;
+			}
+		}
+
+		public static List<ProductDTO> GetProducts(ProductFilter filter, out decimal maxPrice)
+		{
+
+			if (filter.Product_group == 0)
 			{
 				filter.Product_type = 0;
 			}
@@ -843,64 +842,64 @@ namespace zolotuz
 
 			DataTable dt = new DataTable();
 
-            List<ProductDTO> ProductsList = new List<ProductDTO>();
-            using (SqlConnection conn = new SqlConnection(cs))
-            {
-                SqlCommand cmd = new SqlCommand("sp_get_products", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
+			List<ProductDTO> ProductsList = new List<ProductDTO>();
+			using (SqlConnection conn = new SqlConnection(cs))
+			{
+				SqlCommand cmd = new SqlCommand("sp_get_products", conn);
+				cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@product_group", filter.Product_group);
-                cmd.Parameters.AddWithValue("@product_type", filter.Product_type);
-                cmd.Parameters.AddWithValue("@product_subtype", filter.Product_subtype);
+				cmd.Parameters.AddWithValue("@product_group", filter.Product_group);
+				cmd.Parameters.AddWithValue("@product_type", filter.Product_type);
+				cmd.Parameters.AddWithValue("@product_subtype", filter.Product_subtype);
 				cmd.Parameters.AddWithValue("@manufacturer", filter.cat_manufacturer.ConvertToSqlArr());
 				cmd.Parameters.AddWithValue("@color_palette", filter.cat_color_palette.ConvertToSqlArr());
-                cmd.Parameters.AddWithValue("@appearance", filter.cat_appearance.ConvertToSqlArr());
-                cmd.Parameters.AddWithValue("@washable", filter.cat_washable.ConvertToSqlArr());
-                cmd.Parameters.AddWithValue("@smell", filter.cat_smell.ConvertToSqlArr());
-                cmd.Parameters.AddWithValue("@color", filter.cat_color.ConvertToSqlArr());
-                cmd.Parameters.AddWithValue("@appointment", filter.cat_appointment.ConvertToSqlArr());
-                cmd.Parameters.AddWithValue("@type", filter.cat_type.ConvertToSqlArr());
-                cmd.Parameters.AddWithValue("@application_type", filter.cat_application_type.ConvertToSqlArr());
-                cmd.Parameters.AddWithValue("@paint_type", filter.cat_paint_type.ConvertToSqlArr());
-                cmd.Parameters.AddWithValue("@room_type", filter.cat_room_type.ConvertToSqlArr());
-                cmd.Parameters.AddWithValue("@brush_type", filter.cat_brush_type.ConvertToSqlArr());
-                cmd.Parameters.AddWithValue("@type_of_use", filter.cat_type_of_use.ConvertToSqlArr());
-                cmd.Parameters.AddWithValue("@stencil_theme", filter.cat_stencil_theme.ConvertToSqlArr());
-                cmd.Parameters.AddWithValue("@place_of_use", filter.cat_place_of_use.ConvertToSqlArr());
-                cmd.Parameters.AddWithValue("@created_for", filter.cat_created_for.ConvertToSqlArr());
-                cmd.Parameters.AddWithValue("@finish_guarantee", filter.cat_finish_guarantee.ConvertToSqlArr());
-                cmd.Parameters.AddWithValue("@effect", filter.cat_effect.ConvertToSqlArr());
-                cmd.Parameters.AddWithValue("@volume", filter.cat_volume.ConvertToSqlArr());
-                cmd.Parameters.AddWithValue("@duration_of_protection", filter.cat_duration_of_protection.ConvertToSqlArr());
-                cmd.Parameters.AddWithValue("@surface_of_application", filter.cat_surface_of_application.ConvertToSqlArr());
-                cmd.Parameters.AddWithValue("@width", filter.cat_width.ConvertToSqlArr());
-                cmd.Parameters.AddWithValue("@fiber_material", filter.cat_fiber_material.ConvertToSqlArr());
-                cmd.Parameters.AddWithValue("@structure", filter.cat_structure.ConvertToSqlArr());
-                cmd.Parameters.AddWithValue("@resistant", filter.cat_resistant.ConvertToSqlArr());
-                cmd.Parameters.AddWithValue("@gluing_strength", filter.cat_gluing_strength.ConvertToSqlArr());
-                cmd.Parameters.AddWithValue("@capture_time", filter.cat_capture_time.ConvertToSqlArr());
-                cmd.Parameters.AddWithValue("@frost_resistance", filter.cat_frost_resistance.ConvertToSqlArr());
-                cmd.Parameters.AddWithValue("@heat_resistance", filter.cat_heat_resistance.ConvertToSqlArr());
-                cmd.Parameters.AddWithValue("@color_after_drying", filter.cat_color_after_drying.ConvertToSqlArr());
-                cmd.Parameters.AddWithValue("@gluing_material", filter.cat_gluing_material.ConvertToSqlArr());
-                cmd.Parameters.AddWithValue("@external_material", filter.cat_external_material.ConvertToSqlArr());
+				cmd.Parameters.AddWithValue("@appearance", filter.cat_appearance.ConvertToSqlArr());
+				cmd.Parameters.AddWithValue("@washable", filter.cat_washable.ConvertToSqlArr());
+				cmd.Parameters.AddWithValue("@smell", filter.cat_smell.ConvertToSqlArr());
+				cmd.Parameters.AddWithValue("@color", filter.cat_color.ConvertToSqlArr());
+				cmd.Parameters.AddWithValue("@appointment", filter.cat_appointment.ConvertToSqlArr());
+				cmd.Parameters.AddWithValue("@type", filter.cat_type.ConvertToSqlArr());
+				cmd.Parameters.AddWithValue("@application_type", filter.cat_application_type.ConvertToSqlArr());
+				cmd.Parameters.AddWithValue("@paint_type", filter.cat_paint_type.ConvertToSqlArr());
+				cmd.Parameters.AddWithValue("@room_type", filter.cat_room_type.ConvertToSqlArr());
+				cmd.Parameters.AddWithValue("@brush_type", filter.cat_brush_type.ConvertToSqlArr());
+				cmd.Parameters.AddWithValue("@type_of_use", filter.cat_type_of_use.ConvertToSqlArr());
+				cmd.Parameters.AddWithValue("@stencil_theme", filter.cat_stencil_theme.ConvertToSqlArr());
+				cmd.Parameters.AddWithValue("@place_of_use", filter.cat_place_of_use.ConvertToSqlArr());
+				cmd.Parameters.AddWithValue("@created_for", filter.cat_created_for.ConvertToSqlArr());
+				cmd.Parameters.AddWithValue("@finish_guarantee", filter.cat_finish_guarantee.ConvertToSqlArr());
+				cmd.Parameters.AddWithValue("@effect", filter.cat_effect.ConvertToSqlArr());
+				cmd.Parameters.AddWithValue("@volume", filter.cat_volume.ConvertToSqlArr());
+				cmd.Parameters.AddWithValue("@duration_of_protection", filter.cat_duration_of_protection.ConvertToSqlArr());
+				cmd.Parameters.AddWithValue("@surface_of_application", filter.cat_surface_of_application.ConvertToSqlArr());
+				cmd.Parameters.AddWithValue("@width", filter.cat_width.ConvertToSqlArr());
+				cmd.Parameters.AddWithValue("@fiber_material", filter.cat_fiber_material.ConvertToSqlArr());
+				cmd.Parameters.AddWithValue("@structure", filter.cat_structure.ConvertToSqlArr());
+				cmd.Parameters.AddWithValue("@resistant", filter.cat_resistant.ConvertToSqlArr());
+				cmd.Parameters.AddWithValue("@gluing_strength", filter.cat_gluing_strength.ConvertToSqlArr());
+				cmd.Parameters.AddWithValue("@capture_time", filter.cat_capture_time.ConvertToSqlArr());
+				cmd.Parameters.AddWithValue("@frost_resistance", filter.cat_frost_resistance.ConvertToSqlArr());
+				cmd.Parameters.AddWithValue("@heat_resistance", filter.cat_heat_resistance.ConvertToSqlArr());
+				cmd.Parameters.AddWithValue("@color_after_drying", filter.cat_color_after_drying.ConvertToSqlArr());
+				cmd.Parameters.AddWithValue("@gluing_material", filter.cat_gluing_material.ConvertToSqlArr());
+				cmd.Parameters.AddWithValue("@external_material", filter.cat_external_material.ConvertToSqlArr());
 
-                cmd.Parameters.AddWithValue("@min_amount", filter.Min_price);
-                cmd.Parameters.AddWithValue("@max_amount", filter.Max_price);
+				cmd.Parameters.AddWithValue("@min_amount", filter.Min_price);
+				cmd.Parameters.AddWithValue("@max_amount", filter.Max_price);
 
-                cmd.Parameters.AddWithValue("@start", filter.Start);
-                cmd.Parameters.AddWithValue("@end", filter.End);
-
-
-
-                SqlParameter outParameter = new SqlParameter("@max_price", SqlDbType.Decimal);
-                outParameter.Direction = ParameterDirection.Output;
-                cmd.Parameters.Add(outParameter);
+				cmd.Parameters.AddWithValue("@start", filter.Start);
+				cmd.Parameters.AddWithValue("@end", filter.End);
 
 
 
-                conn.Open();
-                dt.Load(cmd.ExecuteReader());
+				SqlParameter outParameter = new SqlParameter("@max_price", SqlDbType.Decimal);
+				outParameter.Direction = ParameterDirection.Output;
+				cmd.Parameters.Add(outParameter);
+
+
+
+				conn.Open();
+				dt.Load(cmd.ExecuteReader());
 
 
 				maxPrice = 0;
@@ -911,13 +910,13 @@ namespace zolotuz
 				}
 
 				foreach (DataRow dr in dt.Rows)
-                {
-                    ProductsList.Add(dr.ConvertToProductDTO());
-                }
+				{
+					ProductsList.Add(dr.ConvertToProductDTO());
+				}
 
-                return ProductsList;
-            }
-        }
+				return ProductsList;
+			}
+		}
 
 		public static Product GetProduct(int id)
 		{
@@ -936,133 +935,227 @@ namespace zolotuz
 
 				foreach (DataRow dr in dt.Rows)
 				{
-                     dr.ConvertToProduct(product);
+					dr.ConvertToProduct(product);
 				}
 
 				return product;
 			}
 		}
-        public static List<ProductDTO> GetCurrentGroupItems(int group)
-        {
-            DataTable dt = new DataTable();
+		public static List<ProductDTO> GetCurrentGroupItems(int group)
+		{
+			DataTable dt = new DataTable();
 
-            List<ProductDTO> ProductsList = new List<ProductDTO>();
-            using (SqlConnection conn = new SqlConnection(cs))
-            {
-                SqlCommand cmd = new SqlCommand("sp_get_current_type_products", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
+			List<ProductDTO> ProductsList = new List<ProductDTO>();
+			using (SqlConnection conn = new SqlConnection(cs))
+			{
+				SqlCommand cmd = new SqlCommand("sp_get_current_type_products", conn);
+				cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@group", group);
+				cmd.Parameters.AddWithValue("@group", group);
 
-                conn.Open();
-                dt.Load(cmd.ExecuteReader());
+				conn.Open();
+				dt.Load(cmd.ExecuteReader());
 
-                foreach (DataRow dr in dt.Rows)
-                {
-                    ProductsList.Add(dr.ConvertToProductDTO());
-                }
+				foreach (DataRow dr in dt.Rows)
+				{
+					ProductsList.Add(dr.ConvertToProductDTO());
+				}
 
-                return ProductsList;
-            }
+				return ProductsList;
+			}
 
-        }
-
-
-        public static void DeleteOrder(int id)
-        {
-            DataTable dt = new DataTable();
-
-            List<ProductDTO> ProductsList = new List<ProductDTO>();
-            using (SqlConnection conn = new SqlConnection(cs))
-            {
-                SqlCommand cmd = new SqlCommand("sp_delete_order", conn);
-                cmd.CommandType = CommandType.Text;
-
-                cmd.Parameters.AddWithValue("@id", id);
-
-                cmd.ExecuteNonQuery();
-
-            }
-
-        }
-
-        public static Dictionary<string, byte> GetProductCategories(int id)
-        {
-            DataTable dt = new DataTable();
-
-            Dictionary<string, byte> Dict = new Dictionary<string, byte>();
-            using (SqlConnection conn = new SqlConnection(cs))
-            {
-                SqlCommand cmd = new SqlCommand("select * from products p WHERE p.Id = @id", conn);
-
-                cmd.CommandType = CommandType.Text;
-                cmd.Parameters.AddWithValue("@id", id);
-
-                conn.Open();
-                dt.Load(cmd.ExecuteReader());
-
-                foreach (DataRow dr in dt.Rows)
-                {
-                    Dict = dr.ConvertToProductCategory();
-                }
-
-                return Dict;
-            }
-        }
-
-        public static bool AddProduct(CreateProductDTO order, out int id)
-        {
-            int cnt = 0;
-            if (order.Img1 != null)
-                cnt++;
-            if (order.Img2 != null)
-                cnt++;
-            if (order.Img3 != null)
-                cnt++;
-            //DataTable dt = new DataTable();
-
-            //List<ProductDTO> ProductsList = new List<ProductDTO>();
-            using (SqlConnection conn = new SqlConnection(cs))
-            {
-                SqlCommand cmd = new SqlCommand("sp_insert_kovka", conn);
-
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@name", order.Name);
-                cmd.Parameters.AddWithValue("@desc", order.Description);
-                cmd.Parameters.AddWithValue("@price", order.Price);
-                cmd.Parameters.AddWithValue("@type", order.Group);
-                cmd.Parameters.AddWithValue("@type", order.Type);
-                cmd.Parameters.AddWithValue("@type", order.SubType);
-                cmd.Parameters.AddWithValue("@discount", order.Discount);
-                cmd.Parameters.AddWithValue("@imgscount", cnt);
+		}
 
 
+		public static void DeleteOrder(int id)
+		{
+			DataTable dt = new DataTable();
 
-                //cmd.Parameters.Add("@items", SqlDbType.Structured);
-                //cmd.Parameters.Add("@items", SqlDbType.Structured);
-                //cmd.Parameters.Add("@items", SqlDbType.Structured);
-                SqlParameter outParameter = new SqlParameter("@id", SqlDbType.Int);
-                outParameter.Direction = ParameterDirection.Output;
-                cmd.Parameters.Add(outParameter);
+			List<ProductDTO> ProductsList = new List<ProductDTO>();
+			using (SqlConnection conn = new SqlConnection(cs))
+			{
+				SqlCommand cmd = new SqlCommand("sp_delete_order", conn);
+				cmd.CommandType = CommandType.Text;
 
-                //cmd.Parameters["@items"].Value = order.Items;
-                //cmd.Parameters.AddWithValue("@items", order.Items);
+				cmd.Parameters.AddWithValue("@id", id);
+
+				cmd.ExecuteNonQuery();
+
+			}
+
+		}
+
+		public static Dictionary<string, byte> GetProductCategories(int id)
+		{
+			DataTable dt = new DataTable();
+
+			Dictionary<string, byte> Dict = new Dictionary<string, byte>();
+			using (SqlConnection conn = new SqlConnection(cs))
+			{
+				SqlCommand cmd = new SqlCommand("select * from products p WHERE p.Id = @id", conn);
+
+				cmd.CommandType = CommandType.Text;
+				cmd.Parameters.AddWithValue("@id", id);
+
+				conn.Open();
+				dt.Load(cmd.ExecuteReader());
+
+				foreach (DataRow dr in dt.Rows)
+				{
+					Dict = dr.ConvertToProductCategory();
+				}
+
+				return Dict;
+			}
+		}
+
+		public static bool AddProduct(CreateProductDTO order, out int id)
+		{
+			int cnt = 0;
+			if (order.Img1 != null)
+				cnt++;
+			if (order.Img2 != null)
+				cnt++;
+			if (order.Img3 != null)
+				cnt++;
+			//DataTable dt = new DataTable();
+
+			//List<ProductDTO> ProductsList = new List<ProductDTO>();
+			using (SqlConnection conn = new SqlConnection(cs))
+			{
+				SqlCommand cmd = new SqlCommand("sp_insert_product", conn);
+
+				cmd.CommandType = CommandType.StoredProcedure;
+				cmd.Parameters.AddWithValue("@name", order.Name);
+				cmd.Parameters.AddWithValue("@desc", order.Description);
+				cmd.Parameters.AddWithValue("@price", order.Price);
+				cmd.Parameters.AddWithValue("@group", order.Group);
+				cmd.Parameters.AddWithValue("@type", order.Type);
+				cmd.Parameters.AddWithValue("@sub_type", order.SubType);
+				cmd.Parameters.AddWithValue("@discount", order.Discount);
+				cmd.Parameters.AddWithValue("@imgscount", cnt);
 
 
-                conn.Open();
-                //dt.Load(cmd.ExecuteReader());
-                cmd.ExecuteNonQuery();
-                id = Convert.ToInt32(outParameter.Value);
-                //foreach (DataRow dr in dt.Rows)
-                //{
-                //	ProductsList.Add(dr.ConvertToProductDTO());
-                //}
+				cmd.Parameters.AddWithValue("@cat_manufacturer", order.cat_manufacturer);
+				cmd.Parameters.AddWithValue("@cat_color_palette", order.cat_color_palette);
+				cmd.Parameters.AddWithValue("@cat_appearance", order.cat_appearance);
+				cmd.Parameters.AddWithValue("@cat_washable", order.cat_washable);
+				cmd.Parameters.AddWithValue("@cat_smell", order.cat_smell);
+				cmd.Parameters.AddWithValue("@cat_color", order.cat_color);
+				cmd.Parameters.AddWithValue("@cat_room_type", order.cat_room_type);
+				cmd.Parameters.AddWithValue("@cat_appointment", order.cat_appointment);
+				cmd.Parameters.AddWithValue("@cat_type", order.cat_type);
+				cmd.Parameters.AddWithValue("@cat_stencil_theme", order.cat_stencil_theme);
+				cmd.Parameters.AddWithValue("@cat_place_of_use", order.cat_place_of_use);
+				cmd.Parameters.AddWithValue("@cat_created_for", order.cat_created_for);
+				cmd.Parameters.AddWithValue("@cat_finish_guarantee", order.cat_finish_guarantee);
+				cmd.Parameters.AddWithValue("@cat_effect", order.cat_effect);
+				cmd.Parameters.AddWithValue("@cat_volume", order.cat_volume);
+				cmd.Parameters.AddWithValue("@cat_duration_of_protection", order.cat_duration_of_protection);
+				cmd.Parameters.AddWithValue("@cat_surface_of_application", order.cat_surface_of_application);
+				cmd.Parameters.AddWithValue("@cat_type_of_use", order.cat_type_of_use);
+				cmd.Parameters.AddWithValue("@cat_brush_type", order.cat_brush_type);
+				cmd.Parameters.AddWithValue("@cat_width", order.cat_width);
+				cmd.Parameters.AddWithValue("@cat_fiber_material", order.cat_fiber_material);
+				cmd.Parameters.AddWithValue("@cat_structure", order.cat_structure);
+				cmd.Parameters.AddWithValue("@cat_resistant", order.cat_resistant);
+				cmd.Parameters.AddWithValue("@cat_gluing_strength", order.cat_gluing_strength);
+				cmd.Parameters.AddWithValue("@cat_capture_time", order.cat_capture_time);
+				cmd.Parameters.AddWithValue("@cat_gluing_material", order.cat_gluing_material);
+				cmd.Parameters.AddWithValue("@cat_frost_resistance", order.cat_frost_resistance);
+				cmd.Parameters.AddWithValue("@cat_heat_resistance", order.cat_heat_resistance);
+				cmd.Parameters.AddWithValue("@cat_color_after_drying", order.cat_color_after_drying);
+				cmd.Parameters.AddWithValue("@cat_external_material", order.cat_external_material);
+				cmd.Parameters.AddWithValue("@cat_application_type", order.cat_application_type);
+				cmd.Parameters.AddWithValue("@cat_paint_type", order.cat_paint_type);
+
+
+				//cmd.Parameters.Add("@items", SqlDbType.Structured);
+				//cmd.Parameters.Add("@items", SqlDbType.Structured);
+				//cmd.Parameters.Add("@items", SqlDbType.Structured);
+				SqlParameter outParameter = new SqlParameter("@id", SqlDbType.Int);
+				outParameter.Direction = ParameterDirection.Output;
+				cmd.Parameters.Add(outParameter);
+
+				//cmd.Parameters["@items"].Value = order.Items;
+				//cmd.Parameters.AddWithValue("@items", order.Items);
+
+
+				conn.Open();
+				//dt.Load(cmd.ExecuteReader());
+				cmd.ExecuteNonQuery();
+				id = Convert.ToInt32(outParameter.Value);
+				//foreach (DataRow dr in dt.Rows)
+				//{
+				//	ProductsList.Add(dr.ConvertToProductDTO());
+				//}
 
 
 
-                return true;
-            }
-        }
+				return true;
+			}
+		}
 
-    }
+		public static bool EditProduct(CreateProductDTO order)
+		{
+			//List<ProductDTO> ProductsList = new List<ProductDTO>();
+			using (SqlConnection conn = new SqlConnection(cs))
+			{
+				SqlCommand cmd = new SqlCommand("sp_update_product", conn);
+
+				cmd.CommandType = CommandType.StoredProcedure;
+				cmd.Parameters.AddWithValue("@id", order.Id);
+				cmd.Parameters.AddWithValue("@name", order.Name);
+				cmd.Parameters.AddWithValue("@desc", order.Description);
+				cmd.Parameters.AddWithValue("@price", order.Price);
+				cmd.Parameters.AddWithValue("@group", order.Group);
+				cmd.Parameters.AddWithValue("@type", order.Type);
+				cmd.Parameters.AddWithValue("@sub_type", order.SubType);
+				cmd.Parameters.AddWithValue("@discount", order.Discount);
+
+				cmd.Parameters.AddWithValue("@cat_manufacturer", order.cat_manufacturer);
+				cmd.Parameters.AddWithValue("@cat_color_palette", order.cat_color_palette);
+				cmd.Parameters.AddWithValue("@cat_appearance", order.cat_appearance);
+				cmd.Parameters.AddWithValue("@cat_washable", order.cat_washable);
+				cmd.Parameters.AddWithValue("@cat_smell", order.cat_smell);
+				cmd.Parameters.AddWithValue("@cat_color", order.cat_color);
+				cmd.Parameters.AddWithValue("@cat_room_type", order.cat_room_type);
+				cmd.Parameters.AddWithValue("@cat_appointment", order.cat_appointment);
+				cmd.Parameters.AddWithValue("@cat_type", order.cat_type);
+				cmd.Parameters.AddWithValue("@cat_stencil_theme", order.cat_stencil_theme);
+				cmd.Parameters.AddWithValue("@cat_place_of_use", order.cat_place_of_use);
+				cmd.Parameters.AddWithValue("@cat_created_for", order.cat_created_for);
+				cmd.Parameters.AddWithValue("@cat_finish_guarantee", order.cat_finish_guarantee);
+				cmd.Parameters.AddWithValue("@cat_effect", order.cat_effect);
+				cmd.Parameters.AddWithValue("@cat_volume", order.cat_volume);
+				cmd.Parameters.AddWithValue("@cat_duration_of_protection", order.cat_duration_of_protection);
+				cmd.Parameters.AddWithValue("@cat_surface_of_application", order.cat_surface_of_application);
+				cmd.Parameters.AddWithValue("@cat_type_of_use", order.cat_type_of_use);
+				cmd.Parameters.AddWithValue("@cat_brush_type", order.cat_brush_type);
+				cmd.Parameters.AddWithValue("@cat_width", order.cat_width);
+				cmd.Parameters.AddWithValue("@cat_fiber_material", order.cat_fiber_material);
+				cmd.Parameters.AddWithValue("@cat_structure", order.cat_structure);
+				cmd.Parameters.AddWithValue("@cat_resistant", order.cat_resistant);
+				cmd.Parameters.AddWithValue("@cat_gluing_strength", order.cat_gluing_strength);
+				cmd.Parameters.AddWithValue("@cat_capture_time", order.cat_capture_time);
+				cmd.Parameters.AddWithValue("@cat_gluing_material", order.cat_gluing_material);
+				cmd.Parameters.AddWithValue("@cat_frost_resistance", order.cat_frost_resistance);
+				cmd.Parameters.AddWithValue("@cat_heat_resistance", order.cat_heat_resistance);
+				cmd.Parameters.AddWithValue("@cat_color_after_drying", order.cat_color_after_drying);
+				cmd.Parameters.AddWithValue("@cat_external_material", order.cat_external_material);
+				cmd.Parameters.AddWithValue("@cat_application_type", order.cat_application_type);
+				cmd.Parameters.AddWithValue("@cat_paint_type", order.cat_paint_type);
+
+
+
+				conn.Open();
+				//dt.Load(cmd.ExecuteReader());
+				cmd.ExecuteNonQuery();
+
+
+				return true;
+			}
+		}
+
+	}
 }

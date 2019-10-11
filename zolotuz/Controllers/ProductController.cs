@@ -23,8 +23,8 @@ namespace zolotuz.Controllers
 
 			//return new JsonResult(els) { };
 		}
-		
-		
+
+
 		[HttpPost("filter/stroymateryali")]
 		public JsonResult GetStroymats(StroymatFilter filter)
 		{
@@ -92,24 +92,24 @@ namespace zolotuz.Controllers
 		[HttpPost("CreateOrder")]
 		public bool CreateOrder(Order order)
 		{
-            int id = 0;
+			int id = 0;
 			bool isAdded = false;
-            try
-            {
-                
-                if (DataProvider.AddOrder(order, out id))
-                {
-                    MailController.Send(order.Name, order.Email, order.Items);
-                    isAdded = true;
-                }
-            }
-            catch(Exception)
-            {
-                DataProvider.DeleteOrder(id);
-                isAdded = false;
-            }
+			try
+			{
 
-           // isAdded = DataProvider.AddOrder(order);
+				if (DataProvider.AddOrder(order, out id))
+				{
+					MailController.Send(order.Name, order.Email, order.Items);
+					isAdded = true;
+				}
+			}
+			catch (Exception)
+			{
+				DataProvider.DeleteOrder(id);
+				isAdded = false;
+			}
+
+			// isAdded = DataProvider.AddOrder(order);
 
 			return isAdded;
 		}
@@ -134,16 +134,16 @@ namespace zolotuz.Controllers
 			return File(bytes, "image/jpeg");
 		}
 
-		[HttpPost("DeleteProduct")]
-		public JsonResult DeleteProduct(DeleteProductDTO dt)
+		[HttpGet("DeleteProduct/{id}")]
+		public bool DeleteProduct(int id)
 		{
-			var orders = DataProvider.DeleteProduct(dt.Table, Convert.ToInt32(dt.Id));
+			DataProvider.DeleteProduct(id);
 
-			string path = @"imgs\" + dt.Table + @"\" + dt.Id;
+			//string path = @"imgs\" + dt.Table + @"\" + dt.Id;
+			//
+			//Directory.Delete(path, true);
 
-			Directory.Delete(path, true);
-
-			return new JsonResult(true) { };
+			return true;
 		}
 
 		[HttpPost("CreateProduct/kraski")]
@@ -199,10 +199,10 @@ namespace zolotuz.Controllers
 		public string CreateStroymat([FromForm] StroymatDTO str)
 		{
 
-		
+
 			bool isAdded = false;
 
-			
+
 			isAdded = DataProvider.AddStroymat(str, out var id);
 			try
 			{
@@ -234,11 +234,11 @@ namespace zolotuz.Controllers
 					}
 				}
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
 				return ex.Message;
 			}
-			
+
 			return id.ToString();
 		}
 
@@ -259,7 +259,7 @@ namespace zolotuz.Controllers
 
 			isAdded = DataProvider.AddKovka(str, out var id);
 			string path = @"imgs\kovka\" + id;
-			
+
 			Directory.CreateDirectory(path);
 			if (str.Img1?.Length > 0)
 			{
@@ -298,38 +298,38 @@ namespace zolotuz.Controllers
 			return isAdded;
 		}
 
-        [HttpGet("GetHeaders")]
-        public JsonResult GetHeaders()
-        {
-            var headers = DataProvider.GetHeaders();
+		[HttpGet("GetHeaders")]
+		public JsonResult GetHeaders()
+		{
+			var headers = DataProvider.GetHeaders();
 
-            return new JsonResult(headers) { };
-        }
+			return new JsonResult(headers) { };
+		}
 
-        [HttpGet("GetPageFiltersValues")]
-        public JsonResult GetPageFiltersValues()
-        {
-            var pageFilters = DataProvider.GetPageFiltersValues();
+		[HttpGet("GetPageFiltersValues")]
+		public JsonResult GetPageFiltersValues()
+		{
+			var pageFilters = DataProvider.GetPageFiltersValues();
 
-            return new JsonResult(pageFilters) { };
-        }
+			return new JsonResult(pageFilters) { };
+		}
 
-        [HttpGet("GetPageFilters")]
-        public JsonResult GetPageFilters()
-        {
-            var pageFilters = DataProvider.GetPageFilters();
+		[HttpGet("GetPageFilters")]
+		public JsonResult GetPageFilters()
+		{
+			var pageFilters = DataProvider.GetPageFilters();
 
-            return new JsonResult(pageFilters) { };
-        }
+			return new JsonResult(pageFilters) { };
+		}
 
-        [HttpPost("GetProducts")]
-        public JsonResult GetProducts(ProductFilter filter)
-        {
-            decimal maxPrice;
-            var pageFilters = DataProvider.GetProducts(filter, out maxPrice);
-            object o = new { pageFilters, maxPrice };
-            return new JsonResult(o) { };
-        }
+		[HttpPost("GetProducts")]
+		public JsonResult GetProducts(ProductFilter filter)
+		{
+			decimal maxPrice;
+			var pageFilters = DataProvider.GetProducts(filter, out maxPrice);
+			object o = new { pageFilters, maxPrice };
+			return new JsonResult(o) { };
+		}
 
 		[HttpGet("GetProduct/{id}")]
 		public JsonResult GetProduct(int id)
@@ -339,58 +339,70 @@ namespace zolotuz.Controllers
 			return new JsonResult(product) { };
 		}
 
-        [HttpGet("GetCurrentGroupItems/{group}")]
-        public JsonResult GetCurrentProductTypeItems(int group)
-        {
-            var list = DataProvider.GetCurrentGroupItems(group);
+		[HttpGet("GetCurrentGroupItems/{group}")]
+		public JsonResult GetCurrentProductTypeItems(int group)
+		{
+			var list = DataProvider.GetCurrentGroupItems(group);
 
-            return new JsonResult(list) { };
-        }
+			return new JsonResult(list) { };
+		}
 
 
-        [HttpGet("GetProductCategories/{id}")]
-        public JsonResult GetProductCategories(int id)
-        {
-            var product = DataProvider.GetProductCategories(id);
+		[HttpGet("GetProductCategories/{id}")]
+		public JsonResult GetProductCategories(int id)
+		{
+			var product = DataProvider.GetProductCategories(id);
 
-            return new JsonResult(product) { };
-        }
+			return new JsonResult(product) { };
+		}
 
-        [HttpPost("CreateProduct")]
-        public bool CreateProduct([FromForm] CreateProductDTO str)
-        {
-            bool isAdded = false;
+		[HttpPost("CreateProduct")]
+		public bool CreateProduct([FromForm] CreateProductDTO str)
+		{
+			bool isAdded = false;
 
-            isAdded = DataProvider.AddProduct(str, out var id);
-            string path = @"imgs\" + id;
+			isAdded = DataProvider.AddProduct(str, out var id);
+			/*string path = @"imgs\" + id;
+			Directory.CreateDirectory(path);
+			if (str.Img1?.Length > 0)
+			{
+				var filePath = path + @"\1.jpg";
+				using (var fileStream = new FileStream(filePath, FileMode.Create))
+				{
+					str.Img1.CopyTo(fileStream);
+				}
+			}
+			if (str.Img2?.Length > 0)
+			{
+				var filePath = path + @"\2.jpg";
+				using (var fileStream = new FileStream(filePath, FileMode.Create))
+				{
+					str.Img2.CopyTo(fileStream);
+				}
+			}
+			if (str.Img3?.Length > 0)
+			{
+				var filePath = path + @"\3.jpg";
+				using (var fileStream = new FileStream(filePath, FileMode.Create))
+				{
+					str.Img3.CopyTo(fileStream);
+				}
+			}
+			*/
+			return isAdded;
+			
+		}
 
-            Directory.CreateDirectory(path);
-            if (str.Img1?.Length > 0)
-            {
-                var filePath = path + @"\1.jpg";
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    str.Img1.CopyTo(fileStream);
-                }
-            }
-            if (str.Img2?.Length > 0)
-            {
-                var filePath = path + @"\2.jpg";
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    str.Img2.CopyTo(fileStream);
-                }
-            }
-            if (str.Img3?.Length > 0)
-            {
-                var filePath = path + @"\3.jpg";
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    str.Img3.CopyTo(fileStream);
-                }
-            }
-            return isAdded;
-        }
+		[HttpPost("EditProduct")]
+		public bool EditProduct(CreateProductDTO product)
+		{
+			bool isAdded = false;
 
-    }
+			isAdded = DataProvider.EditProduct(product);
+
+			return isAdded;
+		}
+
+
+	}
 }
