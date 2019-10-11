@@ -362,7 +362,7 @@ namespace zolotuz
 			}
 		}
 
-		public static bool AddOrder(Order order)
+		public static bool AddOrder(Order order, out int id)
 		{
 
 			//DataTable dt = new DataTable();
@@ -384,7 +384,12 @@ namespace zolotuz
 				dt.Columns.Add("Price", typeof(decimal));
 				dt.Columns.Add("Count", typeof(int));
 
-				foreach(var el in order.Items)
+                SqlParameter outParameter = new SqlParameter("@id", SqlDbType.Int);
+                outParameter.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(outParameter);
+
+
+                foreach (var el in order.Items)
 				{
 					dt.Rows.Add(el.Name, el.Description, el.Price, el.Count);
 				}
@@ -402,12 +407,13 @@ namespace zolotuz
 				conn.Open();
 				//dt.Load(cmd.ExecuteReader());
 				cmd.ExecuteNonQuery();
-				//foreach (DataRow dr in dt.Rows)
-				//{
-				//	ProductsList.Add(dr.ConvertToProductDTO());
-				//}
+                //foreach (DataRow dr in dt.Rows)
+                //{
+                //	ProductsList.Add(dr.ConvertToProductDTO());
+                //}
+                id = Convert.ToInt32(outParameter.Value);
 
-				return true;
+                return true;
 			}
 		}
 
@@ -915,8 +921,6 @@ namespace zolotuz
 
 		public static Product GetProduct(int id)
 		{
-
-
 			DataTable dt = new DataTable();
 
 			Product product = new Product();
@@ -961,6 +965,103 @@ namespace zolotuz
                 return ProductsList;
             }
 
+        }
+
+
+        public static void DeleteOrder(int id)
+        {
+            DataTable dt = new DataTable();
+
+            List<ProductDTO> ProductsList = new List<ProductDTO>();
+            using (SqlConnection conn = new SqlConnection(cs))
+            {
+                SqlCommand cmd = new SqlCommand("sp_delete_order", conn);
+                cmd.CommandType = CommandType.Text;
+
+                cmd.Parameters.AddWithValue("@id", id);
+
+                cmd.ExecuteNonQuery();
+
+            }
+
+        }
+
+        public static Dictionary<string, byte> GetProductCategories(int id)
+        {
+            DataTable dt = new DataTable();
+
+            Dictionary<string, byte> Dict = new Dictionary<string, byte>();
+            using (SqlConnection conn = new SqlConnection(cs))
+            {
+                SqlCommand cmd = new SqlCommand("select * from products p WHERE p.Id = @id", conn);
+
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.AddWithValue("@id", id);
+
+                conn.Open();
+                dt.Load(cmd.ExecuteReader());
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    Dict = dr.ConvertToProductCategory();
+                }
+
+                return Dict;
+            }
+        }
+
+        public static bool AddProduct(CreateProductDTO order, out int id)
+        {
+            int cnt = 0;
+            if (order.Img1 != null)
+                cnt++;
+            if (order.Img2 != null)
+                cnt++;
+            if (order.Img3 != null)
+                cnt++;
+            //DataTable dt = new DataTable();
+
+            //List<ProductDTO> ProductsList = new List<ProductDTO>();
+            using (SqlConnection conn = new SqlConnection(cs))
+            {
+                SqlCommand cmd = new SqlCommand("sp_insert_kovka", conn);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@name", order.Name);
+                cmd.Parameters.AddWithValue("@desc", order.Description);
+                cmd.Parameters.AddWithValue("@price", order.Price);
+                cmd.Parameters.AddWithValue("@type", order.Group);
+                cmd.Parameters.AddWithValue("@type", order.Type);
+                cmd.Parameters.AddWithValue("@type", order.SubType);
+                cmd.Parameters.AddWithValue("@discount", order.Discount);
+                cmd.Parameters.AddWithValue("@imgscount", cnt);
+
+
+
+                //cmd.Parameters.Add("@items", SqlDbType.Structured);
+                //cmd.Parameters.Add("@items", SqlDbType.Structured);
+                //cmd.Parameters.Add("@items", SqlDbType.Structured);
+                SqlParameter outParameter = new SqlParameter("@id", SqlDbType.Int);
+                outParameter.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(outParameter);
+
+                //cmd.Parameters["@items"].Value = order.Items;
+                //cmd.Parameters.AddWithValue("@items", order.Items);
+
+
+                conn.Open();
+                //dt.Load(cmd.ExecuteReader());
+                cmd.ExecuteNonQuery();
+                id = Convert.ToInt32(outParameter.Value);
+                //foreach (DataRow dr in dt.Rows)
+                //{
+                //	ProductsList.Add(dr.ConvertToProductDTO());
+                //}
+
+
+
+                return true;
+            }
         }
 
     }

@@ -92,17 +92,20 @@ namespace zolotuz.Controllers
 		[HttpPost("CreateOrder")]
 		public bool CreateOrder(Order order)
 		{
+            int id = 0;
 			bool isAdded = false;
             try
             {
-                MailController.Send(order.Name, order.Email, order.Items);
-                if (DataProvider.AddOrder(order))
+                
+                if (DataProvider.AddOrder(order, out id))
                 {
+                    MailController.Send(order.Name, order.Email, order.Items);
                     isAdded = true;
                 }
             }
             catch(Exception)
             {
+                DataProvider.DeleteOrder(id);
                 isAdded = false;
             }
 
@@ -342,6 +345,51 @@ namespace zolotuz.Controllers
             var list = DataProvider.GetCurrentGroupItems(group);
 
             return new JsonResult(list) { };
+        }
+
+
+        [HttpGet("GetProductCategories/{id}")]
+        public JsonResult GetProductCategories(int id)
+        {
+            var product = DataProvider.GetProductCategories(id);
+
+            return new JsonResult(product) { };
+        }
+
+        [HttpPost("CreateProduct")]
+        public bool CreateProduct([FromForm] CreateProductDTO str)
+        {
+            bool isAdded = false;
+
+            isAdded = DataProvider.AddProduct(str, out var id);
+            string path = @"imgs\" + id;
+
+            Directory.CreateDirectory(path);
+            if (str.Img1?.Length > 0)
+            {
+                var filePath = path + @"\1.jpg";
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    str.Img1.CopyTo(fileStream);
+                }
+            }
+            if (str.Img2?.Length > 0)
+            {
+                var filePath = path + @"\2.jpg";
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    str.Img2.CopyTo(fileStream);
+                }
+            }
+            if (str.Img3?.Length > 0)
+            {
+                var filePath = path + @"\3.jpg";
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    str.Img3.CopyTo(fileStream);
+                }
+            }
+            return isAdded;
         }
 
     }

@@ -964,5 +964,137 @@ namespace zolotuz
             P.Images = images;
             return P;
 		}
-	}
+
+        internal static Dictionary<string, byte> ConvertToProductCategory(this DataRow dr)
+        {
+            Dictionary<string, byte> Dict = new Dictionary<string, byte>();
+
+            if (dr["cat_manufacturer"] != DBNull.Value)
+            {
+                Dict.Add("cat_manufacturer", Convert.ToByte(dr["cat_manufacturer"]));
+            }
+            if (dr["cat_color_palette"] != DBNull.Value)
+            {
+                Dict.Add("cat_color_palette", Convert.ToByte(dr["cat_color_palette"]));
+            }
+            if (dr["cat_appearance"] != DBNull.Value)
+            {
+                Dict.Add("cat_appearance", Convert.ToByte(dr["cat_appearance"]));
+            }
+            if (dr["cat_washable"] != DBNull.Value)
+            {
+                Dict.Add("cat_washable", Convert.ToByte(dr["cat_washable"]));
+            }
+            if (dr["cat_smell"] != DBNull.Value)
+            {
+                Dict.Add("cat_smell", Convert.ToByte(dr["cat_smell"]));
+            }
+            if (dr["cat_color"] != DBNull.Value)
+            {
+                Dict.Add("cat_color", Convert.ToByte(dr["cat_color"]));
+            }
+            if (dr["cat_room_type"] != DBNull.Value)
+            {
+                Dict.Add("cat_room_type", Convert.ToByte(dr["cat_room_type"]));
+            }
+            if (dr["cat_appointment"] != DBNull.Value)
+            {
+                Dict.Add("cat_appointment", Convert.ToByte(dr["cat_appointment"]));
+            }
+            if (dr["cat_type"] != DBNull.Value)
+            {
+                Dict.Add("cat_type", Convert.ToByte(dr["cat_type"]));
+            }
+            if (dr["cat_stencil_theme"] != DBNull.Value)
+            {
+                Dict.Add("cat_stencil_theme", Convert.ToByte(dr["cat_stencil_theme"]));
+            }
+            if (dr["cat_place_of_use"] != DBNull.Value)
+            {
+                Dict.Add("cat_place_of_use", Convert.ToByte(dr["cat_place_of_use"]));
+            }
+            if (dr["cat_created_for"] != DBNull.Value)
+            {
+                Dict.Add("cat_created_for", Convert.ToByte(dr["cat_created_for"]));
+            }
+            if (dr["cat_finish_guarantee"] != DBNull.Value)
+            {
+                Dict.Add("cat_finish_guarantee", Convert.ToByte(dr["cat_finish_guarantee"]));
+            }
+            if (dr["cat_effect"] != DBNull.Value)
+            {
+                Dict.Add("cat_effect", Convert.ToByte(dr["cat_effect"]));
+            }
+            if (dr["cat_volume"] != DBNull.Value)
+            {
+                Dict.Add("cat_volume", Convert.ToByte(dr["cat_volume"]));
+            }
+            if (dr["cat_duration_of_protection"] != DBNull.Value)
+            {
+                Dict.Add("cat_duration_of_protection", Convert.ToByte(dr["cat_duration_of_protection"]));
+            }
+            if (dr["cat_surface_of_application"] != DBNull.Value)
+            {
+                Dict.Add("cat_surface_of_application", Convert.ToByte(dr["cat_surface_of_application"]));
+            }
+            if (dr["cat_type_of_use"] != DBNull.Value)
+            {
+                Dict.Add("cat_type_of_use", Convert.ToByte(dr["cat_type_of_use"]));
+            }
+            if (dr["cat_brush_type"] != DBNull.Value)
+            {
+                Dict.Add("cat_brush_type", Convert.ToByte(dr["cat_brush_type"]));
+            }
+            if (dr["cat_width"] != DBNull.Value)
+            {
+                Dict.Add("cat_width", Convert.ToByte(dr["cat_width"]));
+            }
+            if (dr["cat_fiber_material"] != DBNull.Value)
+            {
+                Dict.Add("cat_fiber_material", Convert.ToByte(dr["cat_fiber_material"]));
+            }
+            if (dr["cat_structure"] != DBNull.Value)
+            {
+                Dict.Add("cat_structure", Convert.ToByte(dr["cat_structure"]));
+            }
+            if (dr["cat_resistant"] != DBNull.Value)
+            {
+                Dict.Add("cat_resistant", Convert.ToByte(dr["cat_resistant"]));
+            }
+            if (dr["cat_gluing_strength"] != DBNull.Value)
+            {
+                Dict.Add("cat_gluing_strength", Convert.ToByte(dr["cat_gluing_strength"]));
+            }
+            if (dr["cat_capture_time"] != DBNull.Value)
+            {
+                Dict.Add("cat_capture_time", Convert.ToByte(dr["cat_capture_time"]));
+            }
+            if (dr["cat_gluing_material"] != DBNull.Value)
+            {
+                Dict.Add("cat_gluing_material", Convert.ToByte(dr["cat_gluing_material"]));
+            }
+            if (dr["cat_frost_resistance"] != DBNull.Value)
+            {
+                Dict.Add("cat_frost_resistance", Convert.ToByte(dr["cat_frost_resistance"]));
+            }
+            if (dr["cat_heat_resistance"] != DBNull.Value)
+            {
+                Dict.Add("cat_heat_resistance", Convert.ToByte(dr["cat_heat_resistance"]));
+            }
+            if (dr["cat_color_after_drying"] != DBNull.Value)
+            {
+                Dict.Add("cat_color_after_drying", Convert.ToByte(dr["cat_color_after_drying"]));
+            }
+            if (dr["cat_external_material"] != DBNull.Value)
+            {
+                Dict.Add("cat_external_material", Convert.ToByte(dr["cat_external_material"]));
+            }
+            if (dr["cat_application_type"] != DBNull.Value)
+            {
+                Dict.Add("cat_application_type", Convert.ToByte(dr["cat_application_type"]));
+            }
+
+            return Dict;
+        }
+    }
 }
