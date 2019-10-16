@@ -122,13 +122,13 @@ namespace zolotuz.Controllers
 			return new JsonResult(orders) { };
 		}
 
-		[HttpGet("img/{id}/{nmb}")]
-		public ActionResult Img(string id, string nmb)
+		[HttpGet("img/{group}/{id}/{nmb}")]
+		public ActionResult Img(int group, int id, int nmb)
 		{
 			Image img = new Image();
 			//string name = Directory.GetFiles("imgs")[0];
 
-			string path = Directory.GetCurrentDirectory() + string.Format(@"\imgs\{0}\{1}.jpg", id, nmb);
+			string path = Directory.GetCurrentDirectory() + string.Format(@"\imgs\{0}\{1}\{2}.jpg", group, id, nmb);
 			byte[] bytes = System.IO.File.ReadAllBytes(path);
 
 			return File(bytes, "image/jpeg");
@@ -362,7 +362,7 @@ namespace zolotuz.Controllers
 			bool isAdded = false;
 
 			isAdded = DataProvider.AddProduct(str, out var id);
-			/*string path = @"imgs\" + id;
+			string path = @"imgs\" + str.Group + @"\" + id;
 			Directory.CreateDirectory(path);
 			if (str.Img1?.Length > 0)
 			{
@@ -388,10 +388,11 @@ namespace zolotuz.Controllers
 					str.Img3.CopyTo(fileStream);
 				}
 			}
-			*/
-			return isAdded;
 			
-		}
+			return isAdded;
+           
+
+        }
 
 		[HttpPost("EditProduct")]
 		public bool EditProduct(CreateProductDTO product)

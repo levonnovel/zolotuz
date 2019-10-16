@@ -17,38 +17,38 @@ namespace zolotuz.Models
 		public decimal SubType { get; set; }
 		public decimal Discount { get; set; }
 
-		public byte? cat_manufacturer;
-		public byte? cat_color_palette;
-		public byte? cat_appearance;
-		public byte? cat_washable;
-		public byte? cat_smell;
-		public byte? cat_color;
-		public byte? cat_room_type;
-		public byte? cat_appointment;
-		public byte? cat_type;
-		public byte? cat_stencil_theme;
-		public byte? cat_place_of_use;
-		public byte? cat_created_for;
-		public byte? cat_finish_guarantee;
-		public byte? cat_effect;
-		public byte? cat_volume;
-		public byte? cat_duration_of_protection;
-		public byte? cat_surface_of_application;
-		public byte? cat_type_of_use;
-		public byte? cat_brush_type;
-		public byte? cat_width;
-		public byte? cat_fiber_material;
-		public byte? cat_structure;
-		public byte? cat_resistant;
-		public byte? cat_gluing_strength;
-		public byte? cat_capture_time;
-		public byte? cat_gluing_material;
-		public byte? cat_frost_resistance;
-		public byte? cat_heat_resistance;
-		public byte? cat_color_after_drying;
-		public byte? cat_external_material;
-		public byte? cat_application_type;
-		public byte? cat_paint_type;
+		public byte? Cat_manufacturer {get; set;}
+		public byte? Cat_color_palette {get; set;}
+		public byte? Cat_appearance {get; set;}
+		public byte? Cat_washable {get; set;}
+		public byte? Cat_smell {get; set;}
+		public byte? Cat_color {get; set;}
+		public byte? Cat_room_type {get; set;}
+		public byte? Cat_appointment {get; set;}
+		public byte? Cat_type {get; set;}
+		public byte? Cat_stencil_theme {get; set;}
+		public byte? Cat_place_of_use {get; set;}
+		public byte? Cat_created_for {get; set;}
+		public byte? Cat_finish_guarantee {get; set;}
+		public byte? Cat_effect {get; set;}
+		public byte? Cat_volume {get; set;}
+		public byte? Cat_duration_of_protection {get; set;}
+		public byte? Cat_surface_of_application {get; set;}
+		public byte? Cat_type_of_use {get; set;}
+		public byte? Cat_brush_type {get; set;}
+		public byte? Cat_width {get; set;}
+		public byte? Cat_fiber_material {get; set;}
+		public byte? Cat_structure {get; set;}
+		public byte? Cat_resistant {get; set;}
+		public byte? Cat_gluing_strength {get; set;}
+		public byte? Cat_capture_time {get; set;}
+		public byte? Cat_gluing_material {get; set;}
+		public byte? Cat_frost_resistance {get; set;}
+		public byte? Cat_heat_resistance {get; set;}
+		public byte? Cat_color_after_drying {get; set;}
+		public byte? Cat_external_material {get; set;}
+		public byte? Cat_application_type {get; set;}
+		public byte? Cat_paint_type {get; set;}
 		
 
 		public IFormFile Img1 { get; set; }
