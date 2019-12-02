@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ImageProcessor;
+using ImageProcessor.Imaging;
+using ImageProcessor.Imaging.Formats;
+using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using zolotuz.Models;
 using zolotuz.Models.Filters;
 
@@ -125,7 +127,7 @@ namespace zolotuz.Controllers
         [HttpGet("img/{group}/{id}/{nmb}")]
         public ActionResult Img(int group, int id, int nmb)
         {
-            Image img = new Image();
+            zolotuz.Models.Image img = new zolotuz.Models.Image();
             //string name = Directory.GetFiles("imgs")[0];
 
             string path = Directory.GetCurrentDirectory() + string.Format(@"\imgs\{0}\{1}\{2}.jpg", group, id, nmb);
@@ -159,19 +161,85 @@ namespace zolotuz.Controllers
             Directory.CreateDirectory(path);
             if (paint.Img1?.Length > 0)
             {
-                var filePath = path + @"\1.jpg";
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
+
+
+
+                using (var ms = new MemoryStream())
                 {
-                    paint.Img1.CopyTo(fileStream);
+                    paint.Img1.CopyTo(ms);
+                    var fileBytes = ms.ToArray();
+                    string s = Convert.ToBase64String(fileBytes);
+                    // act on the Base64 data
+                    ISupportedImageFormat format = new JpegFormat { Quality = 10 };
+                    using (MemoryStream inStream = new MemoryStream(fileBytes))
+                    using (MemoryStream outStream = new MemoryStream())
+                    {
+                        using (ImageFactory imageFactory = new ImageFactory(preserveExifData: false))
+                        {
+                            var maxSize = new Size(200, 50);
+                            var r = new ResizeLayer(maxSize);
+                            r.MaxSize = maxSize;
+                            imageFactory.Load(inStream)
+                                .Resize(r)
+                                 .Format(format)
+                                .Save(outStream);
+                        }
+
+                        using (System.Drawing.Image image = System.Drawing.Image.FromStream(outStream))
+                        {
+                            var filePath = path + @"\11.jpg";
+                            image.Save(filePath, ImageFormat.Jpeg);
+                        }
+                    }
                 }
+
+
+
+
+                //using (var fileStream = new FileStream(filePath, FileMode.Create))
+                //{
+                //    paint.Img1.CopyTo(fileStream);
+                //}
             }
             if (paint.Img2?.Length > 0)
             {
-                var filePath = path + @"\2.jpg";
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
+
+
+                using (var ms = new MemoryStream())
                 {
-                    paint.Img2.CopyTo(fileStream);
+                    paint.Img1.CopyTo(ms);
+                    var fileBytes = ms.ToArray();
+                    string s = Convert.ToBase64String(fileBytes);
+                    // act on the Base64 data
+                    ISupportedImageFormat format = new JpegFormat { Quality = 50 };
+                    using (MemoryStream inStream = new MemoryStream(fileBytes))
+                    using (MemoryStream outStream = new MemoryStream())
+                    {
+                        using (ImageFactory imageFactory = new ImageFactory(preserveExifData: false))
+                        {
+                            var maxSize = new Size(10, 10);
+                            var r = new ResizeLayer(maxSize);
+                            r.MaxSize = maxSize;
+                            imageFactory.Load(inStream)
+                                .Resize(r)
+                                 .Format(format)
+                                .Save(outStream);
+                        }
+
+                        using (System.Drawing.Image image = System.Drawing.Image.FromStream(outStream))
+                        {
+                            var filePath = path + @"\2.jpg";
+                            image.Save(filePath, ImageFormat.Jpeg);
+                        }
+                    }
                 }
+
+
+                //var filePath = path + @"\2.jpg";
+                //using (var fileStream = new FileStream(filePath, FileMode.Create))
+                //{
+                //    paint.Img2.CopyTo(fileStream);
+                //}
             }
             if (paint.Img3?.Length > 0)
             {
@@ -367,26 +435,98 @@ namespace zolotuz.Controllers
             Directory.CreateDirectory(path);
             if (str.Img1?.Length > 0)
             {
-                var filePath = path + @"\1.jpg";
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                using (var ms = new MemoryStream())
                 {
-                    str.Img1.CopyTo(fileStream);
+                    str.Img1.CopyTo(ms);
+                    var fileBytes = ms.ToArray();
+                    string s = Convert.ToBase64String(fileBytes);
+                    // act on the Base64 data
+                    ISupportedImageFormat format = new JpegFormat { Quality = 75 };
+                    using (MemoryStream inStream = new MemoryStream(fileBytes))
+                    using (MemoryStream outStream = new MemoryStream())
+                    {
+                        using (ImageFactory imageFactory = new ImageFactory(preserveExifData: false))
+                        {
+                            var maxSize = new Size(400, 0);
+                            var r = new ResizeLayer(maxSize);
+                            r.MaxSize = maxSize;
+                            imageFactory.Load(inStream)
+                                .BackgroundColor(Color.White)
+                                .Resize(r)
+                                 .Format(format)
+                                .Save(outStream);
+                        }
+
+                        using (System.Drawing.Image image = System.Drawing.Image.FromStream(outStream))
+                        {
+                            var filePath = path + @"\1.jpg";
+                            image.Save(filePath, ImageFormat.Jpeg);
+                        }
+                    }
                 }
             }
             if (str.Img2?.Length > 0)
             {
-                var filePath = path + @"\2.jpg";
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                using (var ms = new MemoryStream())
                 {
-                    str.Img2.CopyTo(fileStream);
+                    str.Img2.CopyTo(ms);
+                    var fileBytes = ms.ToArray();
+                    string s = Convert.ToBase64String(fileBytes);
+                    // act on the Base64 data
+                    ISupportedImageFormat format = new JpegFormat { Quality = 75 };
+                    using (MemoryStream inStream = new MemoryStream(fileBytes))
+                    using (MemoryStream outStream = new MemoryStream())
+                    {
+                        using (ImageFactory imageFactory = new ImageFactory(preserveExifData: false))
+                        {
+                            var maxSize = new Size(400, 0);
+                            var r = new ResizeLayer(maxSize);
+                            r.MaxSize = maxSize;
+                            imageFactory.Load(inStream)
+                                .BackgroundColor(Color.White)
+                                .Resize(r)
+                                 .Format(format)
+                                .Save(outStream);
+                        }
+
+                        using (System.Drawing.Image image = System.Drawing.Image.FromStream(outStream))
+                        {
+                            var filePath = path + @"\2.jpg";
+                            image.Save(filePath, ImageFormat.Jpeg);
+                        }
+                    }
                 }
             }
             if (str.Img3?.Length > 0)
             {
-                var filePath = path + @"\3.jpg";
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                using (var ms = new MemoryStream())
                 {
-                    str.Img3.CopyTo(fileStream);
+                    str.Img3.CopyTo(ms);
+                    var fileBytes = ms.ToArray();
+                    string s = Convert.ToBase64String(fileBytes);
+                    // act on the Base64 data
+                    ISupportedImageFormat format = new JpegFormat { Quality = 75 };
+                    using (MemoryStream inStream = new MemoryStream(fileBytes))
+                    using (MemoryStream outStream = new MemoryStream())
+                    {
+                        using (ImageFactory imageFactory = new ImageFactory(preserveExifData: false))
+                        {
+                            var maxSize = new Size(400, 0);
+                            var r = new ResizeLayer(maxSize);
+                            r.MaxSize = maxSize;
+                            imageFactory.Load(inStream)
+                                .BackgroundColor(Color.White)
+                                .Resize(r)
+                                 .Format(format)
+                                .Save(outStream);
+                        }
+
+                        using (System.Drawing.Image image = System.Drawing.Image.FromStream(outStream))
+                        {
+                            var filePath = path + @"\3.jpg";
+                            image.Save(filePath, ImageFormat.Jpeg);
+                        }
+                    }
                 }
             }
 
@@ -402,7 +542,6 @@ namespace zolotuz.Controllers
 
             return isAdded;
         }
-
 
     }
 }
