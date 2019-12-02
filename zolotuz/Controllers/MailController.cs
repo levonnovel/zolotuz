@@ -44,67 +44,63 @@ namespace zolotuz.Controllers
 			mail.To.Add(email);
 			mail.IsBodyHtml = true;
 			StringBuilder str = new StringBuilder();
-			str.Append("Здравствуйте " + name + "!<br />");
 
 			str.Append(@"    
-    <h2 style=""font - size: 18px"">Здравствуйте Armen Martirosyan!</h2>
+    <h2 style=""font - size: 18px"">Здравствуйте " + name + @"!</h2>
 
-	 <p>Спасибо за ваш заказ у компании
-      <a href=""https://www.zolotoyuzor.ru""
-		 target = ""_blank"" >
+    <p> Спасибо за ваш заказ у компании
+      <a href = ""https://www.zolotoyuzor.ru"" target = ""_blank"" >
         «Интернет - магазин ""Золотой узор""».
+      </a >
+    </p >
 
-	  </a >
+    <p > Вы заказали:</p >
 
-	</p >
+    <center >
+        <table width = ""100 %"" border = ""0"" cellpadding = ""10"" cellspacing = ""0"" >
 
+            <thead bgColor = ""#ffc700"" >
+                <tr  bgColor=""#ffc700"">
+                    <td > Название </td >
+                    <td > Количество </td >
+                    <td > Цена за единицу </td >
+                </tr >
+            </thead >
 
-	<p>Вы заказали:</p>
-
-
-  <div class=""container"" style =""width: 100 %; max - width: 900px; margin: 0 auto; "" >
-			<table style = ""border -collapse: collapse; width: 100%; "" >
-	 
-
-				 <thead style = ""background: linear-gradient(90deg, #ffc700, #ff862b); color: #ffffff;"" >
-	  
-					  <tr >
-	  
-							<th style = ""text-align: justify; min-width: 150px; padding: 10px 15px; "" > Название </th >
-	   
-							<th style = ""text -align: justify; min-width: 150px; padding: 10px 15px;"" > Количество </th >
-		
-							<th style = ""text -align: justify; min-width: 150px; padding: 10px 15px; "" > Цена за единицу</th >
-			 
-							 </tr >
-			 
-						 </thead >
-
-						 <tbody >
-
-							");
-
-			int i = 0;
+            <tbody >
+                            ");
+            int i = 0;
 			foreach (var it in items)
 			{
+                i++;
+                if(i % 2 == 0)
+                {
+                    str.Append(@"<tr bgColor=""#eee""> ");
 
-
-				str.Append(@"<tr style=""border - bottom: 1px solid #cccccc;"" > ");
-
-				str.Append(@"<td stlye = ""text-align: justify; min-width: 150px; padding: 10px 15px; "">");
+                }
+                else
+                {
+                    str.Append(@"<tr> ");
+                }
+                str.Append(@"<td>");
 				str.Append(it.Name);
 				str.Append("</td>");
 
-				str.Append(@"<td stlye = ""text-align: justify; min-width: 150px; padding: 10px 15px; "">");
+				str.Append(@"<td>");
 				str.Append(it.Count);
 				str.Append("</td>");
 
-				str.Append(@"<td stlye = ""text-align: justify; min-width: 150px; padding: 10px 15px; "">");
+				str.Append(@"<td>");
 				str.Append(it.Price);
 				str.Append("</td>");
 				str.Append("</tr>");
 			}
 
+            str.Append(@"
+            </tbody>
+        </table>
+    </center>
+");
 			mail.Subject = "Спасибо за ваш заказ у <<Интернет-магазин \"Золотой Узор\">>!";
 			mail.Body = str.ToString();
 			//send the message 

@@ -13,8 +13,8 @@ namespace zolotuz.Models
 		public string Description { get; set; }
 		public decimal Price { get; set; }
 		public decimal Group { get; set; }
-		public decimal Type { get; set; }
-		public decimal SubType { get; set; }
+		public decimal? Type { get; set; }
+		public decimal? SubType { get; set; }
 		public decimal Discount { get; set; }
 
 		public byte? Cat_manufacturer {get; set;}

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -378,33 +379,37 @@ namespace zolotuz
 				cmd.Parameters.AddWithValue("@phone", order.Phone);
 				cmd.Parameters.AddWithValue("@addr", order.Address);
 
-				DataTable dt = new DataTable();
-				dt.Columns.Add("Name", typeof(string));
-				dt.Columns.Add("Description", typeof(string));
-				dt.Columns.Add("Price", typeof(decimal));
-				dt.Columns.Add("Count", typeof(int));
+				//DataTable dt = new DataTable();
+				//dt.Columns.Add("Name", typeof(string));
+				//dt.Columns.Add("Description", typeof(string));
+				//dt.Columns.Add("Price", typeof(decimal));
+				//dt.Columns.Add("Count", typeof(int));
 
 				SqlParameter outParameter = new SqlParameter("@id", SqlDbType.Int);
 				outParameter.Direction = ParameterDirection.Output;
 				cmd.Parameters.Add(outParameter);
 
 
-				foreach (var el in order.Items)
-				{
-					dt.Rows.Add(el.Name, el.Description, el.Price, el.Count);
-				}
-				cmd.Parameters.AddWithValue("@ordersList", dt);
+				//foreach (var el in order.Items)
+				//{
+				//	dt.Rows.Add(el.Name, el.Description??"", el.Price, el.Count);
+				//}
+				
+               // cmd.Parameters.AddWithValue("@ordersList", dt);
 
-				//cmd.Parameters.Add("@items", SqlDbType.Structured);
-				//cmd.Parameters.Add("@items", SqlDbType.Structured);
-				//cmd.Parameters.Add("@items", SqlDbType.Structured);
+                var orderItems = JsonConvert.SerializeObject(order.Items);
+                cmd.Parameters.AddWithValue("@ordersList", orderItems);
+
+                //cmd.Parameters.Add("@items", SqlDbType.Structured);
+                //cmd.Parameters.Add("@items", SqlDbType.Structured);
+                //cmd.Parameters.Add("@items", SqlDbType.Structured);
 
 
-				//cmd.Parameters["@items"].Value = order.Items;
-				//cmd.Parameters.AddWithValue("@items", order.Items);
+                //cmd.Parameters["@items"].Value = order.Items;
+                //cmd.Parameters.AddWithValue("@items", order.Items);
 
 
-				conn.Open();
+                conn.Open();
 				//dt.Load(cmd.ExecuteReader());
 				cmd.ExecuteNonQuery();
 				//foreach (DataRow dr in dt.Rows)
@@ -979,8 +984,8 @@ namespace zolotuz
 				cmd.CommandType = CommandType.Text;
 
 				cmd.Parameters.AddWithValue("@id", id);
-
-				cmd.ExecuteNonQuery();
+                conn.Open();
+                cmd.ExecuteNonQuery();
 
 			}
 
