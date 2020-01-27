@@ -890,6 +890,8 @@ namespace zolotuz
 				cmd.Parameters.AddWithValue("@color_after_drying", filter.Cat_color_after_drying.ConvertToSqlArr());
 				cmd.Parameters.AddWithValue("@gluing_material", filter.Cat_gluing_material.ConvertToSqlArr());
 				cmd.Parameters.AddWithValue("@external_material", filter.Cat_external_material.ConvertToSqlArr());
+				cmd.Parameters.AddWithValue("@consumption", filter.Cat_consumption.ConvertToSqlArr());
+				cmd.Parameters.AddWithValue("@application_temperature", filter.Cat_application_temperature.ConvertToSqlArr());
 
 				cmd.Parameters.AddWithValue("@min_amount", filter.Min_price);
 				cmd.Parameters.AddWithValue("@max_amount", filter.Max_price);
@@ -1075,6 +1077,8 @@ namespace zolotuz
 				cmd.Parameters.AddWithValue("@cat_external_material", order.Cat_external_material);
 				cmd.Parameters.AddWithValue("@cat_application_type", order.Cat_application_type);
 				cmd.Parameters.AddWithValue("@cat_paint_type", order.Cat_paint_type);
+				cmd.Parameters.AddWithValue("@cat_consumption", order.Cat_consumption);
+				cmd.Parameters.AddWithValue("@cat_application_temperature", order.Cat_application_temperature);
 
 
 				//cmd.Parameters.Add("@items", SqlDbType.Structured);
@@ -1152,7 +1156,8 @@ namespace zolotuz
 				cmd.Parameters.AddWithValue("@cat_external_material", order.Cat_external_material);
 				cmd.Parameters.AddWithValue("@cat_application_type", order.Cat_application_type);
 				cmd.Parameters.AddWithValue("@cat_paint_type", order.Cat_paint_type);
-
+				cmd.Parameters.AddWithValue("@cat_consumption", order.Cat_consumption);
+				cmd.Parameters.AddWithValue("@cat_application_temperature", order.Cat_application_temperature);
 
 
 				conn.Open();

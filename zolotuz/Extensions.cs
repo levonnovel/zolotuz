@@ -631,7 +631,17 @@ namespace zolotuz
 				values = dr["application_type"].ToString();
 				P.cat_application_type = values.Split(',').Select(byte.Parse).ToList(); ;
 			}
+			if (dr["consumption"] != DBNull.Value)
+			{
+				values = dr["consumption"].ToString();
+				P.cat_consumption = values.Split(',').Select(byte.Parse).ToList(); ;
+			}
 
+			if (dr["application_temperature"] != DBNull.Value)
+			{
+				values = dr["application_temperature"].ToString();
+				P.cat_application_temperature = values.Split(',').Select(byte.Parse).ToList(); ;
+			}
 			return P;
 		}
 
@@ -776,6 +786,15 @@ namespace zolotuz
 				P.cat_application_type = Convert.ToByte(dr["cat_application_type"]);
 			}
 
+			if (dr["cat_consumption"] != DBNull.Value)
+			{
+				P.cat_consumption = Convert.ToByte(dr["cat_consumption"]);
+			}
+
+			if (dr["cat_application_temperature"] != DBNull.Value)
+			{
+				P.cat_application_temperature = Convert.ToByte(dr["cat_application_temperature"]);
+			}
 			return P;
 		}
 
@@ -947,8 +966,16 @@ namespace zolotuz
 			{
 				P.produtInfos.Add(new ProductInfo() { Label = refs.First(x => x.Key == "cat_application_type").Value, Value = dr["application_type_name"].ToString() });
 			}
+			if (dr["cat_consumption_name"] != DBNull.Value)
+			{
+				P.produtInfos.Add(new ProductInfo() { Label = refs.First(x => x.Key == "cat_consumption").Value, Value = dr["cat_consumption_name"].ToString() });
+			}
+			if (dr["cat_application_temperature_name"] != DBNull.Value)
+			{
+				P.produtInfos.Add(new ProductInfo() { Label = refs.First(x => x.Key == "cat_application_temperature").Value, Value = dr["cat_application_temperature_name"].ToString() });
+			}
 
-            if (dr["IMAGE_1_NAME"] != DBNull.Value && dr["IMG_1"] != DBNull.Value)
+			if (dr["IMAGE_1_NAME"] != DBNull.Value && dr["IMG_1"] != DBNull.Value)
             {
                 P.Image = new Image() { Name = dr["IMAGE_1_NAME"].ToString(), Url = dr["IMG_1"].ToString() };
             }
@@ -1093,8 +1120,16 @@ namespace zolotuz
             {
                 Dict.Add("cat_application_type", Convert.ToByte(dr["cat_application_type"]));
             }
+			if (dr["cat_consumption"] != DBNull.Value)
+			{
+				Dict.Add("cat_consumption", Convert.ToByte(dr["cat_consumption"]));
+			}
+			if (dr["cat_application_temperature"] != DBNull.Value)
+			{
+				Dict.Add("cat_application_temperature", Convert.ToByte(dr["cat_application_temperature"]));
+			}
 
-            return Dict;
+			return Dict;
         }
     }
 }

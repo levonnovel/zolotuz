@@ -45,6 +45,8 @@ namespace zolotuz.Models
 		public List<byte> Cat_external_material {get; set;}
 		public List<byte> Cat_application_type {get; set;}
 		public List<byte> Cat_paint_type {get; set;}
+		public List<byte> Cat_consumption { get; set; }
+		public List<byte> Cat_application_temperature { get; set; }
 
 		public decimal? Min_price { get; set; }
 		public decimal? Max_price { get; set; }
