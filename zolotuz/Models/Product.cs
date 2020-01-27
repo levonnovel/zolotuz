@@ -145,7 +145,10 @@ namespace zolotuz.Models
 		public byte Discount { get; set; }
 		public int Product_Type { get; set; }
 		public string Product_Type_Name { get; set; }
-		public List<ProductInfo> produtInfos = new List<ProductInfo>();
+        public string Color { get; set; }
+        public string Weight { get; set; }
+
+        public List<ProductInfo> produtInfos = new List<ProductInfo>();
 
         public Image Image { get; set; }
 

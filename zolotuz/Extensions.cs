@@ -850,6 +850,15 @@ namespace zolotuz
 				P.DiscountedPrice = Math.Round((P.Price * (100 - P.Discount)) / 100);
 			}
 
+			if (dr["Color"] != DBNull.Value)
+			{
+				P.Color = dr["Color"].ToString();
+			}
+			if (dr["Weight"] != DBNull.Value)
+			{
+				P.Weight = dr["Weight"].ToString();
+			}
+
 			if (dr["manufacturer_name"] != DBNull.Value)
 			{
 				P.produtInfos.Add(new ProductInfo() { Label = refs.First(x => x.Key == "cat_manufacturer").Value, Value = dr["manufacturer_name"].ToString() });
