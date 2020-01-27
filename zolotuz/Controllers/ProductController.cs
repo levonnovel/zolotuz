@@ -545,11 +545,21 @@ namespace zolotuz.Controllers
 
 
         [HttpPost("AddFilterValue")]
-        public bool AddFilterValue(string value, string filter)
+        public bool AddFilterValue(FilterDTO f)
         {
             bool isAdded = false;
 
-            isAdded = DataProvider.AddFilterValue(value, filter);
+            isAdded = DataProvider.AddFilterValue(f);
+
+            return isAdded;
+        }
+
+        [HttpPost("DeleteFilterValue")]
+        public bool DeleteFilterValue(FilterDTO f)
+        {
+            bool isAdded = false;
+
+            isAdded = DataProvider.DeleteFilterValue(f);
 
             return isAdded;
         }

@@ -12,8 +12,8 @@ namespace zolotuz
 	{
 		//static readonly string cs = @"Data Source=LEVONPET-PC\SQLEXPRESS; database=DB_A49556_zolotoyuzor ;Integrated Security=SSPI";
 		//static readonly string cs = @"Data Source=LEVON\LEOMAX; database=ZolotoyUzor ;Integrated Security=SSPI";
-		static readonly string cs = @"Data Source=DESKTOP-RJ1MDRJ\SQLEXPRESS; database=DB_A49556_zolotoyuzor ;Integrated Security=SSPI";
-		//static readonly string cs = @"Data Source=SQL6007.site4now.net;Initial Catalog=DB_A49556_zolotoyuzor;User Id=DB_A49556_zolotoyuzor_admin;Password=Aa199814;";
+		//static readonly string cs = @"Data Source=DESKTOP-RJ1MDRJ\SQLEXPRESS; database=DB_A49556_zolotoyuzor ;Integrated Security=SSPI";
+		static readonly string cs = @"Data Source=SQL6007.site4now.net;Initial Catalog=DB_A49556_zolotoyuzor;User Id=DB_A49556_zolotoyuzor_admin;Password=Aa199814;";
 
 
 		public static List<ProductDTO> GetPaints(PaintFilter filter)
@@ -1169,7 +1169,7 @@ namespace zolotuz
 			}
 		}
 
-		public static bool AddFilterValue(string value, string filter)
+		public static bool AddFilterValue(FilterDTO f)
 		{
 			//List<ProductDTO> ProductsList = new List<ProductDTO>();
 			using (SqlConnection conn = new SqlConnection(cs))
@@ -1177,8 +1177,8 @@ namespace zolotuz
 				SqlCommand cmd = new SqlCommand("sp_add_value_to_filter", conn);
 
 				cmd.CommandType = CommandType.StoredProcedure;
-				cmd.Parameters.AddWithValue("@value", value);
-				cmd.Parameters.AddWithValue("@filter", filter);
+				cmd.Parameters.AddWithValue("@value", f.Value);
+				cmd.Parameters.AddWithValue("@filter", f.Filter);
 				
 				conn.Open();
 				//dt.Load(cmd.ExecuteReader());
@@ -1188,6 +1188,25 @@ namespace zolotuz
 				return true;
 			}
 		}
+		public static bool DeleteFilterValue(FilterDTO f)
+		{
+			//List<ProductDTO> ProductsList = new List<ProductDTO>();
+			using (SqlConnection conn = new SqlConnection(cs))
+			{
+				SqlCommand cmd = new SqlCommand("sp_delete_value_from_filter", conn);
 
+				cmd.CommandType = CommandType.StoredProcedure;
+				cmd.Parameters.AddWithValue("@value", f.Value);
+				cmd.Parameters.AddWithValue("@filter", f.Filter);
+
+				conn.Open();
+				//dt.Load(cmd.ExecuteReader());
+				cmd.ExecuteNonQuery();
+
+
+				return true;
+			}
+		}
+		
 	}
 }

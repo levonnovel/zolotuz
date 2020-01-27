@@ -300,6 +300,14 @@ namespace zolotuz
 				P.Discount = Convert.ToByte(dr["Discount"]);
 				P.DiscountedPrice = Math.Round((P.Price * (100 - P.Discount)) / 100);
 			}
+			if (dr["Color"] != DBNull.Value)
+			{
+				P.Color = dr["Color"].ToString();
+			}
+			if (dr["Weight"] != DBNull.Value)
+			{
+				P.Weight = dr["Weight"].ToString();
+			}
 			//if (dr["Product_Type"] != DBNull.Value)
 			//{
 			//	P.Product_Type = Convert.ToInt32(dr["Product_Type"]);
