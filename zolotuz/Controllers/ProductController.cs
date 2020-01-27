@@ -543,5 +543,16 @@ namespace zolotuz.Controllers
             return isAdded;
         }
 
+
+        [HttpPost("AddFilterValue")]
+        public bool AddFilterValue(string value, string filter)
+        {
+            bool isAdded = false;
+
+            isAdded = DataProvider.AddFilterValue(value, filter);
+
+            return isAdded;
+        }
+
     }
 }

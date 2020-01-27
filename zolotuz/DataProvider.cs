@@ -1169,5 +1169,25 @@ namespace zolotuz
 			}
 		}
 
+		public static bool AddFilterValue(string value, string filter)
+		{
+			//List<ProductDTO> ProductsList = new List<ProductDTO>();
+			using (SqlConnection conn = new SqlConnection(cs))
+			{
+				SqlCommand cmd = new SqlCommand("sp_add_value_to_filter", conn);
+
+				cmd.CommandType = CommandType.StoredProcedure;
+				cmd.Parameters.AddWithValue("@value", value);
+				cmd.Parameters.AddWithValue("@filter", filter);
+				
+				conn.Open();
+				//dt.Load(cmd.ExecuteReader());
+				cmd.ExecuteNonQuery();
+
+
+				return true;
+			}
+		}
+
 	}
 }
