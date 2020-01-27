@@ -12,7 +12,8 @@ namespace zolotuz
 	{
 		//static readonly string cs = @"Data Source=LEVONPET-PC\SQLEXPRESS; database=DB_A49556_zolotoyuzor ;Integrated Security=SSPI";
 		//static readonly string cs = @"Data Source=LEVON\LEOMAX; database=ZolotoyUzor ;Integrated Security=SSPI";
-		static readonly string cs = @"Data Source=SQL6007.site4now.net;Initial Catalog=DB_A49556_zolotoyuzor;User Id=DB_A49556_zolotoyuzor_admin;Password=Aa199814;";
+		static readonly string cs = @"Data Source=DESKTOP-RJ1MDRJ\SQLEXPRESS; database=DB_A49556_zolotoyuzor ;Integrated Security=SSPI";
+		//static readonly string cs = @"Data Source=SQL6007.site4now.net;Initial Catalog=DB_A49556_zolotoyuzor;User Id=DB_A49556_zolotoyuzor_admin;Password=Aa199814;";
 
 
 		public static List<ProductDTO> GetPaints(PaintFilter filter)
