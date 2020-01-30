@@ -50,8 +50,8 @@ namespace zolotuz.Models
 		public byte? Cat_application_type {get; set;}
 		public byte? Cat_paint_type {get; set;}
 
-		public byte Cat_consumption { get; set; }
-		public byte Cat_application_temperature { get; set; }
+		public byte? Cat_consumption { get; set; }
+		public byte? Cat_application_temperature { get; set; }
 
 		public IFormFile Img1 { get; set; }
 		public IFormFile Img2 { get; set; }
