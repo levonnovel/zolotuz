@@ -533,12 +533,113 @@ namespace zolotuz.Controllers
             return isAdded;
         }
 
+
         [HttpPost("EditProduct")]
         public bool EditProduct(CreateProductDTO product)
         {
             bool isAdded = false;
 
             isAdded = DataProvider.EditProduct(product);
+
+            string path = @"imgs\" + product.Group + @"\" + product.Id;
+            Directory.Delete(path, true);
+            Directory.CreateDirectory(path);
+            if (product.Img1?.Length > 0)
+            {
+                using (var ms = new MemoryStream())
+                {
+                    product.Img1.CopyTo(ms);
+                    var fileBytes = ms.ToArray();
+                    string s = Convert.ToBase64String(fileBytes);
+                    // act on the Base64 data
+                    ISupportedImageFormat format = new JpegFormat { Quality = 75 };
+                    using (MemoryStream inStream = new MemoryStream(fileBytes))
+                    using (MemoryStream outStream = new MemoryStream())
+                    {
+                        using (ImageFactory imageFactory = new ImageFactory(preserveExifData: false))
+                        {
+                            var maxSize = new Size(400, 0);
+                            var r = new ResizeLayer(maxSize);
+                            r.MaxSize = maxSize;
+                            imageFactory.Load(inStream)
+                                .BackgroundColor(Color.White)
+                                .Resize(r)
+                                 .Format(format)
+                                .Save(outStream);
+                        }
+
+                        using (System.Drawing.Image image = System.Drawing.Image.FromStream(outStream))
+                        {
+                            var filePath = path + @"\1.jpg";
+                            image.Save(filePath, ImageFormat.Jpeg);
+                        }
+                    }
+                }
+            }
+            if (product.Img2?.Length > 0)
+            {
+                using (var ms = new MemoryStream())
+                {
+                    product.Img2.CopyTo(ms);
+                    var fileBytes = ms.ToArray();
+                    string s = Convert.ToBase64String(fileBytes);
+                    // act on the Base64 data
+                    ISupportedImageFormat format = new JpegFormat { Quality = 75 };
+                    using (MemoryStream inStream = new MemoryStream(fileBytes))
+                    using (MemoryStream outStream = new MemoryStream())
+                    {
+                        using (ImageFactory imageFactory = new ImageFactory(preserveExifData: false))
+                        {
+                            var maxSize = new Size(400, 0);
+                            var r = new ResizeLayer(maxSize);
+                            r.MaxSize = maxSize;
+                            imageFactory.Load(inStream)
+                                .BackgroundColor(Color.White)
+                                .Resize(r)
+                                 .Format(format)
+                                .Save(outStream);
+                        }
+
+                        using (System.Drawing.Image image = System.Drawing.Image.FromStream(outStream))
+                        {
+                            var filePath = path + @"\2.jpg";
+                            image.Save(filePath, ImageFormat.Jpeg);
+                        }
+                    }
+                }
+            }
+            if (product.Img3?.Length > 0)
+            {
+                using (var ms = new MemoryStream())
+                {
+                    product.Img3.CopyTo(ms);
+                    var fileBytes = ms.ToArray();
+                    string s = Convert.ToBase64String(fileBytes);
+                    // act on the Base64 data
+                    ISupportedImageFormat format = new JpegFormat { Quality = 75 };
+                    using (MemoryStream inStream = new MemoryStream(fileBytes))
+                    using (MemoryStream outStream = new MemoryStream())
+                    {
+                        using (ImageFactory imageFactory = new ImageFactory(preserveExifData: false))
+                        {
+                            var maxSize = new Size(400, 0);
+                            var r = new ResizeLayer(maxSize);
+                            r.MaxSize = maxSize;
+                            imageFactory.Load(inStream)
+                                .BackgroundColor(Color.White)
+                                .Resize(r)
+                                 .Format(format)
+                                .Save(outStream);
+                        }
+
+                        using (System.Drawing.Image image = System.Drawing.Image.FromStream(outStream))
+                        {
+                            var filePath = path + @"\3.jpg";
+                            image.Save(filePath, ImageFormat.Jpeg);
+                        }
+                    }
+                }
+            }
 
             return isAdded;
         }
