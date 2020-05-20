@@ -1018,7 +1018,7 @@ namespace zolotuz
 			}
 		}
 
-		public static bool AddProduct(CreateProductDTO order, out int id)
+		public static bool AddProduct(CreateProductDTO order, out int id, List<string> types)
 		{
 			int cnt = 0;
 			if (order.Img1 != null)
@@ -1028,6 +1028,7 @@ namespace zolotuz
 			if (order.Img3 != null)
 				cnt++;
 			//DataTable dt = new DataTable();
+			var json = JsonConvert.SerializeObject(types);
 
 			//List<ProductDTO> ProductsList = new List<ProductDTO>();
 			using (SqlConnection conn = new SqlConnection(cs))
@@ -1043,6 +1044,7 @@ namespace zolotuz
 				cmd.Parameters.AddWithValue("@sub_type", order.SubType);
 				cmd.Parameters.AddWithValue("@discount", order.Discount);
 				cmd.Parameters.AddWithValue("@imgscount", cnt);
+				cmd.Parameters.AddWithValue("@imgs_types", json);
 
 
 				cmd.Parameters.AddWithValue("@cat_manufacturer", order.Cat_manufacturer);
@@ -1107,8 +1109,18 @@ namespace zolotuz
 			}
 		}
 
-		public static bool EditProduct(CreateProductDTO order)
+		public static bool EditProduct(CreateProductDTO order, List<string> types)
 		{
+			int cnt = 0;
+			if (order.Img1 != null)
+				cnt++;
+			if (order.Img2 != null)
+				cnt++;
+			if (order.Img3 != null)
+				cnt++;
+
+			var json = JsonConvert.SerializeObject(types);
+
 			//List<ProductDTO> ProductsList = new List<ProductDTO>();
 			using (SqlConnection conn = new SqlConnection(cs))
 			{
@@ -1123,6 +1135,9 @@ namespace zolotuz
 				cmd.Parameters.AddWithValue("@type", order.Type);
 				cmd.Parameters.AddWithValue("@sub_type", order.SubType);
 				cmd.Parameters.AddWithValue("@discount", order.Discount);
+				cmd.Parameters.AddWithValue("@imgscount", cnt);
+				cmd.Parameters.AddWithValue("@imgs_types", json);
+
 
 				cmd.Parameters.AddWithValue("@cat_manufacturer", order.Cat_manufacturer);
 				cmd.Parameters.AddWithValue("@cat_color_palette", order.Cat_color_palette);

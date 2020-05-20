@@ -53,11 +53,11 @@ namespace zolotuz.Models
 		public byte? Cat_consumption { get; set; }
 		public byte? Cat_application_temperature { get; set; }
 
-		public IFormFile Img1 { get; set; }
-		public IFormFile Img2 { get; set; }
-		public IFormFile Img3 { get; set; }
+		public string Img1 { get; set; }
+		public string Img2 { get; set; }
+		public string Img3 { get; set; }
 		//public List<Image> Images { get; set; }
-
+		//public string Img1Base64 { get; set; }
 
 	}
 }

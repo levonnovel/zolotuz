@@ -37,10 +37,11 @@ namespace zolotuz.Controllers
 			MailMessage mail = new MailMessage();
 
 			//set the addresses 
-			mail.From = new MailAddress("Artur@zolotoyuzor.ru"); //IMPORTANT: This must be same as your smtp authentication addres
+			mail.From = new MailAddress("manager@zolotoyuzor.ru"); //IMPORTANT: This must be same as your smtp authentication addres
 
 			mail.To.Add("leomax2016@mail.ru");
-			mail.To.Add("dadamyan2012@mail.ru");
+			//mail.To.Add("dadamyan2012@mail.ru");
+			mail.To.Add("manager@mail.ru");
 			mail.To.Add(email);
 			mail.IsBodyHtml = true;
 			StringBuilder str = new StringBuilder();
@@ -104,9 +105,9 @@ namespace zolotuz.Controllers
 			mail.Subject = "Спасибо за ваш заказ у <<Интернет-магазин \"Золотой Узор\">>!";
 			mail.Body = str.ToString();
 			//send the message 
-			SmtpClient smtp = new SmtpClient("mail.zolotoyuzor.ru");
+			SmtpClient smtp = new SmtpClient("mail.zolotoyuzor.com");
 			//IMPORANT:  Your smtp login email MUST be same as your FROM address. 
-			NetworkCredential Credentials = new NetworkCredential("Artur@zolotoyuzor.ru", "Aa199814-");
+			NetworkCredential Credentials = new NetworkCredential("manager@zolotoyuzor.ru", "Aa199814-");
 			smtp.Credentials = Credentials;
 			smtp.Send(mail);
 
